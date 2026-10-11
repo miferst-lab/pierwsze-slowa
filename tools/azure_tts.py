@@ -6,7 +6,7 @@ Limit: abort, gdy suma znaków tekstu w jednym uruchomieniu przekroczy CHAR_CAP 
 import hashlib, json, os, re, sys, time, urllib.request, urllib.error
 from pathlib import Path
 
-CHAR_CAP = 4500
+CHAR_CAP = int(os.environ.get('PS_CHAR_CAP', '4500'))   # twardy limit znaków na uruchomienie (zmienna PS_CHAR_CAP podnosi go świadomie)
 FORMAT = 'audio-24khz-48kbitrate-mono-mp3'
 CACHE = Path(os.environ.get('PS_AZURE_CACHE', '~/.cache/pierwsze-slowa-azure')).expanduser()
 UA = 'pierwsze-slowa-audio-generator/1.0'

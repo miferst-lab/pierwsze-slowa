@@ -32,6 +32,7 @@ VOICE = 'pl-PL-ZofiaNeural'
 STYLE = {
     'sound': dict(rate='-25%', volume='+100%'), 'syllable': dict(rate='-25%', volume='loud'),
     'word': dict(rate='-8%'), 'sentence': dict(rate='-8%'), 'instruction': dict(rate='-8%'), 'parent': dict(rate='-8%'),
+    'number': dict(rate='-5%'), 'problem': dict(rate='-8%'),
     'praise': dict(rate='-3%', pitch='+6%'), 'finish': dict(rate='-3%', pitch='+6%'), 'retry': dict(rate='-5%', pitch='+2%'),
 }
 PHON = {kind for kind in ('sound', 'syllable')}
@@ -85,13 +86,20 @@ def join_clips(parts_ids, paths_gap=0.28):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('--only'); ap.add_argument('--force', action='store_true'); ap.add_argument('--voice', default=VOICE)
+    ap.add_argument('--only'); ap.add_argument('--force', action='store_true'); ap.add_argument('--voice', default=VOICE); ap.add_argument('--dry', action='store_true', help='tylko policz znaki brakujących nagrań (bez Azure)')
     args = ap.parse_args()
     items = json.loads(subprocess.run(['node', str(ROOT / 'tools/list-audio-ids.mjs'), '--json'], capture_output=True, text=True, check=True, cwd=ROOT).stdout)
     only = set(args.only.split(',')) if args.only else None
     AUDIO.mkdir(exist_ok=True)
     rp = ROOT / 'docs' / 'audio-report.json'
     old = json.loads(rp.read_text()).get('details', {}) if rp.exists() else {}
+    if args.dry:
+        need = [it for it in items if not (AUDIO / f"{it['id']}.mp3").exists() or it['id'] not in old]
+        need = [it for it in need if it['kind'] != 'sentence' or True]
+        tot = sum(text_chars(build_ssml(args.voice, it['kind'], it['part'])) for it in need)
+        by = {}
+        for it in need: by[it['kind']] = by.get(it['kind'], 0) + text_chars(build_ssml(args.voice, it['kind'], it['part']))
+        print(f'brakujących nagrań: {len(need)}, znaków: {tot}, wg rodzaju: {by}'); return
     az = Azure()
     by_id = {i['id']: i for i in items}
     sent_ids = {}

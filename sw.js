@@ -3,7 +3,7 @@
 // Są cache'owane leniwie (przy pierwszym odtworzeniu, patrz handler fetch) oraz dociągane w tle po komunikacie
 // {type:'precache-audio'} wysyłanym przez stronę ~6 s po starcie (pomijane przy włączonym oszczędzaniu danych).
 // UWAGA: przy KAŻDEJ zmianie plików podnieś VERSION – stary cache zostanie usunięty przy aktywacji.
-const VERSION = 'v5';
+const VERSION = 'v6';
 const CACHE = `pierwsze-slowa-${VERSION}`;
 const SHELL = [
   './',
@@ -21,10 +21,14 @@ const SHELL = [
   'js/core/say.js',
   'js/core/spoken.js',
   'js/core/ui.js',
+  'js/games/index.js',
+  'js/games/logic.js',
+  'js/games/phrases.js',
   'js/parent.js',
   'modules/index.js',
   'modules/math/curriculum.js',
   'modules/math/index.js',
+  'modules/math/runner.js',
   'modules/math/say.js',
   'modules/reading/curriculum.js',
   'modules/reading/index.js',

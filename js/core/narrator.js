@@ -111,13 +111,16 @@ export class Narrator {
     if (!this.enabled && !opts.force) return;
     const list = Array.isArray(parts) ? parts : [parts];
     this.log?.push(list);
+    // element listy może być tablicą = „ciasna grupa” (np. ['dwadzieścia', 'trzy', 'jabłka']): krótsze przerwy, jak w mowie ciągłej
+    const seq = [];
+    list.forEach((p) => (Array.isArray(p) ? p.forEach((q, i) => seq.push({ part: q, tight: i > 0 })) : seq.push({ part: p, tight: false })));
     const mode0 = opts.mode ?? this.mode;
-    if (mode0 === 'recorded') for (const part of list) { const id = audioId(part); if (this.manifest.has(id)) this.clipUrl(id).catch(() => {}); } // pobierz z góry, równolegle
-    for (const part of list) {
+    if (mode0 === 'recorded') for (const { part } of seq) { const id = audioId(part); if (this.manifest.has(id)) this.clipUrl(id).catch(() => {}); } // pobierz z góry, równolegle
+    for (let i = 0; i < seq.length; i++) {
       if (t !== this.token) return;
-      await this.one(part, t, opts.mode ?? this.mode);
+      await this.one(seq[i].part, t, opts.mode ?? this.mode);
       if (t !== this.token) return;
-      await new Promise((r) => setTimeout(r, 120));
+      if (i < seq.length - 1) await new Promise((r) => setTimeout(r, seq[i + 1].tight ? 40 : 130));
     }
   }
   one(part, t, mode) {

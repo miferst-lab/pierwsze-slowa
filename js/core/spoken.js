@@ -6,6 +6,10 @@ import { LEVELS } from '../../modules/reading/curriculum.js';
 import { WORD_ART } from '../art/words.js';
 import { SOUND_KEYS, audioId, stripPunct } from './say.js';
 import { PRAISE, RETRY, FINISH, PARENT_LINES } from './lines.js';
+import { MATH_LEVELS } from '../../modules/math/curriculum.js';
+import { taskStrings, ALL_NOUNS } from '../../modules/math/say.js';
+import { allNumberWordForms, HOUR_ORDINALS } from './numerals.js';
+import { GAME_PHRASES } from '../games/phrases.js';
 
 /** Rodzaje czytane wolniej i głośniej („fonetyczne”). */
 export const PHONETIC_KINDS = new Set(['sound', 'syllable']);
@@ -48,5 +52,18 @@ export function collectSpoken() {
   RETRY.forEach((p) => add(p, 'retry'));
   FINISH.forEach((p) => add(p, 'finish'));
   PARENT_LINES.forEach((p) => add(p, 'parent'));
+  // --- matematyka i zabawy: nowe nagrania (nigdy nie nadpisują istniejących) ---
+  const addNew = (part, kind) => { if (part && !out.has(audioId(part))) out.set(audioId(part), { id: audioId(part), part, kind }); };
+  const numbers = new Set([...allNumberWordForms()]);
+  const nounForms = new Set(ALL_NOUNS.flatMap((n) => [n.one, n.few, n.many]));
+  const problems = new Set();
+  for (const w of numbers) addNew(w, 'number');
+  for (const w of nounForms) addNew(w, 'word');
+  HOUR_ORDINALS.filter(Boolean).forEach((w) => addNew(w, 'number'));
+  for (const l of MATH_LEVELS) for (const t of l.tasks) if (t.type === 'problem') problems.add(t.text);
+  for (const l of MATH_LEVELS) for (const t of l.tasks) for (const w of ['kosmos', 'dzungla', 'wyspy']) {
+    for (const s of taskStrings(t, w)) addNew(s, problems.has(s) ? 'problem' : numbers.has(s) || nounForms.has(s) ? 'word' : 'instruction');
+  }
+  GAME_PHRASES.forEach((p) => addNew(p, 'instruction'));
   return out;
 }
