@@ -4,7 +4,7 @@ export const STATE_VERSION = 1;
 export const ITEMS_PER_WORLD = 12;
 
 export function defaultState() {
-  return { v: STATE_VERSION, world: 'kosmos', narrator: true, rate: 0.8, voiceMode: 'recorded', speed: 1, volume: 1, voiceURI: null, unlockAll: false, gameSpeed: 'slow', games: {}, levels: {}, hits: {}, misses: {}, last: null, updatedAt: 0 };
+  return { v: STATE_VERSION, world: 'lesna', narrator: true, rate: 0.8, voiceMode: 'recorded', speed: 1, volume: 1, voiceURI: null, unlockAll: false, gameSpeed: 'slow', games: {}, levels: {}, hits: {}, misses: {}, last: null, updatedAt: 0 };
 }
 
 const isObj = (x) => x && typeof x === 'object' && !Array.isArray(x);
@@ -17,7 +17,7 @@ const cleanCounts = (o) => {
 };
 
 /** Bezpieczne parsowanie: dowolny śmieć -> stan domyślny; pola poprawiane pojedynczo. */
-export function parseState(raw, worldIds = ['kosmos', 'dzungla', 'wyspy']) {
+export function parseState(raw, worldIds = ['lesna', 'kosmos', 'dzungla', 'wyspy']) {
   const d = defaultState();
   let o;
   try { o = typeof raw === 'string' ? JSON.parse(raw) : raw; } catch { return d; }

@@ -3,14 +3,24 @@
 // Są cache'owane leniwie (przy pierwszym odtworzeniu, patrz handler fetch) oraz dociągane w tle po komunikacie
 // {type:'precache-audio'} wysyłanym przez stronę ~6 s po starcie (pomijane przy włączonym oszczędzaniu danych).
 // UWAGA: przy KAŻDEJ zmianie plików podnieś VERSION – stary cache zostanie usunięty przy aktywacji.
-const VERSION = 'v11';
+const VERSION = 'v13';
 const CACHE = `pierwsze-slowa-${VERSION}`;
 const SHELL = [
   './',
+  'art/lesna/ekipa.webp',
+  'art/lesna/jez.webp',
+  'art/lesna/lis.webp',
+  'art/lesna/mis.webp',
+  'art/lesna/sowa.webp',
+  'art/lesna/wiewiorka.webp',
+  'art/lesna/wyprawa.webp',
+  'art/lesna/zajac.webp',
   'css/app.css',
+  'css/lesna.css',
   'icon.svg',
   'index.html',
   'js/app.js',
+  'js/art/lesna.js',
   'js/art/manip.js',
   'js/art/words.js',
   'js/art/worlds.js',

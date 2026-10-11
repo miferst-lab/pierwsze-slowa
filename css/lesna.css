@@ -1,0 +1,97 @@
+/* Świat „Leśna Wyprawa” (kierunek Artysty z projektu Grok): drewniane tabliczki, pergamin, miodowe złoto, zieleń lasu.
+   Tokeny kolorów pochodzą z js/art/lesna.js; tu tylko kształty i faktury. Wszystko działa tylko przy data-world="lesna". */
+img.sprite{display:block;width:100%;height:100%;object-fit:contain;border-radius:50%;box-shadow:0 0 0 3px #f2b84b,0 0 0 6px #8a5a2b,0 4px 8px rgba(92,58,28,.3);background:#fff6dc}
+.wmascots img.sprite{width:60px;height:60px;box-shadow:0 0 0 2px #f2b84b,0 0 0 4px #8a5a2b;margin:4px}
+.item-art img.sprite{box-shadow:0 0 0 3px #f2b84b,0 0 0 5px #8a5a2b}
+.g-sciezka .hero img.sprite{box-shadow:0 0 0 2px #f2b84b,0 0 0 4px #8a5a2b}
+.parade,.crew-art{pointer-events:none}
+.parade-img,.crew-img{display:block;width:100%;height:auto;-webkit-mask-image:radial-gradient(ellipse 62% 66% at 50% 50%,#000 55%,transparent 100%);mask-image:radial-gradient(ellipse 62% 66% at 50% 50%,#000 55%,transparent 100%)}
+.crew-art{max-width:560px;margin:0 auto .6rem;padding:0 1rem}
+.badges{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;padding:0 1rem}
+.badge{width:220px;background:var(--surface);border:3px solid var(--line);border-radius:var(--r-m);padding:.6rem;box-shadow:var(--shadow-s)}
+.badge.locked .item-art{filter:grayscale(1) brightness(.55);opacity:.55}
+.badge figcaption{font-size:.95rem}
+
+[data-world="lesna"]{--shadow:0 6px 0 rgba(138,90,43,.28),0 10px 18px rgba(92,58,28,.18);--shadow-s:0 3px 0 rgba(138,90,43,.3),0 5px 10px rgba(92,58,28,.14);--r-s:14px;--r-m:20px;--r-l:26px;
+  --wood:linear-gradient(180deg,#f3d89e,#e6bd74);--wood-dark:linear-gradient(180deg,#9a6a36,#7a5028);
+  --grain:repeating-linear-gradient(90deg,rgba(138,90,43,.07) 0 2px,transparent 2px 9px);--stitch:inset 0 0 0 4px var(--surface),inset 0 0 0 6px #e3c88e}
+[data-world="lesna"] body,body[data-world="lesna"]{font-family:"Trebuchet MS","Segoe UI",Verdana,system-ui,sans-serif}
+/* przyciski = drewniane tabliczki */
+[data-world="lesna"] .btn{background:var(--grain),var(--wood);border:3px solid #8a5a2b;border-radius:18px;color:var(--ink);box-shadow:0 4px 0 #6b4220,0 7px 12px rgba(92,58,28,.2)}
+[data-world="lesna"] .btn:active{transform:translateY(3px);box-shadow:0 1px 0 #6b4220}
+[data-world="lesna"] .btn.primary{background:var(--grain),linear-gradient(180deg,#3f8650,#2f6b3a);border-color:#1d4a28;color:#fffaf0;box-shadow:0 4px 0 #1d4a28,0 7px 12px rgba(29,74,40,.25)}
+[data-world="lesna"] .btn.accent,[data-world="lesna"] .btn.listen{background:var(--grain),linear-gradient(180deg,#f8cf6a,#f2b84b);border-color:#b07a1a}
+[data-world="lesna"] .btn.ghost{background:rgba(255,250,240,.85)}
+[data-world="lesna"] .btn.danger{background:#fff0e8;border-color:#a33a3a}
+/* karty, pergamin ze ściegiem */
+[data-world="lesna"] .card,[data-world="lesna"] .badge{border:3px solid #b8863f;box-shadow:var(--shadow),var(--stitch)}
+[data-world="lesna"] :is(.prompt,.q-text,.ptext,.bubble,.eqline,.bignum,.seqbox,.tapword,.story,.opt,.slot.filled,.coll,.crew figure,.world-choice,.starstrip,.frame,.plate,.wallet,.tray,.pile,.cmp-panel svg,.artg svg,.scene svg,.art){border-width:3px;border-color:#b8863f}
+[data-world="lesna"] :is(.prompt,.q-text,.ptext,.eqline,.bignum,.bubble){box-shadow:var(--shadow-s),var(--stitch)}
+[data-world="lesna"] .prompt{border-radius:22px;background:var(--grain),var(--surface)}
+/* opcje odpowiedzi = jasne drewniane klocki */
+[data-world="lesna"] .opt,[data-world="lesna"] .tapword,[data-world="lesna"] .tile,[data-world="lesna"] .seqbox{background:var(--grain),linear-gradient(180deg,#fbeccb,#f1d49a);border-color:#a8742e;border-radius:22px;box-shadow:0 5px 0 #a8742e,0 8px 12px rgba(92,58,28,.16),inset 0 2px 0 rgba(255,255,255,.55)}
+[data-world="lesna"] .opt:hover:not(:disabled){background:var(--grain),linear-gradient(180deg,#fff3d8,#f6dca4)}
+[data-world="lesna"] .opt.good{background:linear-gradient(180deg,#e9f6d8,#cfe8b2);border-color:var(--good);box-shadow:0 5px 0 #1f6b3a,0 8px 12px rgba(31,107,58,.2)}
+[data-world="lesna"] .tapword.read,[data-world="lesna"] .sline.read{background:linear-gradient(180deg,#f8cf6a,#f2b84b);border-color:#b07a1a}
+[data-world="lesna"] .slot{background:rgba(255,250,240,.7);border:3px dashed #a8742e}
+[data-world="lesna"] .tile{background:var(--grain),linear-gradient(180deg,#f8cf6a,#f2b84b);border-color:#a8742e}
+[data-world="lesna"] .opt svg.art,[data-world="lesna"] .scene svg,[data-world="lesna"] .art{background:rgba(255,250,240,.9)}
+/* pasek górny: drewniany drogowskaz */
+[data-world="lesna"] .topbar{background:linear-gradient(180deg,rgba(255,250,240,.0),rgba(255,250,240,0))}
+[data-world="lesna"] .bar-title{background:var(--grain),var(--wood);border:3px solid #8a5a2b;border-radius:14px;padding:.15rem .9rem;box-shadow:0 3px 0 #6b4220;font-size:1.15rem}
+[data-world="lesna"] .starstrip{background:var(--surface)}
+[data-world="lesna"] .sstar svg,[data-world="lesna"] .ms svg,[data-world="lesna"] .bstar svg{fill:#efe2c0;stroke:#a8845a}
+[data-world="lesna"] .sstar.on svg,[data-world="lesna"] .ms.on svg,[data-world="lesna"] .bstar.on svg{fill:#f5b52e;stroke:#8a5a00}
+[data-world="lesna"] .feedback{background:none}
+[data-world="lesna"] .bubble{border-radius:26px 26px 26px 6px;background:var(--surface)}
+[data-world="lesna"] #voice-banner{background:#fff3c4}
+/* ekran startowy */
+[data-world="lesna"] .logo{display:inline-block;background:var(--grain),var(--wood);border:4px solid #8a5a2b;border-radius:22px;padding:.12em .6em;box-shadow:0 6px 0 #6b4220,0 10px 16px rgba(92,58,28,.25);font-size:clamp(2rem,6.4vh,3.6rem);letter-spacing:.01em;position:relative}
+[data-world="lesna"] .logo::before,[data-world="lesna"] .logo::after{content:'';position:absolute;top:50%;width:.32em;height:.32em;margin-top:-.16em;border-radius:50%;background:radial-gradient(circle at 35% 30%,#d9d0c0,#6b5a48)}
+[data-world="lesna"] .logo::before{left:.2em}[data-world="lesna"] .logo::after{right:.2em}
+[data-world="lesna"] .hero .lead{background:rgba(255,250,240,.9);display:inline-block;padding:.15rem 1rem;border-radius:16px;border:2px dashed #b8863f;margin-top:.8rem}
+[data-world="lesna"] .mascot.big{width:clamp(90px,16vh,130px);height:clamp(90px,16vh,130px)}
+[data-world="lesna"] .start{overflow:hidden}
+[data-world="lesna"] .start .module-row{flex:none;padding:.9rem 1rem .5rem}
+[data-world="lesna"] .start .parade{order:1;flex:1 1 0;min-height:80px;display:flex;justify-content:center;align-items:center;overflow:hidden}
+[data-world="lesna"] .start .module-row{order:2}
+[data-world="lesna"] .start .parade img{height:100%;width:auto;max-width:94vw;object-fit:contain}
+[data-world="lesna"] .start .start-foot{order:3}
+[data-world="lesna"] .module-row{gap:clamp(1rem,3vw,2.4rem)}
+[data-world="lesna"] .module-card{background:var(--grain),linear-gradient(180deg,#fff7e2,#f8e6bd);border:4px solid #8a5a2b;border-radius:30px;min-height:clamp(150px,27vh,240px);width:min(38vw,320px);box-shadow:0 7px 0 #6b4220,0 12px 20px rgba(92,58,28,.22),var(--stitch);position:relative;color:var(--ink)}
+[data-world="lesna"] .module-card::before{content:'';position:absolute;top:-14px;left:50%;width:44px;height:22px;margin-left:-22px;border-radius:12px 12px 0 0;background:var(--wood-dark);border:3px solid #5c3a1c;border-bottom:0}
+[data-world="lesna"] .module-card.soon{background:var(--surface2)}
+[data-world="lesna"] .module-card:hover{transform:translateY(-3px) rotate(-.6deg)}
+[data-world="lesna"] .mtag{color:var(--ink-soft)}
+[data-world="lesna"] .start .resume{background:var(--grain),linear-gradient(180deg,#3f8650,#2f6b3a)}
+/* mapa poziomów: kręta ścieżka z drewnianych desek i tabliczki poziomów */
+[data-world="lesna"] .tiles-grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem .9rem;padding:1.6rem 0 1rem;position:relative}
+[data-world="lesna"] .tile-level{position:relative;background:var(--grain),linear-gradient(180deg,#fff7e2,#f8e6bd);border:3px solid #8a5a2b;border-radius:22px 22px 16px 16px;box-shadow:0 5px 0 #6b4220,0 9px 14px rgba(92,58,28,.18),var(--stitch);min-height:140px}
+[data-world="lesna"] .tile-level:nth-child(4n+2){transform:translateY(18px)}
+[data-world="lesna"] .tile-level:nth-child(4n){transform:translateY(-14px)}
+[data-world="lesna"] .tile-level::after{content:'';position:absolute;right:-.95rem;top:50%;width:.9rem;height:12px;margin-top:-6px;background:repeating-linear-gradient(90deg,#c79a56 0 5px,#8a5a2b 5px 7px);border-radius:3px;z-index:-1}
+[data-world="lesna"] .tile-level:last-child::after{display:none}
+[data-world="lesna"] .tile-level:hover{filter:brightness(1.04)}
+[data-world="lesna"] .lnum{position:relative;border-radius:50% 50% 46% 46%/38% 38% 62% 62%;background:linear-gradient(180deg,#3f8650,#2f6b3a);border:3px solid #f2b84b;min-width:2.6rem;height:2.6rem;line-height:2.1rem;box-shadow:0 2px 0 #1d4a28}
+[data-world="lesna"] .tile-level.done{background:var(--grain),linear-gradient(180deg,#fff4cf,#f6dc93);border-color:#c8921a;box-shadow:0 5px 0 #a87612,0 0 0 3px #f2b84b,0 9px 14px rgba(92,58,28,.18)}
+[data-world="lesna"] .tile-level.locked{background:repeating-linear-gradient(135deg,#dfe8c4 0 10px,#cfdcae 10px 20px);border:3px dashed #7e8f55;color:var(--ink-soft);box-shadow:none}
+[data-world="lesna"] .tile-level.locked .lnum{background:#7e8f55;border-color:#cfdcae}
+[data-world="lesna"] .tile-level.locked .ltitle,[data-world="lesna"] .tile-level.locked .lprev{color:#3b2412}
+[data-world="lesna"] .lbar{background:#ecd9ac}.lbar span{background:#2f6b3a}
+[data-world="lesna"] .group h2{display:inline-block;background:var(--grain),var(--wood);border:3px solid #8a5a2b;border-radius:14px;padding:.05em .8em;box-shadow:0 3px 0 #6b4220}
+/* nagrody */
+[data-world="lesna"] .done-screen .card{position:relative;padding-top:2.4rem}
+[data-world="lesna"] .done-screen .card::before{content:'';position:absolute;left:50%;top:-52px;width:96px;height:96px;margin-left:-48px;border-radius:50%;background:url(../art/lesna/lis.webp) center/cover;box-shadow:0 0 0 4px #f2b84b,0 0 0 8px #8a5a2b;animation:bounce .8s 2}
+[data-world="lesna"] .done-screen{padding-top:56px}
+[data-world="lesna"] .item-art{filter:drop-shadow(0 3px 2px rgba(92,58,28,.25))}
+[data-world="lesna"] .coll.got{border-color:#c8921a;box-shadow:0 0 0 2px #f2b84b,var(--shadow-s)}
+/* zabawy */
+[data-world="lesna"] .game-field{border:4px solid #8a5a2b;border-radius:var(--r-l);background:radial-gradient(ellipse at 50% 0,rgba(255,246,200,.9),transparent 70%),linear-gradient(180deg,#fdf0cf 0 62%,#d7e5a9 62% 100%);box-shadow:0 5px 0 #6b4220,var(--shadow-s)}
+[data-world="lesna"] .gitem{background:var(--grain),linear-gradient(180deg,#fbeccb,#f1d49a);border-color:#a8742e;box-shadow:0 4px 0 #a8742e,var(--shadow-s)}
+[data-world="lesna"] .g-sciezka .platform{background:var(--grain),var(--plat,#d9b27a);border-color:#8a5a2b;border-radius:30px;box-shadow:0 5px 0 #6b4220}
+[data-world="lesna"] .balloon{border-color:#8a5a2b;box-shadow:var(--shadow-s)}
+[data-world="lesna"] .world-choice.sel{border-color:var(--good)}
+[data-world="lesna"] .start .micon{width:40%;max-width:clamp(60px,11vh,100px)}
+[data-world="lesna"] .start .module-card{min-height:0;height:clamp(130px,25vh,210px);justify-content:center;padding:.6rem .8rem}
+[data-world="lesna"] .start .hero{margin:.4rem 0 .2rem}
+[data-world="lesna"] .start .mtitle{font-size:clamp(1.4rem,3.6vh,2rem)}

@@ -7,17 +7,17 @@ const mem = () => { const m = new Map(); return { getItem: (k) => m.get(k) ?? nu
 
 test('parseState: śmieci -> stan domyślny', () => {
   for (const raw of [null, '', '{', 'null', '[]', '"x"', '{"v":999}', '{"v":1,"levels":5}']) assert.deepEqual(P.parseState(raw).levels, {});
-  assert.equal(P.parseState('{broken').world, 'kosmos');
+  assert.equal(P.parseState('{broken').world, 'lesna');
 });
 test('parseState: poprawia pojedyncze pola', () => {
   const s = P.parseState({ v: 1, world: 'nieznany', rate: 99, narrator: 'tak', levels: { L01: { tasks: { 'L01-1': 3, 'L01-2': 7, 'L01-3': 'x' }, done: true } }, misses: { m: 2, bad: -1 } });
-  assert.equal(s.world, 'kosmos'); assert.equal(s.rate, 1.2); assert.equal(s.narrator, true);
+  assert.equal(s.world, 'lesna'); assert.equal(s.rate, 1.2); assert.equal(s.narrator, true);
   assert.deepEqual(s.levels.L01.tasks, { 'L01-1': 3 }); assert.deepEqual(s.misses, { m: 2 });
 });
 test('zapis i odczyt z (sztucznego) localStorage; klucz z wersją', () => {
   const st = mem(); const s = P.defaultState(); s.world = 'wyspy'; assert.ok(P.saveState(st, s));
   assert.ok(P.STORAGE_KEY.includes(':v1')); assert.equal(P.loadState(st).world, 'wyspy');
-  st.setItem(P.STORAGE_KEY, '%%%'); assert.equal(P.loadState(st).world, 'kosmos');
+  st.setItem(P.STORAGE_KEY, '%%%'); assert.equal(P.loadState(st).world, 'lesna');
 });
 test('zapis nie wywala się, gdy storage rzuca wyjątek', () => {
   const bad = { getItem() { throw new Error('x'); }, setItem() { throw new Error('x'); }, removeItem() { throw new Error('x'); } };

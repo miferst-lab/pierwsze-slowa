@@ -19,7 +19,7 @@ const ctx = {
   state, narrator, onWorld: null, showBanner: true,
   readingLevels: LEVELS, mathLevels: MATH_LEVELS, allLevels: [...LEVELS, ...MATH_LEVELS],
   save: () => P.saveState(globalThis.localStorage, state),
-  world: () => WORLDS[state.world] ?? WORLDS.kosmos,
+  world: () => WORLDS[state.world] ?? WORLDS.lesna,
   mascot: (i) => ctx.world().mascots[i % ctx.world().mascots.length],
   resetAll() { Object.assign(state, P.resetState(globalThis.localStorage)); applyTheme(); applyVoice(); narrator.refresh?.(); },
   go: (name) => go(name),
@@ -81,15 +81,16 @@ function start() {
   clear(root);
   const cards = MODULES.map((m) => h('button', { class: 'module-card' + (m.available ? '' : ' soon'), type: 'button', 'data-module': m.id, onclick: () => openModule(m) },
     h('span', { class: 'micon', html: m.icon }), h('span', { class: 'mtitle' }, m.title), h('span', { class: 'mtag' }, m.available ? m.tagline : 'Wkrótce')));
-  const m0 = ctx.mascot(0);
-  root.append(h('div', { class: 'start' }, ctx.topbar({}),
+  const m0 = ctx.mascot(0), w0 = ctx.world();
+  root.append(h('div', { class: 'start' + (w0.parade ? ' has-parade' : '') }, ctx.topbar({}),
     h('div', { class: 'hero' }, h('div', { class: 'mascot big', 'data-mascot': 0, html: m0.svg, 'aria-hidden': 'true' }),
       h('div', {}, h('h1', { class: 'logo' }, 'Pierwsze Słowa'), h('p', { class: 'lead on-bg' }, `Cześć Piotrku! Co dziś robimy?`))),
     resumeBtn(),
     h('div', { class: 'module-row' }, cards),
     h('div', { class: 'start-foot' },
       h('button', { class: 'btn', type: 'button', onclick: () => go('collection') }, h('span', { html: STAR, class: 'ico star-ico', 'aria-hidden': 'true' }), `Moje skarby`),
-      h('button', { class: 'btn ghost', type: 'button', onclick: () => go('parent') }, 'Dla rodzica'))));
+      h('button', { class: 'btn ghost', type: 'button', onclick: () => go('parent') }, 'Dla rodzica')),
+    w0.parade ? h('div', { class: 'parade', 'aria-hidden': 'true', html: w0.parade }) : null));
   voiceBanner();
 }
 function resumeBtn() {
@@ -111,8 +112,13 @@ function collection() {
   const got = P.itemsUnlockedCombined(state, LEVELS, ctx.allLevels);
   const grid = h('div', { class: 'collection' }, w.items.map((it, i) => h('figure', { class: 'coll' + (i < got ? ' got' : ' locked'), 'aria-label': i < got ? it.name : 'Jeszcze nie zdobyty skarb' }, h('div', { class: 'item-art', html: it.svg }), h('figcaption', {}, i < got ? it.name : 'Ukończ kolejne poziomy'))));
   const crew = h('div', { class: 'crew' }, w.mascots.map((m) => h('figure', {}, h('div', { class: 'item-art', html: m.svg }), h('figcaption', {}, h('b', {}, m.name), h('br'), m.bio))));
+  const doneAll = (levels) => P.completedCount(state, levels) >= levels.length;
+  const badges = w.badges ? h('div', { class: 'badges' }, w.badges.map((b) => { const on = doneAll(b.module === 'math' ? MATH_LEVELS : LEVELS);
+    return h('figure', { class: 'badge' + (on ? ' got' : ' locked'), 'aria-label': on ? b.name : `${b.name} – jeszcze nie zdobyta` }, h('div', { class: 'item-art', html: b.svg }), h('figcaption', {}, h('b', {}, b.name), h('br'), on ? 'Zdobyta!' : b.hint)); })) : null;
   root.append(h('div', { class: 'scroll-screen' }, ctx.topbar({ back: 'Menu', onBack: start, title: 'Moje skarby' }),
-    h('p', { class: 'lead on-bg' }, `${w.name}: zebrane skarby ${got} z ${w.items.length}`), grid, h('h2', { class: 'on-bg' }, 'Twoja ekipa'), crew));
+    h('p', { class: 'lead on-bg' }, `${w.name}: zebrane skarby ${got} z ${w.items.length}`), grid,
+    badges ? h('h2', { class: 'on-bg' }, 'Odznaki') : null, badges,
+    h('h2', { class: 'on-bg' }, 'Twoja ekipa'), w.crewArt ? h('div', { class: 'crew-art', 'aria-hidden': 'true', html: w.crewArt }) : null, crew));
 }
 function go(name) {
   narrator.cancel(); ctx.showBanner = false; voiceBanner();

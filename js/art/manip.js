@@ -8,6 +8,11 @@ const itemInner = (worldId, name) => innerOf(WORLDS[worldId].items.find((i) => i
 
 /** Przedmioty do liczenia w każdym świecie (rzeczownik z odmianą dla lektora). */
 export const MANIP = {
+  lesna: [
+    { key: 'lisc', noun: { one: 'liść', few: 'liście', many: 'liści', gender: 'm' }, inner: itemInner('lesna', 'Liść dębu') },
+    { key: 'gwiazda', noun: { one: 'gwiazda', few: 'gwiazdy', many: 'gwiazd', gender: 'f' }, inner: itemInner('lesna', 'Złota gwiazdka') },
+    { key: 'motyl', noun: { one: 'motyl', few: 'motyle', many: 'motyli', gender: 'm' }, inner: itemInner('dzungla', 'Motyl') },
+  ],
   kosmos: [
     { key: 'gwiazda', noun: { one: 'gwiazda', few: 'gwiazdy', many: 'gwiazd', gender: 'f' }, inner: itemInner('kosmos', 'Gwiazdka') },
     { key: 'planeta', noun: { one: 'planeta', few: 'planety', many: 'planet', gender: 'f' }, inner: itemInner('kosmos', 'Niebieska planeta') },

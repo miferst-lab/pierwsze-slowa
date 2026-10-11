@@ -61,7 +61,7 @@ export function collectSpoken() {
   for (const w of nounForms) addNew(w, 'word');
   HOUR_ORDINALS.filter(Boolean).forEach((w) => addNew(w, 'number'));
   for (const l of MATH_LEVELS) for (const t of l.tasks) if (t.type === 'problem') problems.add(t.text);
-  for (const l of MATH_LEVELS) for (const t of l.tasks) for (const w of ['kosmos', 'dzungla', 'wyspy']) {
+  for (const l of MATH_LEVELS) for (const t of l.tasks) for (const w of ['lesna', 'kosmos', 'dzungla', 'wyspy']) {
     for (const s of taskStrings(t, w)) addNew(s, problems.has(s) ? 'problem' : numbers.has(s) || nounForms.has(s) ? 'word' : 'instruction');
   }
   GAME_PHRASES.forEach((p) => addNew(p, 'instruction'));

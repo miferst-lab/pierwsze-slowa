@@ -16,6 +16,7 @@ const speakParts = (parts) => parts.map((p) => (typeof p === 'string' ? p : reso
 
 /** Skórki światów: kształt „platform” i balonów. */
 const SKIN = {
+  lesna: { platform: 'kłoda', balloon: ['#f2b84b', '#9bc47a', '#f0a07a', '#f7d9a0'], plat: ['#d9b27a', '#a9c98a', '#e8c48a'] },
   kosmos: { platform: 'planeta', balloon: ['#b9a8ff', '#8fd3f4', '#ffd98a', '#ffb3d1'], plat: ['#c9b8ff', '#9fd0f5', '#ffd6a0'] },
   dzungla: { platform: 'kłoda', balloon: ['#ffb870', '#9fdc9a', '#ffd86b', '#f59fb5'], plat: ['#c9a06b', '#a9d18e', '#d9b77a'] },
   wyspy: { platform: 'liść', balloon: ['#7fd6e8', '#ffcf7a', '#ff9fb2', '#a8e6a1'], plat: ['#8fd9a3', '#a8e6c0', '#7fcfa0'] },

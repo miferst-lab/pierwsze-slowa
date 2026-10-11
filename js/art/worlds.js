@@ -1,6 +1,7 @@
-// Trzy światy = tylko motyw (kolory, tło, maskotki, skarby). Ten sam program nauki.
+// Cztery światy (Leśna Wyprawa w js/art/lesna.js) = tylko motyw (kolory, tło, maskotki, skarby). Ten sam program nauki.
 // Wszystkie postacie są ORYGINALNE (własne imiona i projekty), rysowane w SVG.
 import { c, e, r, p, ln, eye, smile } from './words.js';
+import { lesna } from './lesna.js';
 
 const wrap = (inner) => `<svg viewBox='0 0 100 100' aria-hidden='true' focusable='false'>${inner}</svg>`;
 const star = (col, x = 0, y = 0, s = 1) => `<polygon transform='translate(${x},${y}) scale(${s})' points='50,10 61,38 92,38 67,56 77,86 50,68 23,86 33,56 8,38 39,38' fill='${col}'/>`;
@@ -89,6 +90,6 @@ const sea = {
   ],
 };
 
-export const WORLDS = { kosmos, dzungla: jungle, wyspy: sea };
+export const WORLDS = { lesna, kosmos, dzungla: jungle, wyspy: sea };
 export const WORLD_IDS = Object.keys(WORLDS);
-export const DEFAULT_WORLD = 'kosmos';
+export const DEFAULT_WORLD = 'lesna';

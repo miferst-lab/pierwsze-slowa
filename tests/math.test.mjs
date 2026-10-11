@@ -83,7 +83,7 @@ test('zakresy programu: 10 → 20 → 100, kolejność nauki', () => {
   for (const { t } of all.filter(({ l, t }) => l.num <= 10 && t.type === 'count')) assert.ok(t.n <= 10, t.id);
 });
 test('wypowiedzi: każda część się rozwija, bez cyfr, w każdym świecie', () => {
-  for (const { t } of all) for (const w of ['kosmos', 'dzungla', 'wyspy']) for (const s of taskStrings(t, w)) assert.ok(typeof s === 'string' && s && !/\d/.test(s), t.id + ' ' + s);
+  for (const { t } of all) for (const w of ['lesna', 'kosmos', 'dzungla', 'wyspy']) for (const s of taskStrings(t, w)) assert.ok(typeof s === 'string' && s && !/\d/.test(s), t.id + ' ' + s);
   assert.deepEqual(resolvePart({ count: 5, noun: 'jablko' }), ['pięć', 'jabłek']);
   assert.deepEqual(resolvePart({ count: 2 }, 'kosmos', 0), ['dwie', 'gwiazdy']);
   assert.deepEqual(resolvePart({ count: 2 }, 'dzungla', 0), ['dwa', 'banany']);
