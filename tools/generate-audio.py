@@ -30,12 +30,12 @@ ROOT, AUDIO = g.ROOT, g.AUDIO
 VOICE = 'pl-PL-ZofiaNeural'
 # styl SSML <prosody>; głoski/sylaby -25% i głośno; zdania -8%; pochwały pitch +6%, rate -3%
 STYLE = {
-    'sound': dict(rate='-25%', volume='+100%'), 'syllable': dict(rate='-25%', volume='loud'),
+    'sound': dict(rate='-25%', volume='+100%'), 'syllable': dict(rate='-25%', volume='loud'), 'drill': dict(rate='-30%', volume='loud'),
     'word': dict(rate='-8%'), 'sentence': dict(rate='-8%'), 'instruction': dict(rate='-8%'), 'parent': dict(rate='-8%'),
     'number': dict(rate='-5%'), 'problem': dict(rate='-8%'),
     'praise': dict(rate='-3%', pitch='+6%'), 'finish': dict(rate='-3%', pitch='+6%'), 'retry': dict(rate='-5%', pitch='+2%'),
 }
-PHON = {kind for kind in ('sound', 'syllable')}
+PHON = {kind for kind in ('sound', 'syllable', 'drill')}
 # Głoski przez <phoneme alphabet='ipa'> (Azure oddaje wtedy samą głoskę, bez samogłoski nośnej).
 IPA = {'a': 'a', 'o': 'ɔ', 'e': 'ɛ', 'u': 'u', 'i': 'i', 'y': 'ɨ', 'ą': 'ɔ̃', 'ę': 'ɛ̃', 'ó': 'u',
        'm': 'm', 'n': 'n', 'ń': 'ɲ', 'l': 'l', 'ł': 'w', 'r': 'r', 'j': 'j', 'f': 'f', 's': 's', 'ś': 'ɕ', 'sz': 'ʂ', 'ch': 'x', 'h': 'x',

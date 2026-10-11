@@ -197,6 +197,61 @@
    "dur": 0.74,
    "bytes": 4508
   },
+  "t-ac": {
+   "kind": "drill",
+   "dur": 0.89,
+   "bytes": 5372
+  },
+  "t-aca": {
+   "kind": "drill",
+   "dur": 0.82,
+   "bytes": 4940
+  },
+  "t-acia": {
+   "kind": "drill",
+   "dur": 0.84,
+   "bytes": 5084
+  },
+  "t-acz": {
+   "kind": "drill",
+   "dur": 0.65,
+   "bytes": 3932
+  },
+  "t-acza": {
+   "kind": "drill",
+   "dur": 0.79,
+   "bytes": 4796
+  },
+  "t-adu17a": {
+   "kind": "drill",
+   "dur": 0.62,
+   "bytes": 3788
+  },
+  "t-adu17ca": {
+   "kind": "drill",
+   "dur": 0.82,
+   "bytes": 4940
+  },
+  "t-adu17ce": {
+   "kind": "drill",
+   "dur": 0.82,
+   "bytes": 4940
+  },
+  "t-adz": {
+   "kind": "drill",
+   "dur": 0.74,
+   "bytes": 4508
+  },
+  "t-adza": {
+   "kind": "drill",
+   "dur": 0.84,
+   "bytes": 5084
+  },
+  "t-adzia": {
+   "kind": "drill",
+   "dur": 0.82,
+   "bytes": 4940
+  },
   "t-ala_ma_trzy_jabu142kau2e_dostau142a_jeszcze_dwau2e_ile_ma_terazu3f": {
    "kind": "problem",
    "dur": 5.69,
@@ -207,15 +262,75 @@
    "dur": 6.05,
    "bytes": 36332
   },
+  "t-ar": {
+   "kind": "drill",
+   "dur": 0.79,
+   "bytes": 4796
+  },
+  "t-asia": {
+   "kind": "drill",
+   "dur": 0.86,
+   "bytes": 5228
+  },
+  "t-asz": {
+   "kind": "drill",
+   "dur": 0.65,
+   "bytes": 3932
+  },
+  "t-asza": {
+   "kind": "drill",
+   "dur": 0.79,
+   "bytes": 4796
+  },
+  "t-au107": {
+   "kind": "drill",
+   "dur": 0.65,
+   "bytes": 3932
+  },
+  "t-au15b": {
+   "kind": "drill",
+   "dur": 0.65,
+   "bytes": 3932
+  },
+  "t-au17a": {
+   "kind": "drill",
+   "dur": 0.65,
+   "bytes": 3932
+  },
+  "t-au17c": {
+   "kind": "drill",
+   "dur": 0.65,
+   "bytes": 3932
+  },
+  "t-au17ca": {
+   "kind": "drill",
+   "dur": 0.79,
+   "bytes": 4796
+  },
+  "t-azia": {
+   "kind": "drill",
+   "dur": 0.84,
+   "bytes": 5084
+  },
   "t-ba": {
    "kind": "syllable",
    "dur": 0.6,
    "bytes": 3644
   },
+  "t-babcia": {
+   "kind": "word",
+   "dur": 0.79,
+   "bytes": 4796
+  },
   "t-balon": {
    "kind": "word",
    "dur": 0.72,
    "bytes": 4364
+  },
+  "t-baloniku3a_nadmij_policzki_i_powoli_wypuu15bu107_powietrzeu2e": {
+   "kind": "instruction",
+   "dur": 3.84,
+   "bytes": 23084
   },
   "t-balonuf3w": {
    "kind": "word",
@@ -277,6 +392,11 @@
    "dur": 1.3,
    "bytes": 7820
   },
+  "t-bre": {
+   "kind": "drill",
+   "dur": 1.13,
+   "bytes": 6812
+  },
   "t-bu": {
    "kind": "syllable",
    "dur": 0.58,
@@ -286,6 +406,21 @@
    "kind": "word",
    "dur": 0.72,
    "bytes": 4364
+  },
+  "t-ca": {
+   "kind": "drill",
+   "dur": 0.84,
+   "bytes": 5084
+  },
+  "t-ce": {
+   "kind": "drill",
+   "dur": 0.89,
+   "bytes": 5372
+  },
+  "t-cebula": {
+   "kind": "word",
+   "dur": 0.79,
+   "bytes": 4796
   },
   "t-centymetr": {
    "kind": "word",
@@ -312,10 +447,30 @@
    "dur": 0.7,
    "bytes": 4220
   },
+  "t-chodziu107": {
+   "kind": "word",
+   "dur": 0.74,
+   "bytes": 4508
+  },
+  "t-chodzu119": {
+   "kind": "word",
+   "dur": 0.67,
+   "bytes": 4076
+  },
   "t-chowa": {
    "kind": "word",
    "dur": 0.65,
    "bytes": 3932
+  },
+  "t-ci": {
+   "kind": "drill",
+   "dur": 0.58,
+   "bytes": 3500
+  },
+  "t-cia": {
+   "kind": "drill",
+   "dur": 1.15,
+   "bytes": 6956
   },
   "t-ciastek": {
    "kind": "word",
@@ -332,10 +487,85 @@
    "dur": 0.79,
    "bytes": 4796
   },
+  "t-ciasto": {
+   "kind": "word",
+   "dur": 0.74,
+   "bytes": 4508
+  },
+  "t-cie": {
+   "kind": "drill",
+   "dur": 0.6,
+   "bytes": 3644
+  },
+  "t-cieu144": {
+   "kind": "word",
+   "dur": 0.55,
+   "bytes": 3356
+  },
+  "t-cio": {
+   "kind": "drill",
+   "dur": 1.2,
+   "bytes": 7244
+  },
+  "t-ciocia": {
+   "kind": "word",
+   "dur": 0.72,
+   "bytes": 4364
+  },
+  "t-ciocia_piecze_ciastou2e": {
+   "kind": "sentence",
+   "dur": 1.51,
+   "bytes": 9116
+  },
+  "t-ciu": {
+   "kind": "drill",
+   "dur": 1.15,
+   "bytes": 6956
+  },
+  "t-co": {
+   "kind": "drill",
+   "dur": 0.79,
+   "bytes": 4796
+  },
   "t-co_bu119dzie_daleju3f": {
    "kind": "instruction",
    "dur": 1.18,
    "bytes": 7100
+  },
+  "t-cu": {
+   "kind": "drill",
+   "dur": 0.82,
+   "bytes": 4940
+  },
+  "t-cukier": {
+   "kind": "word",
+   "dur": 0.7,
+   "bytes": 4220
+  },
+  "t-cy": {
+   "kind": "drill",
+   "dur": 0.62,
+   "bytes": 3788
+  },
+  "t-cyrk": {
+   "kind": "word",
+   "dur": 0.65,
+   "bytes": 3932
+  },
+  "t-cytryna": {
+   "kind": "word",
+   "dur": 0.91,
+   "bytes": 5516
+  },
+  "t-cytryna_jest_kwau15bnau2e": {
+   "kind": "sentence",
+   "dur": 1.66,
+   "bytes": 9980
+  },
+  "t-cza": {
+   "kind": "drill",
+   "dur": 0.58,
+   "bytes": 3500
   },
   "t-czapka": {
    "kind": "word",
@@ -352,10 +582,40 @@
    "dur": 0.77,
    "bytes": 4652
   },
+  "t-czarna_kaczka_niesie_kluczu2e": {
+   "kind": "sentence",
+   "dur": 1.97,
+   "bytes": 11852
+  },
+  "t-cze": {
+   "kind": "drill",
+   "dur": 1.13,
+   "bytes": 6812
+  },
+  "t-czekolada": {
+   "kind": "word",
+   "dur": 0.96,
+   "bytes": 5804
+  },
+  "t-czerwona_czapka_leu17cy_na_krzeu15bleu2e": {
+   "kind": "sentence",
+   "dur": 2.3,
+   "bytes": 13868
+  },
+  "t-czerwony": {
+   "kind": "word",
+   "dur": 0.91,
+   "bytes": 5516
+  },
   "t-czeu15bu107_piotrkuu21_zaczynamy_czytau107u2e": {
    "kind": "parent",
    "dur": 3.29,
    "bytes": 19772
+  },
+  "t-czo": {
+   "kind": "drill",
+   "dur": 0.55,
+   "bytes": 3356
   },
   "t-czterdzieu15bci": {
    "kind": "number",
@@ -372,10 +632,25 @@
    "dur": 0.72,
    "bytes": 4364
   },
+  "t-czu": {
+   "kind": "drill",
+   "dur": 0.55,
+   "bytes": 3356
+  },
   "t-czwarta": {
    "kind": "number",
    "dur": 0.79,
    "bytes": 4796
+  },
+  "t-czy": {
+   "kind": "drill",
+   "dur": 0.55,
+   "bytes": 3356
+  },
+  "t-czytanie": {
+   "kind": "word",
+   "dur": 0.82,
+   "bytes": 4940
   },
   "t-da": {
    "kind": "syllable",
@@ -386,6 +661,11 @@
    "kind": "syllable",
    "dur": 0.62,
    "bytes": 3788
+  },
+  "t-dmuchaj_na_goru105cu105_zupu119u2c_potem_na_zimne_du142onieu2e": {
+   "kind": "instruction",
+   "dur": 3.29,
+   "bytes": 19772
   },
   "t-do": {
    "kind": "syllable",
@@ -442,10 +722,70 @@
    "dur": 1.18,
    "bytes": 7100
   },
+  "t-dro": {
+   "kind": "drill",
+   "dur": 1.25,
+   "bytes": 7532
+  },
+  "t-drou17cdu17ce": {
+   "kind": "word",
+   "dur": 0.79,
+   "bytes": 4796
+  },
   "t-druga": {
    "kind": "number",
    "dur": 0.67,
    "bytes": 4076
+  },
+  "t-du17awiu119k": {
+   "kind": "word",
+   "dur": 0.72,
+   "bytes": 4364
+  },
+  "t-du17ca": {
+   "kind": "drill",
+   "dur": 0.67,
+   "bytes": 4076
+  },
+  "t-du17ce": {
+   "kind": "drill",
+   "dur": 0.65,
+   "bytes": 3932
+  },
+  "t-du17cem": {
+   "kind": "word",
+   "dur": 0.58,
+   "bytes": 3500
+  },
+  "t-du17cem_jest_bardzo_su142odkiu2e": {
+   "kind": "sentence",
+   "dur": 1.8,
+   "bytes": 10844
+  },
+  "t-du17cinsy": {
+   "kind": "word",
+   "dur": 0.79,
+   "bytes": 4796
+  },
+  "t-du17co": {
+   "kind": "drill",
+   "dur": 0.62,
+   "bytes": 3788
+  },
+  "t-du17cu": {
+   "kind": "drill",
+   "dur": 0.6,
+   "bytes": 3644
+  },
+  "t-du17cungla": {
+   "kind": "word",
+   "dur": 0.79,
+   "bytes": 4796
+  },
+  "t-du17cy": {
+   "kind": "drill",
+   "dur": 0.65,
+   "bytes": 3932
   },
   "t-dwa": {
    "kind": "number",
@@ -477,6 +817,51 @@
    "dur": 1.06,
    "bytes": 6380
   },
+  "t-dza": {
+   "kind": "drill",
+   "dur": 1.1,
+   "bytes": 6668
+  },
+  "t-dzban": {
+   "kind": "word",
+   "dur": 0.65,
+   "bytes": 3932
+  },
+  "t-dze": {
+   "kind": "drill",
+   "dur": 1.1,
+   "bytes": 6668
+  },
+  "t-dzi": {
+   "kind": "drill",
+   "dur": 0.58,
+   "bytes": 3500
+  },
+  "t-dzia": {
+   "kind": "drill",
+   "dur": 0.67,
+   "bytes": 4076
+  },
+  "t-dziadek": {
+   "kind": "word",
+   "dur": 0.82,
+   "bytes": 4940
+  },
+  "t-dzie": {
+   "kind": "drill",
+   "dur": 0.62,
+   "bytes": 3788
+  },
+  "t-dziecko": {
+   "kind": "word",
+   "dur": 0.79,
+   "bytes": 4796
+  },
+  "t-dziecko_widzi_u142uf3du17au2e": {
+   "kind": "sentence",
+   "dur": 1.42,
+   "bytes": 8540
+  },
   "t-dziesiu105ta": {
    "kind": "number",
    "dur": 0.91,
@@ -486,6 +871,16 @@
    "kind": "number",
    "dur": 0.82,
    "bytes": 4940
+  },
+  "t-dzieu144": {
+   "kind": "word",
+   "dur": 0.58,
+   "bytes": 3500
+  },
+  "t-dzieu144_jest_piu119knyu2e": {
+   "kind": "sentence",
+   "dur": 1.42,
+   "bytes": 8540
   },
   "t-dziewiu105ta": {
    "kind": "number",
@@ -507,6 +902,96 @@
    "dur": 1.08,
    "bytes": 6524
   },
+  "t-dzio": {
+   "kind": "drill",
+   "dur": 0.62,
+   "bytes": 3788
+  },
+  "t-dziu": {
+   "kind": "drill",
+   "dur": 0.58,
+   "bytes": 3500
+  },
+  "t-dzo": {
+   "kind": "drill",
+   "dur": 0.86,
+   "bytes": 5228
+  },
+  "t-dzu": {
+   "kind": "drill",
+   "dur": 1.49,
+   "bytes": 8972
+  },
+  "t-dzwon": {
+   "kind": "word",
+   "dur": 0.65,
+   "bytes": 3932
+  },
+  "t-dzwonek": {
+   "kind": "word",
+   "dur": 0.86,
+   "bytes": 5228
+  },
+  "t-dzwonek_dzwoni_gu142ou15bnou2e": {
+   "kind": "sentence",
+   "dur": 1.75,
+   "bytes": 10556
+  },
+  "t-dzy": {
+   "kind": "drill",
+   "dur": 0.65,
+   "bytes": 3932
+  },
+  "t-ec": {
+   "kind": "drill",
+   "dur": 0.84,
+   "bytes": 5084
+  },
+  "t-ecz": {
+   "kind": "drill",
+   "dur": 0.62,
+   "bytes": 3788
+  },
+  "t-edu17a": {
+   "kind": "drill",
+   "dur": 0.6,
+   "bytes": 3644
+  },
+  "t-edz": {
+   "kind": "drill",
+   "dur": 0.62,
+   "bytes": 3788
+  },
+  "t-er": {
+   "kind": "drill",
+   "dur": 0.5,
+   "bytes": 3068
+  },
+  "t-esz": {
+   "kind": "drill",
+   "dur": 0.58,
+   "bytes": 3500
+  },
+  "t-eu107": {
+   "kind": "drill",
+   "dur": 0.6,
+   "bytes": 3644
+  },
+  "t-eu15b": {
+   "kind": "drill",
+   "dur": 0.62,
+   "bytes": 3788
+  },
+  "t-eu17a": {
+   "kind": "drill",
+   "dur": 0.62,
+   "bytes": 3788
+  },
+  "t-eu17c": {
+   "kind": "drill",
+   "dur": 0.58,
+   "bytes": 3500
+  },
   "t-gdzie_jest_mnieju3f": {
    "kind": "instruction",
    "dur": 1.15,
@@ -516,6 +1001,11 @@
    "kind": "instruction",
    "dur": 1.32,
    "bytes": 7964
+  },
+  "t-gou15bu107": {
+   "kind": "word",
+   "dur": 0.72,
+   "bytes": 4364
   },
   "t-grosz": {
    "kind": "word",
@@ -531,6 +1021,26 @@
    "kind": "word",
    "dur": 0.77,
    "bytes": 4652
+  },
+  "t-gruszka": {
+   "kind": "word",
+   "dur": 0.79,
+   "bytes": 4796
+  },
+  "t-gry": {
+   "kind": "drill",
+   "dur": 0.65,
+   "bytes": 3932
+  },
+  "t-gu105sienica": {
+   "kind": "word",
+   "dur": 1.08,
+   "bytes": 6524
+  },
+  "t-gu119u15b": {
+   "kind": "word",
+   "dur": 0.62,
+   "bytes": 3788
   },
   "t-gwiazd": {
    "kind": "word",
@@ -551,6 +1061,11 @@
    "kind": "word",
    "dur": 0.94,
    "bytes": 5660
+  },
+  "t-gwuf3u17adu17a": {
+   "kind": "word",
+   "dur": 0.77,
+   "bytes": 4652
   },
   "t-hurrau21_poziom_ukou144czonyu21": {
    "kind": "finish",
@@ -682,6 +1197,11 @@
    "dur": 0.67,
    "bytes": 4076
   },
+  "t-jedzenie": {
+   "kind": "word",
+   "dur": 0.84,
+   "bytes": 5084
+  },
   "t-jedzie": {
    "kind": "word",
    "dur": 0.67,
@@ -727,10 +1247,40 @@
    "dur": 2.18,
    "bytes": 13148
   },
+  "t-jeu17c": {
+   "kind": "word",
+   "dur": 0.55,
+   "bytes": 3356
+  },
+  "t-jeu17c_u17cuje_u17cou142u105du17au2e": {
+   "kind": "sentence",
+   "dur": 1.42,
+   "bytes": 8540
+  },
+  "t-jeu17cyk": {
+   "kind": "word",
+   "dur": 0.79,
+   "bytes": 4796
+  },
+  "t-jezioro": {
+   "kind": "word",
+   "dur": 0.77,
+   "bytes": 4652
+  },
   "t-ka": {
    "kind": "syllable",
    "dur": 0.72,
    "bytes": 4364
+  },
+  "t-kaczka": {
+   "kind": "word",
+   "dur": 0.74,
+   "bytes": 4508
+  },
+  "t-kapelusz": {
+   "kind": "word",
+   "dur": 0.89,
+   "bytes": 5372
   },
   "t-kasia_ma_dziewiu119u107_ciasteku2e_dostau142a_jeszcze_osiemu2e_ile_ma_terazu3f": {
    "kind": "problem",
@@ -742,6 +1292,16 @@
    "dur": 7.08,
    "bytes": 42524
   },
+  "t-kasza": {
+   "kind": "word",
+   "dur": 0.7,
+   "bytes": 4220
+  },
+  "t-kau142uu17ca": {
+   "kind": "word",
+   "dur": 0.79,
+   "bytes": 4796
+  },
   "t-ke": {
    "kind": "syllable",
    "dur": 0.82,
@@ -752,10 +1312,35 @@
    "dur": 0.77,
    "bytes": 4652
   },
+  "t-klucz": {
+   "kind": "word",
+   "dur": 0.6,
+   "bytes": 3644
+  },
+  "t-kluczyk": {
+   "kind": "word",
+   "dur": 0.77,
+   "bytes": 4652
+  },
   "t-ko": {
    "kind": "syllable",
    "dur": 0.48,
    "bytes": 2924
+  },
+  "t-koc": {
+   "kind": "word",
+   "dur": 0.58,
+   "bytes": 3500
+  },
+  "t-kociu119": {
+   "kind": "word",
+   "dur": 0.67,
+   "bytes": 4076
+  },
+  "t-kocyk": {
+   "kind": "word",
+   "dur": 0.72,
+   "bytes": 4364
   },
   "t-kokos": {
    "kind": "word",
@@ -771,6 +1356,21 @@
    "kind": "word",
    "dur": 0.84,
    "bytes": 5084
+  },
+  "t-konikiu3a_klu105skaj_ju119zykiem_jak_koniku2e": {
+   "kind": "instruction",
+   "dur": 2.71,
+   "bytes": 16316
+  },
+  "t-kosz": {
+   "kind": "word",
+   "dur": 0.53,
+   "bytes": 3212
+  },
+  "t-koszyk": {
+   "kind": "word",
+   "dur": 0.72,
+   "bytes": 4364
   },
   "t-kot": {
    "kind": "word",
@@ -807,6 +1407,26 @@
    "dur": 0.6,
    "bytes": 3644
   },
+  "t-kou15bu107": {
+   "kind": "word",
+   "dur": 0.65,
+   "bytes": 3932
+  },
+  "t-koziou142ek": {
+   "kind": "word",
+   "dur": 0.91,
+   "bytes": 5516
+  },
+  "t-koziou142ek_skacze_nad_jezioremu2e": {
+   "kind": "sentence",
+   "dur": 2.06,
+   "bytes": 12428
+  },
+  "t-kru": {
+   "kind": "drill",
+   "dur": 0.55,
+   "bytes": 3356
+  },
   "t-ktuf3ra_jest_godzinau3f": {
    "kind": "instruction",
    "dur": 1.32,
@@ -841,6 +1461,11 @@
    "kind": "sentence",
    "dur": 1.13,
    "bytes": 6812
+  },
+  "t-kurtka": {
+   "kind": "word",
+   "dur": 0.77,
+   "bytes": 4652
   },
   "t-kwadrat": {
    "kind": "instruction",
@@ -882,6 +1507,11 @@
    "dur": 0.72,
    "bytes": 4364
   },
+  "t-lekarz": {
+   "kind": "word",
+   "dur": 0.7,
+   "bytes": 4220
+  },
   "t-lesie": {
    "kind": "word",
    "dur": 0.7,
@@ -891,6 +1521,11 @@
    "kind": "syllable",
    "dur": 0.55,
    "bytes": 3356
+  },
+  "t-liczymy_zu119byu3a_dotknij_ju119zykiem_kau17cdego_zu119bau2e": {
+   "kind": "instruction",
+   "dur": 3.34,
+   "bytes": 20060
   },
   "t-lis": {
    "kind": "word",
@@ -962,6 +1597,11 @@
    "dur": 0.58,
    "bytes": 3500
   },
+  "t-malarzu3a_pomaluj_ju119zykiem_niebo_w_buziu2e": {
+   "kind": "instruction",
+   "dur": 2.88,
+   "bytes": 17324
+  },
   "t-mama": {
    "kind": "word",
    "dur": 0.67,
@@ -997,15 +1637,40 @@
    "dur": 0.58,
    "bytes": 3500
   },
+  "t-mecz": {
+   "kind": "word",
+   "dur": 0.58,
+   "bytes": 3500
+  },
   "t-mi": {
    "kind": "syllable",
    "dur": 0.55,
    "bytes": 3356
   },
+  "t-miecz": {
+   "kind": "word",
+   "dur": 0.6,
+   "bytes": 3644
+  },
+  "t-miedu17a": {
+   "kind": "word",
+   "dur": 0.6,
+   "bytes": 3644
+  },
   "t-minus": {
    "kind": "instruction",
    "dur": 0.74,
    "bytes": 4508
+  },
+  "t-miu15b": {
+   "kind": "word",
+   "dur": 0.6,
+   "bytes": 3644
+  },
+  "t-miu15b_ma_u15bwieczku119u2e": {
+   "kind": "sentence",
+   "dur": 1.42,
+   "bytes": 8540
   },
   "t-mniej": {
    "kind": "instruction",
@@ -1016,6 +1681,11 @@
    "kind": "syllable",
    "dur": 0.79,
    "bytes": 4796
+  },
+  "t-morze": {
+   "kind": "word",
+   "dur": 0.62,
+   "bytes": 3788
   },
   "t-motyl": {
    "kind": "word",
@@ -1082,6 +1752,11 @@
    "dur": 4.78,
    "bytes": 28700
   },
+  "t-myszka": {
+   "kind": "word",
+   "dur": 0.77,
+   "bytes": 4652
+  },
   "t-na": {
    "kind": "syllable",
    "dur": 0.55,
@@ -1107,6 +1782,11 @@
    "dur": 6.55,
    "bytes": 39356
   },
+  "t-na_ulicy_stoi_cyrku2e": {
+   "kind": "sentence",
+   "dur": 1.75,
+   "bytes": 10556
+  },
   "t-ni": {
    "kind": "syllable",
    "dur": 0.5,
@@ -1127,15 +1807,85 @@
    "dur": 0.5,
    "bytes": 3068
   },
+  "t-noc": {
+   "kind": "word",
+   "dur": 0.6,
+   "bytes": 3644
+  },
   "t-noga": {
    "kind": "word",
    "dur": 0.67,
    "bytes": 4076
   },
+  "t-nou17cyczki": {
+   "kind": "word",
+   "dur": 0.94,
+   "bytes": 5660
+  },
+  "t-nuf3u17c": {
+   "kind": "word",
+   "dur": 0.58,
+   "bytes": 3500
+  },
   "t-ny": {
    "kind": "syllable",
    "dur": 0.55,
    "bytes": 3356
+  },
+  "t-oc": {
+   "kind": "drill",
+   "dur": 0.77,
+   "bytes": 4652
+  },
+  "t-oce": {
+   "kind": "drill",
+   "dur": 0.79,
+   "bytes": 4796
+  },
+  "t-ocio": {
+   "kind": "drill",
+   "dur": 1.3,
+   "bytes": 7820
+  },
+  "t-ocz": {
+   "kind": "drill",
+   "dur": 0.58,
+   "bytes": 3500
+  },
+  "t-ocze": {
+   "kind": "drill",
+   "dur": 0.74,
+   "bytes": 4508
+  },
+  "t-odu17a": {
+   "kind": "drill",
+   "dur": 0.62,
+   "bytes": 3788
+  },
+  "t-odu17co": {
+   "kind": "drill",
+   "dur": 0.74,
+   "bytes": 4508
+  },
+  "t-odu17cy": {
+   "kind": "drill",
+   "dur": 0.77,
+   "bytes": 4652
+  },
+  "t-odz": {
+   "kind": "drill",
+   "dur": 0.62,
+   "bytes": 3788
+  },
+  "t-odze": {
+   "kind": "drill",
+   "dur": 0.74,
+   "bytes": 4508
+  },
+  "t-odzio": {
+   "kind": "drill",
+   "dur": 0.77,
+   "bytes": 4652
   },
   "t-oko": {
    "kind": "word",
@@ -1172,6 +1922,11 @@
    "dur": 6.26,
    "bytes": 37628
   },
+  "t-or": {
+   "kind": "drill",
+   "dur": 0.53,
+   "bytes": 3212
+  },
   "t-osa": {
    "kind": "word",
    "dur": 0.67,
@@ -1197,10 +1952,70 @@
    "dur": 1.06,
    "bytes": 6380
   },
+  "t-osio": {
+   "kind": "drill",
+   "dur": 1.3,
+   "bytes": 7820
+  },
+  "t-osz": {
+   "kind": "drill",
+   "dur": 0.6,
+   "bytes": 3644
+  },
+  "t-osze": {
+   "kind": "drill",
+   "dur": 0.74,
+   "bytes": 4508
+  },
+  "t-ou107": {
+   "kind": "drill",
+   "dur": 0.62,
+   "bytes": 3788
+  },
+  "t-ou15b": {
+   "kind": "drill",
+   "dur": 0.6,
+   "bytes": 3644
+  },
+  "t-ou17a": {
+   "kind": "drill",
+   "dur": 0.6,
+   "bytes": 3644
+  },
+  "t-ou17c": {
+   "kind": "drill",
+   "dur": 0.6,
+   "bytes": 3644
+  },
+  "t-ou17ce": {
+   "kind": "drill",
+   "dur": 0.7,
+   "bytes": 4220
+  },
+  "t-owca": {
+   "kind": "word",
+   "dur": 0.72,
+   "bytes": 4364
+  },
+  "t-ozio": {
+   "kind": "drill",
+   "dur": 1.3,
+   "bytes": 7820
+  },
   "t-pa": {
    "kind": "syllable",
    "dur": 0.53,
    "bytes": 3212
+  },
+  "t-palec": {
+   "kind": "word",
+   "dur": 0.72,
+   "bytes": 4364
+  },
+  "t-parasol": {
+   "kind": "word",
+   "dur": 0.84,
+   "bytes": 5084
   },
   "t-pe": {
    "kind": "syllable",
@@ -1292,6 +2107,16 @@
    "dur": 1.2,
    "bytes": 7244
   },
+  "t-pociu105g": {
+   "kind": "word",
+   "dur": 0.79,
+   "bytes": 4796
+  },
+  "t-poduszka": {
+   "kind": "word",
+   "dur": 0.89,
+   "bytes": 5372
+  },
   "t-policz_i_dotknij_wu142au15bciwu105_liczbu119u2e": {
    "kind": "instruction",
    "dur": 2.33,
@@ -1362,10 +2187,35 @@
    "dur": 0.74,
    "bytes": 4508
   },
+  "t-pu119dzel": {
+   "kind": "word",
+   "dur": 0.72,
+   "bytes": 4364
+  },
+  "t-pu119dzel_leu17cy_w_dzbankuu2e": {
+   "kind": "sentence",
+   "dur": 1.68,
+   "bytes": 10124
+  },
   "t-ra": {
    "kind": "syllable",
    "dur": 0.84,
    "bytes": 5084
+  },
+  "t-rak": {
+   "kind": "word",
+   "dur": 0.58,
+   "bytes": 3500
+  },
+  "t-rak_i_ryba_graju105_w_gru119u2e": {
+   "kind": "sentence",
+   "dur": 1.82,
+   "bytes": 10988
+  },
+  "t-rak_rysuje_ruf3u17cu119u2e": {
+   "kind": "sentence",
+   "dur": 1.37,
+   "bytes": 8252
   },
   "t-rakiet": {
    "kind": "word",
@@ -1402,6 +2252,11 @@
    "dur": 0.48,
    "bytes": 2924
   },
+  "t-rodzina": {
+   "kind": "word",
+   "dur": 0.79,
+   "bytes": 4796
+  },
   "t-rower": {
    "kind": "word",
    "dur": 0.67,
@@ -1412,15 +2267,30 @@
    "dur": 1.2,
    "bytes": 7244
   },
+  "t-rrra": {
+   "kind": "drill",
+   "dur": 0.74,
+   "bytes": 4508
+  },
   "t-ru": {
    "kind": "syllable",
    "dur": 0.74,
    "bytes": 4508
   },
+  "t-ruf3u17ca": {
+   "kind": "word",
+   "dur": 0.6,
+   "bytes": 3644
+  },
   "t-ruf3wna_siu119": {
    "kind": "instruction",
    "dur": 0.82,
    "bytes": 4940
+  },
+  "t-ry": {
+   "kind": "drill",
+   "dur": 0.5,
+   "bytes": 3068
   },
   "t-ryba": {
    "kind": "word",
@@ -1447,6 +2317,21 @@
    "dur": 0.65,
    "bytes": 3932
   },
+  "t-rydz": {
+   "kind": "word",
+   "dur": 0.6,
+   "bytes": 3644
+  },
+  "t-rzeka": {
+   "kind": "word",
+   "dur": 0.7,
+   "bytes": 4220
+  },
+  "t-rzepa": {
+   "kind": "word",
+   "dur": 0.74,
+   "bytes": 4508
+  },
   "t-sa": {
    "kind": "syllable",
    "dur": 0.77,
@@ -1472,6 +2357,16 @@
    "dur": 0.84,
    "bytes": 5084
   },
+  "t-sia": {
+   "kind": "drill",
+   "dur": 1.18,
+   "bytes": 7100
+  },
+  "t-sie": {
+   "kind": "drill",
+   "dur": 0.62,
+   "bytes": 3788
+  },
   "t-siedem": {
    "kind": "number",
    "dur": 0.74,
@@ -1486,6 +2381,16 @@
    "kind": "number",
    "dur": 1.1,
    "bytes": 6668
+  },
+  "t-sio": {
+   "kind": "drill",
+   "dur": 0.6,
+   "bytes": 3644
+  },
+  "t-siu": {
+   "kind": "drill",
+   "dur": 0.6,
+   "bytes": 3644
   },
   "t-siuf3dma": {
    "kind": "number",
@@ -1532,6 +2437,16 @@
    "dur": 0.7,
    "bytes": 4220
   },
+  "t-sweter": {
+   "kind": "word",
+   "dur": 0.79,
+   "bytes": 4796
+  },
+  "t-sza": {
+   "kind": "drill",
+   "dur": 0.6,
+   "bytes": 3644
+  },
   "t-szafa": {
    "kind": "word",
    "dur": 0.72,
@@ -1546,6 +2461,21 @@
    "kind": "word",
    "dur": 0.7,
    "bytes": 4220
+  },
+  "t-szalik": {
+   "kind": "word",
+   "dur": 0.82,
+   "bytes": 4940
+  },
+  "t-szary_szalik_leu17cy_w_szufladzieu2e": {
+   "kind": "sentence",
+   "dur": 2.18,
+   "bytes": 13148
+  },
+  "t-sze": {
+   "kind": "drill",
+   "dur": 0.6,
+   "bytes": 3644
   },
   "t-szesnau15bcie": {
    "kind": "number",
@@ -1562,10 +2492,40 @@
    "dur": 1.03,
    "bytes": 6236
   },
+  "t-szo": {
+   "kind": "drill",
+   "dur": 0.58,
+   "bytes": 3500
+  },
+  "t-szopa": {
+   "kind": "word",
+   "dur": 0.72,
+   "bytes": 4364
+  },
+  "t-szu": {
+   "kind": "drill",
+   "dur": 0.6,
+   "bytes": 3644
+  },
   "t-szuf3sta": {
    "kind": "number",
    "dur": 0.72,
    "bytes": 4364
+  },
+  "t-szy": {
+   "kind": "drill",
+   "dur": 0.77,
+   "bytes": 4652
+  },
+  "t-szybka_mysz_szuka_szafyu2e": {
+   "kind": "sentence",
+   "dur": 1.73,
+   "bytes": 10412
+  },
+  "t-szynka": {
+   "kind": "word",
+   "dur": 0.74,
+   "bytes": 4508
   },
   "t-ta": {
    "kind": "syllable",
@@ -1647,6 +2607,16 @@
    "dur": 5.78,
    "bytes": 34748
   },
+  "t-tra": {
+   "kind": "drill",
+   "dur": 0.58,
+   "bytes": 3500
+  },
+  "t-tramwaj": {
+   "kind": "word",
+   "dur": 0.82,
+   "bytes": 4940
+  },
   "t-truf3jku105t": {
    "kind": "instruction",
    "dur": 0.84,
@@ -1677,6 +2647,11 @@
    "dur": 0.48,
    "bytes": 2924
   },
+  "t-tu119cza": {
+   "kind": "word",
+   "dur": 0.72,
+   "bytes": 4364
+  },
   "t-ty": {
    "kind": "syllable",
    "dur": 0.48,
@@ -1686,6 +2661,41 @@
    "kind": "instruction",
    "dur": 0.94,
    "bytes": 5660
+  },
+  "t-u107ma": {
+   "kind": "word",
+   "dur": 0.58,
+   "bytes": 3500
+  },
+  "t-u107ma_lata_w_nocyu2e": {
+   "kind": "sentence",
+   "dur": 1.37,
+   "bytes": 8252
+  },
+  "t-u142uf3du17a": {
+   "kind": "word",
+   "dur": 0.6,
+   "bytes": 3644
+  },
+  "t-u15blimak": {
+   "kind": "word",
+   "dur": 0.84,
+   "bytes": 5084
+  },
+  "t-u15blimak_idzie_przez_u15bniegu2e": {
+   "kind": "sentence",
+   "dur": 1.85,
+   "bytes": 11132
+  },
+  "t-u15bnieg": {
+   "kind": "word",
+   "dur": 0.65,
+   "bytes": 3932
+  },
+  "t-u15bwieca": {
+   "kind": "word",
+   "dur": 0.84,
+   "bytes": 5084
   },
   "t-u15bwietna_robotau21_ukou144czyu142eu15b_poziomu2e": {
    "kind": "finish",
@@ -1701,6 +2711,11 @@
    "kind": "praise",
    "dur": 0.82,
    "bytes": 4940
+  },
+  "t-u15bwinka": {
+   "kind": "word",
+   "dur": 0.84,
+   "bytes": 5084
   },
   "t-u17ca": {
    "kind": "syllable",
@@ -1727,10 +2742,130 @@
    "dur": 4.92,
    "bytes": 29564
   },
+  "t-u17caba_u17cyje_przy_rzeceu2e": {
+   "kind": "sentence",
+   "dur": 1.66,
+   "bytes": 9980
+  },
+  "t-u17ce": {
+   "kind": "drill",
+   "dur": 0.58,
+   "bytes": 3500
+  },
+  "t-u17co": {
+   "kind": "drill",
+   "dur": 0.6,
+   "bytes": 3644
+  },
+  "t-u17cu": {
+   "kind": "drill",
+   "dur": 0.6,
+   "bytes": 3644
+  },
+  "t-u17cuk": {
+   "kind": "word",
+   "dur": 0.65,
+   "bytes": 3932
+  },
+  "t-u17cy": {
+   "kind": "drill",
+   "dur": 0.6,
+   "bytes": 3644
+  },
+  "t-u17cyrafa": {
+   "kind": "word",
+   "dur": 0.84,
+   "bytes": 5084
+  },
+  "t-uc": {
+   "kind": "drill",
+   "dur": 0.89,
+   "bytes": 5372
+  },
+  "t-ucie": {
+   "kind": "drill",
+   "dur": 0.72,
+   "bytes": 4364
+  },
+  "t-ucy": {
+   "kind": "drill",
+   "dur": 0.77,
+   "bytes": 4652
+  },
+  "t-ucz": {
+   "kind": "drill",
+   "dur": 0.6,
+   "bytes": 3644
+  },
+  "t-uczy": {
+   "kind": "drill",
+   "dur": 0.72,
+   "bytes": 4364
+  },
+  "t-udu17a": {
+   "kind": "drill",
+   "dur": 0.62,
+   "bytes": 3788
+  },
+  "t-udu17ca": {
+   "kind": "drill",
+   "dur": 0.72,
+   "bytes": 4364
+  },
+  "t-udu17cu": {
+   "kind": "drill",
+   "dur": 0.77,
+   "bytes": 4652
+  },
+  "t-udz": {
+   "kind": "drill",
+   "dur": 0.62,
+   "bytes": 3788
+  },
+  "t-udzie": {
+   "kind": "drill",
+   "dur": 0.72,
+   "bytes": 4364
+  },
+  "t-udzy": {
+   "kind": "drill",
+   "dur": 0.72,
+   "bytes": 4364
+  },
   "t-uf3sma": {
    "kind": "number",
    "dur": 0.67,
    "bytes": 4076
+  },
+  "t-ulica": {
+   "kind": "word",
+   "dur": 0.86,
+   "bytes": 5228
+  },
+  "t-ur": {
+   "kind": "drill",
+   "dur": 0.5,
+   "bytes": 3068
+  },
+  "t-usie": {
+   "kind": "drill",
+   "dur": 0.84,
+   "bytes": 5084
+  },
+  "t-usz": {
+   "kind": "drill",
+   "dur": 0.58,
+   "bytes": 3500
+  },
+  "t-uszy": {
+   "kind": "drill",
+   "dur": 0.72,
+   "bytes": 4364
+  },
+  "t-uu107": {
+   "kind": "drill",
+   "dur": 0.82,
+   "bytes": 4940
   },
   "t-uu142uf3u17c_su142owo_z_literu2e": {
    "kind": "instruction",
@@ -1747,6 +2882,36 @@
    "dur": 1.18,
    "bytes": 7100
   },
+  "t-uu15b": {
+   "kind": "drill",
+   "dur": 0.84,
+   "bytes": 5084
+  },
+  "t-uu15bmiech_i_dziuf3beku2c_uu15bmiech_i_dziuf3beku2e": {
+   "kind": "instruction",
+   "dur": 2.59,
+   "bytes": 15596
+  },
+  "t-uu17a": {
+   "kind": "drill",
+   "dur": 0.84,
+   "bytes": 5084
+  },
+  "t-uu17c": {
+   "kind": "drill",
+   "dur": 0.82,
+   "bytes": 4940
+  },
+  "t-uu17cy": {
+   "kind": "drill",
+   "dur": 0.74,
+   "bytes": 4508
+  },
+  "t-uzie": {
+   "kind": "drill",
+   "dur": 0.74,
+   "bytes": 4508
+  },
   "t-uzupeu142niju2e": {
    "kind": "instruction",
    "dur": 1.03,
@@ -1756,6 +2921,11 @@
    "kind": "word",
    "dur": 0.98,
    "bytes": 5948
+  },
+  "t-w_du17cungli_mieszka_tygryseku2e": {
+   "kind": "sentence",
+   "dur": 1.92,
+   "bytes": 11564
   },
   "t-w_koszyku_jest_dziesiu119u107_balonuf3wu2e_doku142adamy_jeszcze_siedemu2e_ile_jest_teraz_w_koszykuu3f": {
    "kind": "problem",
@@ -1802,6 +2972,21 @@
    "dur": 0.6,
    "bytes": 3644
   },
+  "t-weu17a": {
+   "kind": "word",
+   "dur": 0.6,
+   "bytes": 3644
+  },
+  "t-weu17a_powietrze_nosem_i_dmuchaj_na_wiatraczeku2e": {
+   "kind": "instruction",
+   "dur": 2.98,
+   "bytes": 17900
+  },
+  "t-widzieu107": {
+   "kind": "word",
+   "dur": 0.77,
+   "bytes": 4652
+  },
   "t-wiu119cej": {
    "kind": "instruction",
    "dur": 0.82,
@@ -1832,10 +3017,25 @@
    "dur": 0.6,
    "bytes": 3644
   },
+  "t-wu105u17c": {
+   "kind": "word",
+   "dur": 0.62,
+   "bytes": 3788
+  },
+  "t-wuf3dz": {
+   "kind": "word",
+   "dur": 0.62,
+   "bytes": 3788
+  },
   "t-wybierz_znaku2e": {
    "kind": "instruction",
    "dur": 1.13,
    "bytes": 6812
+  },
+  "t-yr": {
+   "kind": "drill",
+   "dur": 0.65,
+   "bytes": 3932
   },
   "t-za": {
    "kind": "syllable",
@@ -1852,6 +3052,11 @@
    "dur": 1.61,
    "bytes": 9692
   },
+  "t-zegar": {
+   "kind": "word",
+   "dur": 0.77,
+   "bytes": 4652
+  },
   "t-zero": {
    "kind": "number",
    "dur": 0.65,
@@ -1862,10 +3067,55 @@
    "dur": 0.89,
    "bytes": 5372
   },
+  "t-zia": {
+   "kind": "drill",
+   "dur": 0.74,
+   "bytes": 4508
+  },
+  "t-ziarno": {
+   "kind": "word",
+   "dur": 0.77,
+   "bytes": 4652
+  },
+  "t-zie": {
+   "kind": "drill",
+   "dur": 0.67,
+   "bytes": 4076
+  },
   "t-zielona": {
    "kind": "word",
    "dur": 0.84,
    "bytes": 5084
+  },
+  "t-zielony": {
+   "kind": "word",
+   "dur": 0.86,
+   "bytes": 5228
+  },
+  "t-ziemia": {
+   "kind": "word",
+   "dur": 0.74,
+   "bytes": 4508
+  },
+  "t-zima": {
+   "kind": "word",
+   "dur": 0.7,
+   "bytes": 4220
+  },
+  "t-zimu105_pada_u15bniegu2e": {
+   "kind": "sentence",
+   "dur": 1.46,
+   "bytes": 8828
+  },
+  "t-zio": {
+   "kind": "drill",
+   "dur": 0.96,
+   "bytes": 5804
+  },
+  "t-ziu": {
+   "kind": "drill",
+   "dur": 0.62,
+   "bytes": 3788
   },
   "t-znajdu17a_zegaru2e": {
    "kind": "instruction",

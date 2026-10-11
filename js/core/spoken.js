@@ -10,9 +10,10 @@ import { MATH_LEVELS } from '../../modules/math/curriculum.js';
 import { taskStrings, ALL_NOUNS } from '../../modules/math/say.js';
 import { allNumberWordForms, HOUR_ORDINALS } from './numerals.js';
 import { GAME_PHRASES } from '../games/phrases.js';
+import { pronSpoken } from '../../modules/pron/curriculum.js';
 
 /** Rodzaje czytane wolniej i głośniej („fonetyczne”). */
-export const PHONETIC_KINDS = new Set(['sound', 'syllable']);
+export const PHONETIC_KINDS = new Set(['sound', 'syllable', 'drill']);
 export const isPhoneticKind = (k) => PHONETIC_KINDS.has(k);
 
 /** Zwraca Map: id -> { id, part, kind }. */
@@ -65,5 +66,6 @@ export function collectSpoken() {
     for (const s of taskStrings(t, w)) addNew(s, problems.has(s) ? 'problem' : numbers.has(s) || nounForms.has(s) ? 'word' : 'instruction');
   }
   GAME_PHRASES.forEach((p) => addNew(p, 'instruction'));
+  pronSpoken().forEach((s) => addNew(s.part, s.kind)); // Ćwiczenia wymowy (drill = sylaba-ćwiczenie, czytana wolniej)
   return out;
 }

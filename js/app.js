@@ -7,6 +7,7 @@ import { KIDS, kidById, kidHeroHtml, kidDoneUrl, kidImg } from './art/kids.js';
 import { initAvatar } from './core/avatar.js';
 import { MODULES } from '../modules/index.js';
 import { LEVELS } from '../modules/reading/curriculum.js';
+import { PRON_LEVELS } from '../modules/pron/curriculum.js';
 import { MATH_LEVELS } from '../modules/math/curriculum.js';
 import { showParent } from './parent.js';
 
@@ -117,7 +118,7 @@ function start() {
   voiceBanner();
 }
 function resumeBtn() {
-  const r = P.resumeTarget(state, { reading: LEVELS, math: MATH_LEVELS });
+  const r = P.resumeTarget(state, { reading: LEVELS, math: MATH_LEVELS, pron: PRON_LEVELS });
   if (!r) return null;
   const m = MODULES.find((x) => x.id === r.module);
   return h('button', { class: 'btn primary resume', type: 'button', 'data-resume': r.level.id, onclick: () => openModule(m, { resumeLevel: r.level }),

@@ -3,7 +3,7 @@
 // Są cache'owane leniwie (przy pierwszym odtworzeniu, patrz handler fetch) oraz dociągane w tle po komunikacie
 // {type:'precache-audio'} wysyłanym przez stronę ~6 s po starcie (pomijane przy włączonym oszczędzaniu danych).
 // UWAGA: przy KAŻDEJ zmianie plików podnieś VERSION – stary cache zostanie usunięty przy aktywacji.
-const VERSION = 'v22';
+const VERSION = 'v24';
 const CACHE = `pierwsze-slowa-${VERSION}`;
 const SHELL = [
   './',
@@ -105,6 +105,7 @@ const SHELL = [
   'art/words/zaba.webp',
   'css/app.css',
   'css/lesna.css',
+  'css/pron.css',
   'icon.svg',
   'index.html',
   'js/app.js',
@@ -132,6 +133,11 @@ const SHELL = [
   'modules/math/index.js',
   'modules/math/runner.js',
   'modules/math/say.js',
+  'modules/pron/curriculum.js',
+  'modules/pron/index.js',
+  'modules/pron/mouth.js',
+  'modules/pron/recorder.js',
+  'modules/pron/runner.js',
   'modules/reading/curriculum.js',
   'modules/reading/index.js',
   'modules/reading/runner.js',

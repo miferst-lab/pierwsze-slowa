@@ -47,7 +47,7 @@ export function parseState(raw, worldIds = ['lesna', 'kosmos', 'dzungla', 'wyspy
       d.levels[lid] = { tasks, done: lv.done === true };
     }
   }
-  if (isObj(o.last) && (o.last.module === 'reading' || o.last.module === 'math') && typeof o.last.level === 'string' && /^[A-Za-z0-9_-]{1,20}$/.test(o.last.level)) {
+  if (isObj(o.last) && ['reading', 'math', 'pron'].includes(o.last.module) && typeof o.last.level === 'string' && /^[A-Za-z0-9_-]{1,20}$/.test(o.last.level)) {
     d.last = { module: o.last.module, level: o.last.level, idx: Number.isInteger(o.last.idx) ? clamp(o.last.idx, 0, 200) : 0, world: d.world, at: Number.isFinite(o.last.at) ? o.last.at : 0 };
   }
   d.hits = cleanCounts(o.hits);
