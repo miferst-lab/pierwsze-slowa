@@ -45,9 +45,10 @@ def key(img, mode='auto', holes=False):
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser(); ap.add_argument('src'); ap.add_argument('dst')
-    ap.add_argument('--mode', default='auto'); ap.add_argument('--max', type=int, default=512); ap.add_argument('--crop', action='store_true'); ap.add_argument('--holes', action='store_true')
+    ap.add_argument('--mode', default='auto'); ap.add_argument('--max', type=int, default=512); ap.add_argument('--crop', action='store_true'); ap.add_argument('--holes', action='store_true'); ap.add_argument('--pre', type=int, default=900)
     o = ap.parse_args()
-    im, mode = key(Image.open(o.src), o.mode, o.holes)
+    src = Image.open(o.src).convert('RGB'); src.thumbnail((o.pre, o.pre), Image.LANCZOS)  # przed kluczowaniem zmniejszamy (szybciej, mniej artefaktów JPG)
+    im, mode = key(src, o.mode, o.holes)
     if o.crop and im.getbbox(): im = im.crop(im.getchannel('A').point(lambda v: 255 if v > 8 else 0).getbbox())
     im.thumbnail((o.max, o.max), Image.LANCZOS); im.save(o.dst, quality=86, method=6)
     print(o.dst, mode, im.size)

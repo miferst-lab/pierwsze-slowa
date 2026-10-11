@@ -116,3 +116,11 @@ img.sprite{display:block;width:100%;height:100%;object-fit:contain;border-radius
 [data-world="kosmos"] .start .module-card{border-image:url(../art/ui/ramka-kosmos.webp) 20% 12% fill/22px stretch}
 [data-world="dzungla"] .start .module-card{border-image:url(../art/ui/ramka-dzungla.webp) 20% 12% fill/22px stretch}
 [data-world="wyspy"] .start .module-card{border-image:url(../art/ui/ramka-wyspy.webp) 20% 12% fill/22px stretch}
+/* gwiazdki nagrody (Artysta) w każdym świecie; puste gwiazdki zostają szare (SVG) */
+.bstar.on{background-position:center;background-size:contain;background-repeat:no-repeat}.bstar.on svg{visibility:hidden}
+[data-world="lesna"] .bstar.on{background-image:url(../art/stars/lesna.webp)}
+[data-world="kosmos"] .bstar.on{background-image:url(../art/stars/kosmos.webp)}
+[data-world="dzungla"] .bstar.on{background-image:url(../art/stars/dzungla.webp)}
+[data-world="wyspy"] .bstar.on{background-image:url(../art/stars/wyspy.webp)}
+.badge-img{display:block;width:auto;height:100%;margin:0 auto}
+img.sprite.face{border-radius:50%}

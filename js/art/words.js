@@ -41,7 +41,7 @@ export const WORD_ART = {
 };
 
 // Obrazki od Artysty (art/words/*.webp, klucz zieleni) zastępują rysunki SVG tam, gdzie je dostarczył; reszta słów zostaje w SVG.
-for (const k of ['mama', 'ryba', 'zaba']) WORD_ART[k].svg = `<image href='art/words/${k}.webp' x='4' y='4' width='92' height='92' preserveAspectRatio='xMidYMid meet'/>`;
+for (const k of ['mama', 'ryba', 'zaba', 'balon', 'mak', 'kot', 'dom']) WORD_ART[k].svg = `<image href='art/words/${k}.webp' x='4' y='4' width='92' height='92' preserveAspectRatio='xMidYMid meet'/>`;
 export const WORD_ART_KEYS = Object.keys(WORD_ART);
 
 /** Zwraca <svg> ilustracji; dla kilku kluczy układa scenę obok siebie. */
