@@ -40,6 +40,8 @@ export const WORD_ART = {
   oko: { label: 'oko', svg: p('M6 50Q50 10 94 50Q50 90 6 50z', '#fff', "stroke='#333' stroke-width='4'") + c(50, 50, 20, '#3a7bd5') + c(50, 50, 9, '#111') + c(56, 43, 4, '#fff') },
 };
 
+// Obrazki od Artysty (art/words/*.webp, klucz zieleni) zastępują rysunki SVG tam, gdzie je dostarczył; reszta słów zostaje w SVG.
+for (const k of ['mama', 'ryba', 'zaba']) WORD_ART[k].svg = `<image href='art/words/${k}.webp' x='4' y='4' width='92' height='92' preserveAspectRatio='xMidYMid meet'/>`;
 export const WORD_ART_KEYS = Object.keys(WORD_ART);
 
 /** Zwraca <svg> ilustracji; dla kilku kluczy układa scenę obok siebie. */

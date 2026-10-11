@@ -81,7 +81,6 @@ img.sprite{display:block;width:100%;height:100%;object-fit:contain;border-radius
 [data-world="lesna"] .group h2{display:inline-block;background:var(--grain),var(--wood);border:3px solid #8a5a2b;border-radius:14px;padding:.05em .8em;box-shadow:0 3px 0 #6b4220}
 /* nagrody */
 [data-world="lesna"] .done-screen .card{position:relative;padding-top:2.4rem}
-[data-world="lesna"] .done-screen .card::before{content:'';position:absolute;left:-8px;bottom:-4px;width:clamp(110px,22vh,190px);height:clamp(140px,28vh,240px);background:url(../art/lesna/lis-cieszy.webp) left bottom/contain no-repeat;pointer-events:none;animation:bounce .8s 2}
 [data-world="lesna"] .done-screen .card{margin-left:auto;margin-right:auto}
 [data-world="lesna"] .item-art{filter:drop-shadow(0 3px 2px rgba(92,58,28,.25))}
 [data-world="lesna"] .coll.got{border-color:#c8921a;box-shadow:0 0 0 2px #f2b84b,var(--shadow-s)}
@@ -95,8 +94,6 @@ img.sprite{display:block;width:100%;height:100%;object-fit:contain;border-radius
 [data-world="lesna"] .start .module-card{min-height:0;height:clamp(140px,28vh,225px);justify-content:center;padding:.6rem .8rem}
 [data-world="lesna"] .start .hero{margin:.4rem 0 .2rem}
 [data-world="lesna"] .start .mtitle{font-size:clamp(1.4rem,3.6vh,2rem)}
-[data-world="lesna"] .mascot.big.fox{width:auto;height:clamp(120px,22vh,190px);margin-bottom:-.5rem}
-[data-world="lesna"] .mascot.big.fox img{width:auto;height:100%}
 /* tła światów: ilustracje Artysty + półprzezroczysta nakładka w kolorze świata (kontrast tekstu na tle) */
 #bg{background-size:cover;background-position:center}
 [data-world="lesna"] #bg{background-image:linear-gradient(rgba(255,243,214,.62),rgba(251,220,176,.5)),url(../art/lesna/tlo-lesna.webp)}
@@ -105,3 +102,12 @@ img.sprite{display:block;width:100%;height:100%;object-fit:contain;border-radius
 [data-world="wyspy"] #bg{background-image:linear-gradient(rgba(212,239,250,.66),rgba(191,230,242,.6)),url(../art/lesna/tlo-wyspy.webp)}
 [data-world] #bg svg{opacity:.3}
 [data-world="lesna"] #bg svg{display:none}
+/* przewodnik świata (Artysta): duża postać na starcie i przy nagrodzie – wspólne dla wszystkich światów */
+.mascot.big.guide{width:auto;height:clamp(120px,22vh,190px);margin-bottom:-.5rem}
+.mascot.big.guide img{width:auto;height:100%;display:block;filter:drop-shadow(0 4px 4px rgba(60,40,20,.25))}
+.done-screen .card{position:relative}
+.done-screen .card::before{content:'';position:absolute;left:-6px;bottom:-4px;width:clamp(110px,22vh,190px);height:clamp(140px,28vh,240px);background:var(--done-art) left bottom/contain no-repeat;pointer-events:none;animation:bounce .8s 2}
+[data-world="lesna"]{--done-art:url(../art/lesna/lis-cieszy.webp)}
+[data-world="kosmos"]{--done-art:url(../art/guides/kosmos-cieszy.webp)}
+[data-world="dzungla"]{--done-art:url(../art/guides/dzungla-stoi.webp)}
+[data-world="wyspy"]{--done-art:url(../art/guides/wyspy-cieszy.webp)}
