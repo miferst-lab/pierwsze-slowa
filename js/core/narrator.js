@@ -133,7 +133,8 @@ export class Narrator {
     // bezpiecznie zapisać w cache (odpowiedzi 206 się nie cache'ują) i działa to tak samo pod podścieżką /pierwsze-slowa/.
     const res = await fetch(new URL(`audio/${id}.mp3`, document.baseURI));
     if (!res.ok) throw new Error('HTTP ' + res.status);
-    const url = URL.createObjectURL(await res.blob());
+    // jawny typ audio/mpeg: GitHub Pages podaje „audio/mp3”, a blob z poprawnym typem odtwarza każda przeglądarka
+    const url = URL.createObjectURL(new Blob([await res.arrayBuffer()], { type: 'audio/mpeg' }));
     this.blobs.set(id, url);
     return url;
   }

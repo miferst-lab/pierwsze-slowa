@@ -1,1101 +1,1101 @@
 {
- "voice": "NeonGeckoCom/tts-vits-mai-pl (BSD-3-Clause)",
- "format": "mp3 mono 22.05 kHz 56 kbps",
+ "voice": "Microsoft Azure Neural TTS pl-PL-ZofiaNeural (głos syntetyczny)",
+ "format": "mp3 mono 24 kHz 48 kbps",
  "clips": {
   "s-a": {
    "kind": "sound",
-   "dur": 0.55,
-   "bytes": 3884
+   "dur": 0.5,
+   "bytes": 3068
   },
   "s-b": {
    "kind": "sound",
-   "dur": 0.26,
-   "bytes": 1872
+   "dur": 0.38,
+   "bytes": 2348
   },
   "s-c": {
    "kind": "sound",
-   "dur": 0.39,
-   "bytes": 2786
+   "dur": 0.46,
+   "bytes": 2780
   },
   "s-ch": {
    "kind": "sound",
-   "dur": 0.91,
-   "bytes": 6444
+   "dur": 0.77,
+   "bytes": 4652
   },
   "s-cz": {
    "kind": "sound",
-   "dur": 0.34,
-   "bytes": 2421
+   "dur": 0.38,
+   "bytes": 2348
   },
   "s-d": {
    "kind": "sound",
-   "dur": 0.34,
-   "bytes": 2421
+   "dur": 0.41,
+   "bytes": 2492
   },
   "s-du17a": {
    "kind": "sound",
-   "dur": 0.29,
-   "bytes": 2055
+   "dur": 0.46,
+   "bytes": 2780
   },
   "s-du17c": {
    "kind": "sound",
-   "dur": 0.34,
-   "bytes": 2421
+   "dur": 0.46,
+   "bytes": 2780
   },
   "s-dz": {
    "kind": "sound",
-   "dur": 0.39,
-   "bytes": 2786
+   "dur": 0.46,
+   "bytes": 2780
   },
   "s-e": {
    "kind": "sound",
-   "dur": 0.55,
-   "bytes": 3884
+   "dur": 0.5,
+   "bytes": 3068
   },
   "s-f": {
    "kind": "sound",
-   "dur": 0.89,
-   "bytes": 6261
+   "dur": 0.77,
+   "bytes": 4652
   },
   "s-g": {
    "kind": "sound",
-   "dur": 0.34,
-   "bytes": 2421
+   "dur": 0.41,
+   "bytes": 2492
   },
   "s-h": {
    "kind": "sound",
-   "dur": 0.91,
-   "bytes": 6444
+   "dur": 0.77,
+   "bytes": 4652
   },
   "s-i": {
    "kind": "sound",
-   "dur": 0.55,
-   "bytes": 3884
+   "dur": 0.5,
+   "bytes": 3068
   },
   "s-j": {
    "kind": "sound",
-   "dur": 0.89,
-   "bytes": 6261
+   "dur": 0.77,
+   "bytes": 4652
   },
   "s-k": {
    "kind": "sound",
-   "dur": 0.24,
-   "bytes": 1689
+   "dur": 0.41,
+   "bytes": 2492
   },
   "s-l": {
    "kind": "sound",
-   "dur": 0.89,
-   "bytes": 6261
+   "dur": 0.77,
+   "bytes": 4652
   },
   "s-m": {
    "kind": "sound",
-   "dur": 0.89,
-   "bytes": 6261
+   "dur": 0.77,
+   "bytes": 4652
   },
   "s-n": {
    "kind": "sound",
-   "dur": 0.89,
-   "bytes": 6261
+   "dur": 0.77,
+   "bytes": 4652
   },
   "s-o": {
    "kind": "sound",
-   "dur": 0.55,
-   "bytes": 3884
+   "dur": 0.5,
+   "bytes": 3068
   },
   "s-p": {
    "kind": "sound",
-   "dur": 0.34,
-   "bytes": 2421
+   "dur": 0.46,
+   "bytes": 2780
   },
   "s-r": {
    "kind": "sound",
-   "dur": 0.89,
-   "bytes": 6261
+   "dur": 0.77,
+   "bytes": 4652
   },
   "s-rz": {
    "kind": "sound",
-   "dur": 0.89,
-   "bytes": 6261
+   "dur": 0.77,
+   "bytes": 4652
   },
   "s-s": {
    "kind": "sound",
-   "dur": 0.89,
-   "bytes": 6261
+   "dur": 0.77,
+   "bytes": 4652
   },
   "s-sz": {
    "kind": "sound",
-   "dur": 0.91,
-   "bytes": 6444
+   "dur": 0.77,
+   "bytes": 4652
   },
   "s-t": {
    "kind": "sound",
-   "dur": 0.34,
-   "bytes": 2421
+   "dur": 0.36,
+   "bytes": 2204
   },
   "s-u": {
    "kind": "sound",
-   "dur": 0.55,
-   "bytes": 3884
+   "dur": 0.5,
+   "bytes": 3068
   },
   "s-u105": {
    "kind": "sound",
-   "dur": 0.55,
-   "bytes": 3884
+   "dur": 0.5,
+   "bytes": 3068
   },
   "s-u107": {
    "kind": "sound",
-   "dur": 0.37,
-   "bytes": 2604
+   "dur": 0.43,
+   "bytes": 2636
   },
   "s-u119": {
    "kind": "sound",
-   "dur": 0.55,
-   "bytes": 3884
+   "dur": 0.5,
+   "bytes": 3068
   },
   "s-u142": {
    "kind": "sound",
-   "dur": 0.89,
-   "bytes": 6261
+   "dur": 0.77,
+   "bytes": 4652
   },
   "s-u144": {
    "kind": "sound",
-   "dur": 0.89,
-   "bytes": 6261
+   "dur": 0.77,
+   "bytes": 4652
   },
   "s-u15b": {
    "kind": "sound",
-   "dur": 0.89,
-   "bytes": 6261
+   "dur": 0.77,
+   "bytes": 4652
   },
   "s-u17a": {
    "kind": "sound",
-   "dur": 0.89,
-   "bytes": 6261
+   "dur": 0.77,
+   "bytes": 4652
   },
   "s-u17c": {
    "kind": "sound",
-   "dur": 0.89,
-   "bytes": 6261
+   "dur": 0.77,
+   "bytes": 4652
   },
   "s-uf3": {
    "kind": "sound",
-   "dur": 0.55,
-   "bytes": 3884
+   "dur": 0.5,
+   "bytes": 3068
   },
   "s-w": {
    "kind": "sound",
-   "dur": 0.89,
-   "bytes": 6261
+   "dur": 0.77,
+   "bytes": 4652
   },
   "s-y": {
    "kind": "sound",
-   "dur": 0.55,
-   "bytes": 3884
+   "dur": 0.5,
+   "bytes": 3068
   },
   "s-z": {
    "kind": "sound",
-   "dur": 0.89,
-   "bytes": 6261
+   "dur": 0.77,
+   "bytes": 4652
   },
   "t-ba": {
    "kind": "syllable",
-   "dur": 0.34,
-   "bytes": 2421
+   "dur": 0.6,
+   "bytes": 3644
   },
   "t-balon": {
    "kind": "word",
-   "dur": 0.68,
-   "bytes": 4798
+   "dur": 0.72,
+   "bytes": 4364
   },
   "t-be": {
    "kind": "syllable",
-   "dur": 0.47,
-   "bytes": 3335
+   "dur": 0.58,
+   "bytes": 3500
   },
   "t-bi": {
    "kind": "syllable",
-   "dur": 0.34,
-   "bytes": 2421
+   "dur": 0.58,
+   "bytes": 3500
   },
   "t-bo": {
    "kind": "syllable",
-   "dur": 0.47,
-   "bytes": 3335
+   "dur": 0.58,
+   "bytes": 3500
   },
   "t-brawou21": {
    "kind": "praise",
-   "dur": 0.57,
-   "bytes": 4066
+   "dur": 0.67,
+   "bytes": 4076
   },
   "t-brawou21_tak_trzymaju21": {
    "kind": "praise",
-   "dur": 1.44,
-   "bytes": 10101
+   "dur": 2.3,
+   "bytes": 13868
   },
   "t-brawou21_ukou144czyu142eu15b_poziomu2e": {
    "kind": "finish",
-   "dur": 1.72,
-   "bytes": 12112
+   "dur": 2.66,
+   "bytes": 16028
   },
   "t-brawou2c_piotrkuu21": {
    "kind": "praise",
-   "dur": 1.36,
-   "bytes": 9552
+   "dur": 1.3,
+   "bytes": 7820
   },
   "t-bu": {
    "kind": "syllable",
-   "dur": 0.42,
-   "bytes": 2969
+   "dur": 0.58,
+   "bytes": 3500
   },
   "t-buty": {
    "kind": "word",
-   "dur": 0.47,
-   "bytes": 3335
+   "dur": 0.72,
+   "bytes": 4364
   },
   "t-cha": {
    "kind": "syllable",
-   "dur": 0.31,
-   "bytes": 2238
+   "dur": 0.62,
+   "bytes": 3788
   },
   "t-chata": {
    "kind": "word",
-   "dur": 0.6,
-   "bytes": 4249
+   "dur": 0.7,
+   "bytes": 4220
   },
   "t-chowa": {
    "kind": "word",
    "dur": 0.65,
-   "bytes": 4615
+   "bytes": 3932
   },
   "t-czapka": {
    "kind": "word",
-   "dur": 0.86,
-   "bytes": 6078
+   "dur": 0.79,
+   "bytes": 4796
   },
   "t-czapka_jest_zielonau2e": {
    "kind": "sentence",
-   "dur": 1.23,
-   "bytes": 8638
+   "dur": 1.56,
+   "bytes": 9404
   },
   "t-czapku119": {
    "kind": "word",
-   "dur": 0.71,
-   "bytes": 4981
+   "dur": 0.77,
+   "bytes": 4652
   },
   "t-czeu15bu107_piotrkuu21_zaczynamy_czytau107u2e": {
    "kind": "parent",
-   "dur": 2.25,
-   "bytes": 15769
+   "dur": 3.29,
+   "bytes": 19772
   },
   "t-da": {
    "kind": "syllable",
-   "dur": 0.39,
-   "bytes": 2786
+   "dur": 0.58,
+   "bytes": 3500
   },
   "t-di": {
    "kind": "syllable",
-   "dur": 0.47,
-   "bytes": 3335
+   "dur": 0.62,
+   "bytes": 3788
   },
   "t-do": {
    "kind": "syllable",
-   "dur": 0.44,
-   "bytes": 3152
+   "dur": 0.55,
+   "bytes": 3356
   },
   "t-dobre": {
    "kind": "word",
-   "dur": 0.68,
-   "bytes": 4798
+   "dur": 0.67,
+   "bytes": 4076
   },
   "t-dom": {
    "kind": "word",
-   "dur": 0.47,
-   "bytes": 3335
+   "dur": 0.55,
+   "bytes": 3356
   },
   "t-domu": {
    "kind": "word",
-   "dur": 0.63,
-   "bytes": 4432
+   "dur": 0.67,
+   "bytes": 4076
   },
   "t-doskonaleu21": {
    "kind": "praise",
-   "dur": 0.94,
-   "bytes": 6626
+   "dur": 0.98,
+   "bytes": 5948
   },
   "t-dotykaj_su142uf3wu2e": {
    "kind": "instruction",
-   "dur": 0.99,
-   "bytes": 6992
+   "dur": 1.18,
+   "bytes": 7100
   },
   "t-dy": {
    "kind": "syllable",
-   "dur": 0.39,
-   "bytes": 2786
+   "dur": 1.06,
+   "bytes": 6380
   },
   "t-gwiazdka_dla_ciebieu21": {
    "kind": "praise",
-   "dur": 1.23,
-   "bytes": 8638
+   "dur": 1.46,
+   "bytes": 8828
   },
   "t-hurrau21_poziom_ukou144czonyu21": {
    "kind": "finish",
-   "dur": 1.8,
-   "bytes": 12661
+   "dur": 2.64,
+   "bytes": 15884
   },
   "t-i": {
    "kind": "word",
-   "dur": 0.39,
-   "bytes": 2786
+   "dur": 0.38,
+   "bytes": 2348
   },
   "t-idzie": {
    "kind": "word",
-   "dur": 0.6,
-   "bytes": 4249
+   "dur": 0.62,
+   "bytes": 3788
   },
   "t-imiu119": {
    "kind": "word",
-   "dur": 0.31,
-   "bytes": 2238
+   "dur": 0.62,
+   "bytes": 3788
   },
   "t-jajo": {
    "kind": "word",
-   "dur": 0.57,
-   "bytes": 4066
+   "dur": 0.7,
+   "bytes": 4220
   },
   "t-jedzie": {
    "kind": "word",
-   "dur": 0.65,
-   "bytes": 4615
+   "dur": 0.67,
+   "bytes": 4076
   },
   "t-jedzu105": {
    "kind": "word",
-   "dur": 0.68,
-   "bytes": 4798
+   "dur": 0.72,
+   "bytes": 4364
   },
   "t-jest": {
    "kind": "word",
-   "dur": 0.5,
-   "bytes": 3518
+   "dur": 0.62,
+   "bytes": 3788
   },
   "t-jeszcze_razu2c_na_pewno_dasz_radu119u21": {
    "kind": "retry",
-   "dur": 2.35,
-   "bytes": 16501
+   "dur": 2.18,
+   "bytes": 13148
   },
   "t-ka": {
    "kind": "syllable",
-   "dur": 0.39,
-   "bytes": 2786
+   "dur": 0.72,
+   "bytes": 4364
   },
   "t-ke": {
    "kind": "syllable",
-   "dur": 0.37,
-   "bytes": 2604
+   "dur": 0.82,
+   "bytes": 4940
   },
   "t-ki": {
    "kind": "syllable",
-   "dur": 0.37,
-   "bytes": 2604
+   "dur": 0.77,
+   "bytes": 4652
   },
   "t-ko": {
    "kind": "syllable",
-   "dur": 0.42,
-   "bytes": 2969
+   "dur": 0.48,
+   "bytes": 2924
   },
   "t-kot": {
    "kind": "word",
-   "dur": 0.39,
-   "bytes": 2786
+   "dur": 0.55,
+   "bytes": 3356
   },
   "t-kot_lubi_rybu119u2e": {
    "kind": "sentence",
-   "dur": 1.1,
-   "bytes": 7724
+   "dur": 1.25,
+   "bytes": 7532
   },
   "t-kot_ma_na_imiu119_mruku2e": {
    "kind": "sentence",
-   "dur": 1.41,
-   "bytes": 9918
+   "dur": 1.61,
+   "bytes": 9692
   },
   "t-kot_nie_ma_serau2e": {
    "kind": "sentence",
-   "dur": 1.04,
-   "bytes": 7358
+   "dur": 1.27,
+   "bytes": 7676
   },
   "t-kota": {
    "kind": "word",
-   "dur": 0.39,
-   "bytes": 2786
+   "dur": 0.65,
+   "bytes": 3932
   },
   "t-kou142a": {
    "kind": "word",
-   "dur": 0.52,
-   "bytes": 3701
+   "dur": 0.62,
+   "bytes": 3788
   },
   "t-kou142o": {
    "kind": "word",
-   "dur": 0.5,
-   "bytes": 3518
+   "dur": 0.6,
+   "bytes": 3644
   },
   "t-ktuf3re_su142owo_pasuje_do_obrazkau3f": {
    "kind": "instruction",
-   "dur": 1.85,
-   "bytes": 13026
+   "dur": 2.11,
+   "bytes": 12716
   },
   "t-ktuf3re_zdanie_pasuje_do_obrazkau3f": {
    "kind": "instruction",
-   "dur": 1.8,
-   "bytes": 12661
+   "dur": 2.16,
+   "bytes": 13004
   },
   "t-ktuf3ry_obrazek_zaczyna_siu119_od_du17awiu119ku": {
    "kind": "instruction",
-   "dur": 2.12,
-   "bytes": 14855
+   "dur": 2.59,
+   "bytes": 15596
   },
   "t-ku": {
    "kind": "syllable",
-   "dur": 0.44,
-   "bytes": 3152
+   "dur": 0.48,
+   "bytes": 2924
   },
   "t-kura": {
    "kind": "word",
-   "dur": 0.52,
-   "bytes": 3701
+   "dur": 0.62,
+   "bytes": 3788
   },
   "t-kura_ma_jajou2e": {
    "kind": "sentence",
-   "dur": 1.1,
-   "bytes": 7724
+   "dur": 1.13,
+   "bytes": 6812
   },
   "t-la": {
    "kind": "syllable",
-   "dur": 0.37,
-   "bytes": 2604
+   "dur": 0.5,
+   "bytes": 3068
   },
   "t-lala": {
    "kind": "word",
-   "dur": 0.52,
-   "bytes": 3701
+   "dur": 0.7,
+   "bytes": 4220
   },
   "t-las": {
    "kind": "word",
-   "dur": 0.52,
-   "bytes": 3701
+   "dur": 0.62,
+   "bytes": 3788
   },
   "t-lasu": {
    "kind": "word",
-   "dur": 0.63,
-   "bytes": 4432
+   "dur": 0.72,
+   "bytes": 4364
   },
   "t-lesie": {
    "kind": "word",
-   "dur": 0.73,
-   "bytes": 5164
+   "dur": 0.7,
+   "bytes": 4220
   },
   "t-li": {
    "kind": "syllable",
-   "dur": 0.5,
-   "bytes": 3518
+   "dur": 0.55,
+   "bytes": 3356
   },
   "t-lis": {
    "kind": "word",
-   "dur": 0.47,
-   "bytes": 3335
+   "dur": 0.65,
+   "bytes": 3932
   },
   "t-lis_idzie_do_domuu2e": {
    "kind": "sentence",
-   "dur": 1.31,
-   "bytes": 9186
+   "dur": 1.39,
+   "bytes": 8396
   },
   "t-lis_ma_butyu2e": {
    "kind": "sentence",
-   "dur": 0.97,
-   "bytes": 6809
+   "dur": 1.18,
+   "bytes": 7100
   },
   "t-lo": {
    "kind": "syllable",
-   "dur": 0.42,
-   "bytes": 2969
+   "dur": 0.77,
+   "bytes": 4652
   },
   "t-lody": {
    "kind": "word",
-   "dur": 0.52,
-   "bytes": 3701
+   "dur": 0.67,
+   "bytes": 4076
   },
   "t-lody_su105_dobreu2e": {
    "kind": "sentence",
-   "dur": 1.15,
-   "bytes": 8089
+   "dur": 1.22,
+   "bytes": 7388
   },
   "t-lu": {
    "kind": "syllable",
-   "dur": 0.42,
-   "bytes": 2969
+   "dur": 0.48,
+   "bytes": 2924
   },
   "t-lubi": {
    "kind": "word",
-   "dur": 0.44,
-   "bytes": 3152
+   "dur": 0.67,
+   "bytes": 4076
   },
   "t-ly": {
    "kind": "syllable",
-   "dur": 0.47,
-   "bytes": 3335
+   "dur": 1.13,
+   "bytes": 6812
   },
   "t-ma": {
    "kind": "syllable",
-   "dur": 0.37,
-   "bytes": 2604
+   "dur": 0.55,
+   "bytes": 3356
   },
   "t-mak": {
    "kind": "word",
-   "dur": 0.47,
-   "bytes": 3335
+   "dur": 0.58,
+   "bytes": 3500
   },
   "t-mama": {
    "kind": "word",
-   "dur": 0.44,
-   "bytes": 3152
+   "dur": 0.67,
+   "bytes": 4076
   },
   "t-mama_lubi_lodyu2e": {
    "kind": "sentence",
-   "dur": 1.2,
-   "bytes": 8455
+   "dur": 1.37,
+   "bytes": 8252
   },
   "t-mama_ma_balonu2e": {
    "kind": "sentence",
-   "dur": 1.12,
-   "bytes": 7906
+   "dur": 1.27,
+   "bytes": 7676
   },
   "t-mama_ma_kotau2e": {
    "kind": "sentence",
-   "dur": 1.07,
-   "bytes": 7541
+   "dur": 1.22,
+   "bytes": 7388
   },
   "t-mama_ma_kotau2e_kot_ma_na_imiu119_mruku2e_mruk_lubi_rybu119u2e": {
    "kind": "sentence",
-   "dur": 3.0,
-   "bytes": 21072
+   "dur": 4.78,
+   "bytes": 28700
   },
   "t-mama_ma_lodyu2e": {
    "kind": "sentence",
-   "dur": 1.02,
-   "bytes": 7175
+   "dur": 1.25,
+   "bytes": 7532
   },
   "t-me": {
    "kind": "syllable",
-   "dur": 0.44,
-   "bytes": 3152
+   "dur": 0.58,
+   "bytes": 3500
   },
   "t-mi": {
    "kind": "syllable",
-   "dur": 0.42,
-   "bytes": 2969
+   "dur": 0.55,
+   "bytes": 3356
   },
   "t-mo": {
    "kind": "syllable",
-   "dur": 0.44,
-   "bytes": 3152
+   "dur": 0.79,
+   "bytes": 4796
   },
   "t-mruk": {
    "kind": "word",
-   "dur": 0.5,
-   "bytes": 3518
+   "dur": 0.67,
+   "bytes": 4076
   },
   "t-mruk_lubi_rybu119u2e": {
    "kind": "sentence",
-   "dur": 1.15,
-   "bytes": 8089
+   "dur": 1.39,
+   "bytes": 8396
   },
   "t-mu": {
    "kind": "syllable",
-   "dur": 0.47,
-   "bytes": 3335
+   "dur": 0.5,
+   "bytes": 3068
   },
   "t-mysz": {
    "kind": "word",
-   "dur": 0.39,
-   "bytes": 2786
+   "dur": 0.58,
+   "bytes": 3500
   },
   "t-mysz_chowa_ser_w_szafieu2e": {
    "kind": "sentence",
-   "dur": 1.44,
-   "bytes": 10101
+   "dur": 1.85,
+   "bytes": 11132
   },
   "t-mysz_ma_seru2e": {
    "kind": "sentence",
-   "dur": 0.99,
-   "bytes": 6992
+   "dur": 1.08,
+   "bytes": 6524
   },
   "t-mysz_ma_seru2e_mysz_chowa_ser_w_szafieu2e_kot_nie_ma_serau2e": {
    "kind": "sentence",
-   "dur": 3.79,
-   "bytes": 26558
+   "dur": 4.78,
+   "bytes": 28700
   },
   "t-na": {
    "kind": "syllable",
-   "dur": 0.47,
-   "bytes": 3335
+   "dur": 0.55,
+   "bytes": 3356
   },
   "t-ni": {
    "kind": "syllable",
-   "dur": 0.37,
-   "bytes": 2604
+   "dur": 0.5,
+   "bytes": 3068
   },
   "t-nic_nie_szkodziu2e_spruf3buj_jeszcze_razu2e": {
    "kind": "retry",
-   "dur": 2.43,
-   "bytes": 17049
+   "dur": 3.31,
+   "bytes": 19916
   },
   "t-nie": {
    "kind": "word",
-   "dur": 0.37,
-   "bytes": 2604
+   "dur": 0.46,
+   "bytes": 2780
   },
   "t-no": {
    "kind": "syllable",
-   "dur": 0.52,
-   "bytes": 3701
+   "dur": 0.5,
+   "bytes": 3068
   },
   "t-noga": {
    "kind": "word",
-   "dur": 0.52,
-   "bytes": 3701
+   "dur": 0.67,
+   "bytes": 4076
   },
   "t-ny": {
    "kind": "syllable",
-   "dur": 0.5,
-   "bytes": 3518
+   "dur": 0.55,
+   "bytes": 3356
   },
   "t-oko": {
    "kind": "word",
-   "dur": 0.47,
-   "bytes": 3335
+   "dur": 0.58,
+   "bytes": 3500
   },
   "t-ola": {
    "kind": "word",
-   "dur": 0.34,
-   "bytes": 2421
+   "dur": 0.6,
+   "bytes": 3644
   },
   "t-ola_i_mama_jedzu105_lodyu2e": {
    "kind": "sentence",
-   "dur": 1.44,
-   "bytes": 10101
+   "dur": 1.92,
+   "bytes": 11564
   },
   "t-ola_ma_lodyu2e": {
    "kind": "sentence",
-   "dur": 0.99,
-   "bytes": 6992
+   "dur": 1.13,
+   "bytes": 6812
   },
   "t-ola_ma_lodyu2e_lody_su105_dobreu2e_mama_lubi_lodyu2e_ola_i_mama_jedzu105_lodyu2e": {
    "kind": "sentence",
-   "dur": 5.17,
-   "bytes": 36249
+   "dur": 6.48,
+   "bytes": 38924
   },
   "t-osa": {
    "kind": "word",
-   "dur": 0.42,
-   "bytes": 2969
+   "dur": 0.67,
+   "bytes": 4076
   },
   "t-osa_lubi_maku2e": {
    "kind": "sentence",
-   "dur": 1.15,
-   "bytes": 8089
+   "dur": 1.27,
+   "bytes": 7676
   },
   "t-pa": {
    "kind": "syllable",
-   "dur": 0.39,
-   "bytes": 2786
+   "dur": 0.53,
+   "bytes": 3212
   },
   "t-pe": {
    "kind": "syllable",
-   "dur": 0.42,
-   "bytes": 2969
+   "dur": 0.82,
+   "bytes": 4940
   },
   "t-piu119knieu21": {
    "kind": "praise",
-   "dur": 0.78,
-   "bytes": 5529
+   "dur": 0.77,
+   "bytes": 4652
   },
   "t-po": {
    "kind": "syllable",
-   "dur": 0.39,
-   "bytes": 2786
+   "dur": 0.48,
+   "bytes": 2924
   },
   "t-posu142uchaj_jeszcze_raz_i_spruf3buju2e": {
    "kind": "retry",
-   "dur": 1.91,
-   "bytes": 13392
+   "dur": 2.11,
+   "bytes": 12716
   },
   "t-posu142uchaju2e": {
    "kind": "instruction",
-   "dur": 0.91,
-   "bytes": 6444
+   "dur": 0.89,
+   "bytes": 5372
   },
   "t-prawieu21_spruf3buj_jeszcze_razu2e": {
    "kind": "retry",
-   "dur": 2.04,
-   "bytes": 14306
+   "dur": 2.81,
+   "bytes": 16892
   },
   "t-przeczytaj_czytanku119u2c_dotykaju105c_zdau144u2e_potem_odpowiedz_na_pytanieu2e": {
    "kind": "instruction",
-   "dur": 3.84,
-   "bytes": 26924
+   "dur": 5.26,
+   "bytes": 31580
   },
   "t-pu": {
    "kind": "syllable",
-   "dur": 0.39,
-   "bytes": 2786
+   "dur": 0.74,
+   "bytes": 4508
   },
   "t-ra": {
    "kind": "syllable",
-   "dur": 0.44,
-   "bytes": 3152
+   "dur": 0.84,
+   "bytes": 5084
   },
   "t-re": {
    "kind": "syllable",
-   "dur": 0.44,
-   "bytes": 3152
+   "dur": 0.53,
+   "bytes": 3212
   },
   "t-rewelacjau21": {
    "kind": "praise",
-   "dur": 0.91,
-   "bytes": 6444
+   "dur": 0.98,
+   "bytes": 5948
   },
   "t-ri": {
    "kind": "syllable",
-   "dur": 0.52,
-   "bytes": 3701
+   "dur": 0.55,
+   "bytes": 3356
   },
   "t-ro": {
    "kind": "syllable",
-   "dur": 0.5,
-   "bytes": 3518
+   "dur": 0.48,
+   "bytes": 2924
   },
   "t-rower": {
    "kind": "word",
-   "dur": 0.63,
-   "bytes": 4432
+   "dur": 0.67,
+   "bytes": 4076
   },
   "t-rower_ma_kou142au2e": {
    "kind": "sentence",
    "dur": 1.2,
-   "bytes": 8455
+   "bytes": 7244
   },
   "t-ru": {
    "kind": "syllable",
-   "dur": 0.5,
-   "bytes": 3518
+   "dur": 0.74,
+   "bytes": 4508
   },
   "t-ryba": {
    "kind": "word",
-   "dur": 0.52,
-   "bytes": 3701
+   "dur": 0.65,
+   "bytes": 3932
   },
   "t-rybu119": {
    "kind": "word",
-   "dur": 0.57,
-   "bytes": 4066
+   "dur": 0.65,
+   "bytes": 3932
   },
   "t-sa": {
    "kind": "syllable",
-   "dur": 0.52,
-   "bytes": 3701
+   "dur": 0.77,
+   "bytes": 4652
   },
   "t-se": {
    "kind": "syllable",
-   "dur": 0.39,
-   "bytes": 2786
+   "dur": 0.89,
+   "bytes": 5372
   },
   "t-ser": {
    "kind": "word",
-   "dur": 0.5,
-   "bytes": 3518
+   "dur": 0.6,
+   "bytes": 3644
   },
   "t-sera": {
    "kind": "word",
-   "dur": 0.55,
-   "bytes": 3884
+   "dur": 0.7,
+   "bytes": 4220
   },
   "t-si": {
    "kind": "syllable",
-   "dur": 0.39,
-   "bytes": 2786
+   "dur": 0.84,
+   "bytes": 5084
   },
   "t-so": {
    "kind": "syllable",
-   "dur": 0.44,
-   "bytes": 3152
+   "dur": 0.84,
+   "bytes": 5084
   },
   "t-sok": {
    "kind": "word",
-   "dur": 0.44,
-   "bytes": 3152
+   "dur": 0.62,
+   "bytes": 3788
   },
   "t-sowa": {
    "kind": "word",
-   "dur": 0.52,
-   "bytes": 3701
+   "dur": 0.67,
+   "bytes": 4076
   },
   "t-spruf3buj_jeszcze_razu2e": {
    "kind": "retry",
-   "dur": 1.18,
-   "bytes": 8272
+   "dur": 1.46,
+   "bytes": 8828
   },
   "t-su": {
    "kind": "syllable",
-   "dur": 0.42,
-   "bytes": 2969
+   "dur": 0.58,
+   "bytes": 3500
   },
   "t-su105": {
    "kind": "word",
-   "dur": 0.44,
-   "bytes": 3152
+   "dur": 0.55,
+   "bytes": 3356
   },
   "t-superu21": {
    "kind": "praise",
-   "dur": 0.65,
-   "bytes": 4615
+   "dur": 0.7,
+   "bytes": 4220
   },
   "t-szafa": {
    "kind": "word",
-   "dur": 0.65,
-   "bytes": 4615
+   "dur": 0.72,
+   "bytes": 4364
   },
   "t-szafie": {
    "kind": "word",
-   "dur": 0.68,
-   "bytes": 4798
+   "dur": 0.77,
+   "bytes": 4652
   },
   "t-szafu119": {
    "kind": "word",
-   "dur": 0.63,
-   "bytes": 4432
+   "dur": 0.7,
+   "bytes": 4220
   },
   "t-ta": {
    "kind": "syllable",
-   "dur": 0.42,
-   "bytes": 2969
+   "dur": 0.5,
+   "bytes": 3068
   },
   "t-tak_brzmi_lektor_w_tym_tempieu2e": {
    "kind": "parent",
-   "dur": 1.59,
-   "bytes": 11198
+   "dur": 1.97,
+   "bytes": 11852
   },
   "t-tak_jestu21": {
    "kind": "praise",
-   "dur": 0.78,
-   "bytes": 5529
+   "dur": 0.77,
+   "bytes": 4652
   },
   "t-tata": {
    "kind": "word",
-   "dur": 0.37,
-   "bytes": 2604
+   "dur": 0.65,
+   "bytes": 3932
   },
   "t-tata_jedzie_do_lasuu2e": {
    "kind": "sentence",
-   "dur": 1.23,
-   "bytes": 8638
+   "dur": 1.56,
+   "bytes": 9404
   },
   "t-tata_ma_roweru2e": {
    "kind": "sentence",
-   "dur": 0.99,
-   "bytes": 6992
+   "dur": 1.13,
+   "bytes": 6812
   },
   "t-tata_ma_roweru2e_rower_ma_kou142au2e_tata_jedzie_do_lasuu2e_mama_ma_balonu2e": {
    "kind": "sentence",
-   "dur": 4.6,
-   "bytes": 32226
+   "dur": 5.98,
+   "bytes": 35900
   },
   "t-te": {
    "kind": "syllable",
-   "dur": 0.39,
-   "bytes": 2786
+   "dur": 0.5,
+   "bytes": 3068
   },
   "t-ti": {
    "kind": "syllable",
-   "dur": 0.29,
-   "bytes": 2055
+   "dur": 0.82,
+   "bytes": 4940
   },
   "t-to": {
    "kind": "syllable",
-   "dur": 0.44,
-   "bytes": 3152
+   "dur": 0.46,
+   "bytes": 2780
   },
   "t-to_jest_domu2e": {
    "kind": "sentence",
-   "dur": 0.84,
-   "bytes": 5895
+   "dur": 0.96,
+   "bytes": 5804
   },
   "t-to_jest_kotu2e": {
    "kind": "sentence",
-   "dur": 1.04,
-   "bytes": 7358
+   "dur": 1.01,
+   "bytes": 6092
   },
   "t-to_jest_lasu2e": {
    "kind": "sentence",
-   "dur": 0.99,
-   "bytes": 6992
+   "dur": 1.01,
+   "bytes": 6092
   },
   "t-to_jest_lasu2e_w_lesie_jest_lisu2e_lis_ma_butyu2e_lis_idzie_do_domuu2e": {
    "kind": "sentence",
-   "dur": 4.31,
-   "bytes": 30215
+   "dur": 5.78,
+   "bytes": 34748
   },
   "t-to_jest_seru2e": {
    "kind": "sentence",
-   "dur": 0.99,
-   "bytes": 6992
+   "dur": 1.03,
+   "bytes": 6236
   },
   "t-tu": {
    "kind": "syllable",
-   "dur": 0.34,
-   "bytes": 2421
+   "dur": 0.48,
+   "bytes": 2924
   },
   "t-ty": {
    "kind": "syllable",
-   "dur": 0.31,
-   "bytes": 2238
+   "dur": 0.48,
+   "bytes": 2924
   },
   "t-u15bwietna_robotau21_ukou144czyu142eu15b_poziomu2e": {
    "kind": "finish",
-   "dur": 1.96,
-   "bytes": 13758
+   "dur": 3.22,
+   "bytes": 19340
   },
   "t-u15bwietnie_ci_idzieu21": {
    "kind": "praise",
-   "dur": 1.04,
-   "bytes": 7358
+   "dur": 1.3,
+   "bytes": 7820
   },
   "t-u15bwietnieu21": {
    "kind": "praise",
-   "dur": 0.68,
-   "bytes": 4798
+   "dur": 0.82,
+   "bytes": 4940
   },
   "t-u17ca": {
    "kind": "syllable",
-   "dur": 0.39,
-   "bytes": 2786
+   "dur": 0.62,
+   "bytes": 3788
   },
   "t-u17caba": {
    "kind": "word",
-   "dur": 0.57,
-   "bytes": 4066
+   "dur": 0.74,
+   "bytes": 4508
   },
   "t-u17caba_lubi_wodu119u2e": {
    "kind": "sentence",
-   "dur": 1.38,
-   "bytes": 9735
+   "dur": 1.39,
+   "bytes": 8396
   },
   "t-u17caba_ma_czapku119u2e": {
    "kind": "sentence",
-   "dur": 1.12,
-   "bytes": 7906
+   "dur": 1.42,
+   "bytes": 8540
   },
   "t-u17caba_ma_czapku119u2e_czapka_jest_zielonau2e_u17caba_lubi_wodu119u2e": {
    "kind": "sentence",
-   "dur": 3.27,
-   "bytes": 22901
+   "dur": 4.92,
+   "bytes": 29564
   },
   "t-uu142uf3u17c_su142owo_z_literu2e": {
    "kind": "instruction",
-   "dur": 1.25,
-   "bytes": 8821
+   "dur": 1.51,
+   "bytes": 9116
   },
   "t-uu142uf3u17c_su142owo_z_sylabu2e": {
    "kind": "instruction",
-   "dur": 1.38,
-   "bytes": 9735
+   "dur": 1.61,
+   "bytes": 9692
   },
   "t-uu142uf3u17c_sylabu119u2e": {
    "kind": "instruction",
-   "dur": 1.15,
-   "bytes": 8089
+   "dur": 1.18,
+   "bytes": 7100
   },
   "t-w": {
    "kind": "word",
-   "dur": 0.37,
-   "bytes": 2604
+   "dur": 0.98,
+   "bytes": 5948
   },
   "t-w_lesie": {
    "kind": "word",
-   "dur": 0.78,
-   "bytes": 5529
+   "dur": 0.79,
+   "bytes": 4796
   },
   "t-w_lesie_jest_lisu2e": {
    "kind": "sentence",
-   "dur": 1.28,
-   "bytes": 9004
+   "dur": 1.37,
+   "bytes": 8252
   },
   "t-w_szafie": {
    "kind": "word",
-   "dur": 0.65,
-   "bytes": 4615
+   "dur": 0.79,
+   "bytes": 4796
   },
   "t-w_wodzie": {
    "kind": "word",
-   "dur": 0.76,
-   "bytes": 5346
+   "dur": 0.84,
+   "bytes": 5084
   },
   "t-wa": {
    "kind": "syllable",
-   "dur": 0.31,
-   "bytes": 2238
+   "dur": 0.58,
+   "bytes": 3500
   },
   "t-we": {
    "kind": "syllable",
-   "dur": 0.37,
-   "bytes": 2604
+   "dur": 0.6,
+   "bytes": 3644
   },
   "t-wo": {
    "kind": "syllable",
-   "dur": 0.47,
-   "bytes": 3335
+   "dur": 0.72,
+   "bytes": 4364
   },
   "t-woda": {
    "kind": "word",
-   "dur": 0.47,
-   "bytes": 3335
+   "dur": 0.7,
+   "bytes": 4220
   },
   "t-wodu119": {
    "kind": "word",
-   "dur": 0.5,
-   "bytes": 3518
+   "dur": 0.7,
+   "bytes": 4220
   },
   "t-wspanialeu21": {
    "kind": "praise",
-   "dur": 0.71,
-   "bytes": 4981
+   "dur": 0.96,
+   "bytes": 5804
   },
   "t-wu": {
    "kind": "syllable",
-   "dur": 0.39,
-   "bytes": 2786
+   "dur": 0.6,
+   "bytes": 3644
   },
   "t-za": {
    "kind": "syllable",
-   "dur": 0.47,
-   "bytes": 3335
+   "dur": 0.6,
+   "bytes": 3644
   },
   "t-zi": {
    "kind": "syllable",
-   "dur": 0.39,
-   "bytes": 2786
+   "dur": 0.89,
+   "bytes": 5372
   },
   "t-zielona": {
    "kind": "word",
-   "dur": 0.81,
-   "bytes": 5712
+   "dur": 0.84,
+   "bytes": 5084
   },
   "t-zo": {
    "kind": "syllable",
-   "dur": 0.39,
-   "bytes": 2786
+   "dur": 0.79,
+   "bytes": 4796
   },
   "t-zy": {
    "kind": "syllable",
-   "dur": 0.42,
-   "bytes": 2969
+   "dur": 0.58,
+   "bytes": 3500
   }
  }
 }

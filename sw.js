@@ -3,7 +3,7 @@
 // Są cache'owane leniwie (przy pierwszym odtworzeniu, patrz handler fetch) oraz dociągane w tle po komunikacie
 // {type:'precache-audio'} wysyłanym przez stronę ~6 s po starcie (pomijane przy włączonym oszczędzaniu danych).
 // UWAGA: przy KAŻDEJ zmianie plików podnieś VERSION – stary cache zostanie usunięty przy aktywacji.
-const VERSION = 'v2';
+const VERSION = 'v4';
 const CACHE = `pierwsze-slowa-${VERSION}`;
 const SHELL = [
   './', 'index.html', 'icon.svg', 'css/app.css', 'audio/manifest.json',

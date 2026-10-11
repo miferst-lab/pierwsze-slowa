@@ -1,28 +1,26 @@
 # Głos lektora – pochodzenie i licencje
 
-Nagrania w tym katalogu (`*.mp3`) zostały wygenerowane **lokalnie, offline** skryptem `tools/generate-audio.py`
-neuronowym modelem syntezy mowy:
+**Głos syntetyczny (Microsoft Azure Neural TTS)** – nagrania `*.mp3` zostały wygenerowane skryptem `tools/generate-audio.py`
+usługą Azure AI Speech (REST), głos `pl-PL-ZofiaNeural` (region northeurope), a następnie przetworzone lokalnie
+(przycięcie ciszy, wydłużenie głosek ciągłych rubberbandem, normalizacja głośności, limiter, mp3 24 kHz / 48 kb/s mono).
+Teksty wejściowe są własnością autora gry. Klucza usługi nie ma w repozytorium.
 
-| | |
-|---|---|
-| Model | **NeonGeckoCom/tts-vits-mai-pl** (Coqui TTS, architektura VITS, jeden głos żeński, polski, 22,05 kHz) |
-| Strona modelu | https://huggingface.co/neongeckocom/tts-vits-mai-pl |
-| Licencja modelu | **BSD-3-Clause** (metadane karty modelu: `license: bsd-3-clause`; ta sama licencja w katalogu modeli Coqui: `tts_models/pl/mai_female/vits`, https://github.com/idiap/coqui-ai-TTS/blob/dev/TTS/.models.json) |
-| Dane treningowe | **M-AILABS Speech Dataset**, część polska (nagrania audiobooków), https://github.com/imdatceleste/m-ailabs-dataset |
-| Licencja danych | „Redistribution and use in any form, **including any commercial use**, with or without modification are permitted” + zakaz używania nazw autorów do promocji (warunki BSD) |
-| Silnik | coqui-tts (idiap fork), licencja MPL-2.0 – nie jest rozpowszechniany w tym repozytorium |
+Ujawnienie: Microsoft wymaga informowania użytkowników, że głos jest syntetyczny – gra to robi w panelu rodzica
+(„Głos syntetyczny (Microsoft Azure Neural TTS)”) i w README.
 
-Wnioski:
-- licencja modelu i danych dopuszcza ponowne rozpowszechnianie wyników (nagrań) w grze publicznej i komercyjnej;
-- model **nie jest** pochodną nagrań na licencjach „tylko do badań” (w odróżnieniu od polskich głosów Piper `gosia`/`darkman`/`mc_speech`,
-  które są dotrenowane z korpusu Lessac Blizzard 2013 – licencja „Research Purposes only”, albo `mls_6892` z RyanSpeech CC BY-NC-SA);
-- nie użyto Coqui XTTS (licencja CPML, ograniczenia komercyjne), MMS-TTS (CC-BY-NC) ani żadnych usług online
-  (Edge/Azure TTS, Google, ElevenLabs itp.).
+## Ważne zastrzeżenie licencyjne (stan na 2026-10)
 
-Atrybucja (BSD-3-Clause, §3: nie używamy nazw autorów danych/modelu do promocji):
-> Voice: NeonGeckoCom/tts-vits-mai-pl (BSD-3-Clause), trained on the M-AILABS Speech Dataset (Copyright (c) 2017-2019 M-AILABS, BSD-style licence).
-> THE MODEL AND DATA ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND.
+Warunki produktowe Microsoft przyznają prawa do **komercyjnego użycia wyników** syntezy głosami prebuilt neural wyłącznie klientom
+**płatnego** poziomu usługi; darmowy poziom **F0** jest przeznaczony do oceny/testów (źródła: Microsoft Q&A
+https://learn.microsoft.com/answers/questions/652774/ oraz https://learn.microsoft.com/en-au/answers/questions/5805156/ ; Product Terms: https://www.microsoft.com/licensing/terms/productoffering/MicrosoftAzure/MCA).
+Te nagrania powstały na zasobie **F0**. Dopóki gra jest darmowa i niekomercyjna (Piotrek, bez reklam), jest to akceptowalne; **przed jakąkolwiek
+sprzedażą/subskrypcją** wygeneruj nagrania ponownie na zasobie płatnym (S0 – to ok. 1,5 tys. znaków, grosze) tym samym skryptem (`--force`)
+albo użyj zapasowego generatora offline.
 
-Modelu (ok. 110 MB) nie ma w repozytorium – skrypt pobiera go z Hugging Face (`--download`).
-Przeróbki sygnału: wycinanie i wydłużanie głosek, korekta wysokości (rubberband), normalizacja głośności, limiter, kodowanie mp3 (ffmpeg).
-Głoski „f” i część składowych „w/z/ż/ź” to prosty sygnał syntetyczny (szum filtrowany), nie nagranie modelu – patrz `audio/README.md`.
+## Zapasowa ścieżka offline
+
+`tools/generate-audio-offline.py` – lokalny model NeonGeckoCom/tts-vits-mai-pl (Coqui VITS; model BSD-3-Clause, dane M-AILABS
+z wyraźną zgodą na użycie komercyjne; https://huggingface.co/neongeckocom/tts-vits-mai-pl). Nie jest używany domyślnie i nie ma modelu w repozytorium.
+Nie użyto polskich głosów Piper (`gosia`/`darkman`/`mc_speech` – dotrenowane z korpusu Lessac „Research Purposes only”; `mls_6892` – CC BY-NC-SA).
+
+Przeróbki sygnału nie zmieniają charakteru głosu; głosek ciągłych (mmm, sss…) Azure nie potrafi przytrzymać, więc są przedłużane algorytmicznie.

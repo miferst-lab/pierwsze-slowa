@@ -96,6 +96,7 @@ export function showParent(ctx, box) {
           radio('recorded', 'Nagrany głos (zalecany)', '– ten sam miły, kobiecy głos na każdym komputerze, działa bez internetu.'),
           radio('system', 'Głos systemowy', '– głos z Windows/przeglądarki (jakość zależy od komputera).')),
         speed, volume,
+        h('p', { class: 'muted', id: 'voice-credit' }, 'Głos syntetyczny (Microsoft Azure Neural TTS) – nagrania wygenerowane komputerowo, to nie jest głos człowieka.'),
         h('label', { class: 'row' }, 'Głos systemowy: ', sel),
         h('div', { class: 'btn-row' }, h('button', { class: 'btn', type: 'button', onclick: () => narrator.speak(['Cześć Piotrku! Zaczynamy czytać.'], { force: true }) }, 'Wypróbuj głos')),
         h('details', {}, h('summary', {}, 'Jak zainstalować polski głos w Windows 11 (dla głosu systemowego)'), h('ol', {}, VOICE_HELP.map((t) => h('li', {}, t)))),

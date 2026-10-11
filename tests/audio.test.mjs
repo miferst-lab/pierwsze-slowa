@@ -66,5 +66,5 @@ test('wszystkie 39 głosek z tabeli SAY ma nagranie', () => {
 });
 test('audio/README i licencja głosu istnieją i wskazują model oraz licencję', () => {
   const lic = readFileSync(join(dir, 'VOICE-LICENSE.md'), 'utf8');
-  assert.match(lic, /BSD-3-Clause/); assert.match(lic, /tts-vits-mai-pl/); assert.match(lic, /M-AILABS/);
+  assert.match(lic, /Azure Neural TTS/); assert.match(lic, /pl-PL-ZofiaNeural/); assert.match(lic, /F0/);
 });

@@ -45,7 +45,8 @@ PUPPETEER_CORE=/ścieżka/do/puppeteer-core node tools/browser-check.mjs [katalo
 index.html            jedyna strona (CSP: tylko własna domena)
 css/app.css           style (duże cele dotykowe, wysoki kontrast, prefers-reduced-motion)
 sw.js                 service worker – działanie offline (podnoś VERSION przy zmianach!); nagrania cache'owane leniwie + w tle
-tools/generate-audio.py  generator nagrań (lokalny neuronowy TTS, bez plików modelu w repo)
+tools/generate-audio.py  generator nagrań (Azure Neural TTS, REST; klucz tylko ze zmiennej środowiskowej)
+tools/generate-audio-offline.py  zapasowy generator w pełni offline (Coqui VITS, licencja BSD-3; nieużywany domyślnie)
 audio/                nagrania lektora (mp3) + manifest.json (generowane), VOICE-LICENSE.md (patrz audio/README.md)
 js/app.js             start, nawigacja, ekran startowy, skarby, przełącznik światów
 js/parent.js          panel rodzica (bramka 7+8, postępy, lektor, dane)
@@ -141,28 +142,29 @@ To czysta strona statyczna – wystarczy wgrać zawartość katalogu (bez `tests
 
 ## Lektor i nagrania
 
-Domyślnie lektor odtwarza **nagrania** (`audio/<id>.mp3`, mono 22,05 kHz, 56 kb/s, razem ok. 1,3 MB) – Piotrek słyszy ten sam głos na każdym komputerze, także bez internetu.
+Domyślnie lektor odtwarza **nagrania** (`audio/<id>.mp3`, mono 24 kHz, 48 kb/s, razem ok. 1,4 MB) – Piotrek słyszy ten sam głos na każdym komputerze, także bez internetu.
 Zapasowo (brak plików, błąd odtwarzania albo wybór rodzica „Głos systemowy”) działa `speechSynthesis`:
 
 - ranking głosów: wybór rodzica → polski głos z „Natural”/„Online” (np. *Microsoft Zofia Online (Natural)*) → Paulina/Zofia lokalna → dowolny `pl-PL`; głosy męskie na końcu;
 - głoski i sylaby: `rate 0.65`, `volume 1.0`; zdania: `rate 0.85`, `volume 0.9`; `pitch` 1.12 (pochwały 1.15); suwaki w panelu rodzica skalują tempo (70–130%) i głośność;
 - głosy „Online” Edge pobiera sam z internetu – to robi przeglądarka, nie gra (gra nie wysyła własnych żądań poza domenę); dlatego domyślne są nagrania.
 
-Głos: **NeonGeckoCom/tts-vits-mai-pl** (Coqui VITS, kobieta, polski; model BSD-3-Clause, dane M-AILABS z wyraźną zgodą na użycie komercyjne) – szczegóły i dowody licencji w `audio/VOICE-LICENSE.md`.
+**Głos syntetyczny (Microsoft Azure Neural TTS)** – `pl-PL-ZofiaNeural`. Nagrania zostały wygenerowane syntezatorem mowy, nie są głosem człowieka (informacja także w panelu rodzica). Uwagi o licencji wyników: `audio/VOICE-LICENSE.md`.
 
 ### Jak wygenerować nagrania od nowa (po zmianie zdań/poziomów)
 
 ```bash
 python3 -m venv .venv-tts && . .venv-tts/bin/activate
-pip install --extra-index-url https://download.pytorch.org/whl/cpu torch torchaudio coqui-tts torchcodec \
-    "transformers>=4.57,<5" huggingface_hub pyloudnorm soundfile librosa scipy numpy
-python tools/generate-audio.py --download      # pobiera model (ok. 110 MB) do ~/.cache/pierwsze-slowa-tts
-python tools/generate-audio.py                 # tylko brakujące nagrania; --force = wszystko, --only s-m,t-mama = wybrane
-npm test                                       # sprawdza, że manifest = pliki = lista wypowiedzi
+pip install numpy scipy librosa soundfile pyloudnorm       # + ffmpeg (libmp3lame, rubberband) i node w systemie
+export AZURE_SPEECH_KEY=...                                 # klucz zasobu Azure Speech (nie zapisuj go w plikach!)
+export AZURE_SPEECH_REGION=northeurope                      # domyślnie northeurope
+python tools/generate-audio.py                              # tylko brakujące; --force = wszystko, --only s-m,t-mama = wybrane
+npm test                                                    # manifest = pliki = lista wypowiedzi
 ```
 
-Skrypt sam bierze listę wypowiedzi z `js/core/spoken.js` (przez `tools/list-audio-ids.mjs --json`), aktualizuje `audio/manifest.json` i zapisuje raport jakości `docs/audio-report.json` (głośność, szczyt, czas, cechy widma i lista „podejrzanych” nagrań).
-Nowe zdanie w programie = jeden przebieg skryptu. Wymaga `ffmpeg` (libmp3lame, rubberband) i `node`. Pliku modelu nie ma w repozytorium.
+Skrypt bierze listę wypowiedzi z `js/core/spoken.js` (przez `tools/list-audio-ids.mjs --json`), wysyła SSML (`<prosody>`: głoski i sylaby rate −25% i głośno, zdania −8%, pochwały pitch +6% / rate −3%; pojedyncze głoski przez `<phoneme alphabet="ipa">` i wydłużenie ciągłych), normalizuje głośność, koduje mp3, aktualizuje `audio/manifest.json` i zapisuje `docs/audio-report.json`.
+Czytanki „Przeczytaj wszystko” są sklejane lokalnie z nagrań pojedynczych zdań (bez dodatkowych znaków).
+**Limit darmowego poziomu F0:** twardy limit 4500 znaków na uruchomienie, odpowiedzi cache'owane po haszu SSML w `~/.cache/pierwsze-slowa-azure` (niezmienione nagrania nie są pobierane ponownie), po HTTP 401/403/429 skrypt kończy działanie bez ponawiania. Pełne wygenerowanie to ok. 1,5 tys. znaków.
 
 ### Cache offline (service worker)
 
