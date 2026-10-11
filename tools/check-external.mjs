@@ -8,7 +8,7 @@ import { join, relative } from 'node:path';
 const root = new URL('..', import.meta.url).pathname;
 const SKIP = new Set(['node_modules', '.git', 'tests', 'tools', 'docs', 'README.md', 'package.json', 'package-lock.json']);
 const EXT = /\.(html|css|js|mjs|svg|json|webmanifest)$/;
-const walk = (d) => readdirSync(d).flatMap((n) => (SKIP.has(n) ? [] : (p => (statSync(p).isDirectory() ? walk(p) : [p]))(join(d, n))));
+const walk = (d) => readdirSync(d).flatMap((n) => (SKIP.has(n) || n.startsWith('.') ? [] : (p => (statSync(p).isDirectory() ? walk(p) : [p]))(join(d, n))));
 const isComment = (line) => /^\s*(\/\/|\/\*|\*|<!--)/.test(line);
 const PATTERNS = [
   [/https?:\/\/[^\s'"`)<>]+/gi, 'adres http(s)'],

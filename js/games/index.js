@@ -94,7 +94,7 @@ export function runGame(ctx, box, { subject, gameId, onExit, bonus = false }) {
   }
 
   /* ---------- pętla: pauza na ukrytej karcie i przy fokusie klawiatury ---------- */
-  const keyboardFocus = () => document.activeElement?.classList?.contains(itemClass) && field.contains(document.activeElement);
+  const keyboardFocus = () => { const a = document.activeElement; return !!a?.classList?.contains(itemClass) && field.contains(a) && a.matches(':focus-visible'); }; // tylko fokus z klawiatury (kliknięcie myszą nie wstrzymuje gry)
   const frame = (t) => {
     if (destroyed) return;
     raf = requestAnimationFrame(frame);
@@ -135,7 +135,7 @@ function lap(env) {
     const picks = pickItems(env.q, 6, rand), item = wantCorrect ? env.q.correct : picks.filter((p) => p.id !== env.q.correct.id)[Math.floor(rand() * Math.max(1, picks.length - 1))] ?? picks[0];
     const el = itemEl(item, 'falling');
     const it = { el, item, x: laneX(lane), y: -0.08, lane, state: 'fall', t: 0, isCorrect: item.id === env.q.correct.id };
-    el.addEventListener('click', () => resolve(it, true)); field.append(el); items.push(it); place(el, it.x, it.y);
+    el.addEventListener('click', (e) => { if (e.detail > 0) el.blur(); resolve(it, true); }); field.append(el); items.push(it); place(el, it.x, it.y);
   };
   function resolve(it, byTap = false) {
     if (it.state !== 'fall') return;
@@ -229,7 +229,7 @@ function balony(env) {
     const picks = pickItems(env.q, 6, rand), item = wantCorrect ? env.q.correct : picks.filter((p) => p.id !== env.q.correct.id)[Math.floor(rand() * Math.max(1, picks.length - 1))] ?? picks[0];
     const el = itemEl(item, 'balloon'); el.style.setProperty('--bal', skin.balloon[balls.length % skin.balloon.length]);
     const b = { el, item, x: laneX(lane), y: 1.12, isCorrect: item.id === env.q.correct.id, state: 'up', ph: rand() * 6 };
-    el.addEventListener('click', () => pop(b)); field.append(el); balls.push(b); place(el, b.x, b.y);
+    el.addEventListener('click', (e) => { if (e.detail > 0) el.blur(); pop(b); }); field.append(el); balls.push(b); place(el, b.x, b.y);
   };
   function pop(b) {
     if (b.state !== 'up') return;
