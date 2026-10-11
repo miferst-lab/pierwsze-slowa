@@ -4,7 +4,7 @@ export const STATE_VERSION = 1;
 export const ITEMS_PER_WORLD = 12;
 
 export function defaultState() {
-  return { v: STATE_VERSION, world: 'kosmos', narrator: true, rate: 0.8, voiceMode: 'recorded', speed: 1, volume: 1, voiceURI: null, unlockAll: false, levels: {}, hits: {}, misses: {}, updatedAt: 0 };
+  return { v: STATE_VERSION, world: 'kosmos', narrator: true, rate: 0.8, voiceMode: 'recorded', speed: 1, volume: 1, voiceURI: null, unlockAll: false, gameSpeed: 'slow', games: {}, levels: {}, hits: {}, misses: {}, updatedAt: 0 };
 }
 
 const isObj = (x) => x && typeof x === 'object' && !Array.isArray(x);
@@ -30,6 +30,13 @@ export function parseState(raw, worldIds = ['kosmos', 'dzungla', 'wyspy']) {
   if (Number.isFinite(o.volume)) d.volume = clamp(o.volume, 0.2, 1);
   if (typeof o.voiceURI === 'string') d.voiceURI = o.voiceURI.slice(0, 300);
   if (typeof o.unlockAll === 'boolean') d.unlockAll = o.unlockAll;
+  if (o.gameSpeed === 'slow' || o.gameSpeed === 'normal') d.gameSpeed = o.gameSpeed;
+  if (isObj(o.games)) {
+    for (const [k, g] of Object.entries(o.games)) {
+      if (!/^(reading|math):[a-z]{3,12}$/.test(k) || !isObj(g)) continue;
+      d.games[k] = { stars: Number.isInteger(g.stars) ? clamp(g.stars, 0, 3) : 0, plays: Number.isInteger(g.plays) ? clamp(g.plays, 0, 100000) : 0 };
+    }
+  }
   if (isObj(o.levels)) {
     for (const [lid, lv] of Object.entries(o.levels)) {
       if (!isObj(lv) || !isObj(lv.tasks)) continue;
@@ -105,4 +112,17 @@ export function weakItems(s, n = 10) {
     .map((x) => ({ ...x, ratio: x.misses / (x.misses + x.hits) }))
     .sort((a, b) => b.ratio - a.ratio || b.misses - a.misses)
     .slice(0, n);
+}
+
+/** Zabawy zręcznościowe: najlepsze gwiazdki (1–3) i liczba rund. Klucz: „reading:lap”, „math:sciezka”. */
+export const gameKey = (subject, id) => `${subject}:${id}`;
+export function recordGame(state, subject, id, stars) {
+  const g = (state.games[gameKey(subject, id)] ??= { stars: 0, plays: 0 });
+  g.stars = Math.max(g.stars, clamp(Math.round(stars), 1, 3)); g.plays += 1;
+  return g;
+}
+export const gameInfo = (state, subject, id) => state.games[gameKey(subject, id)] ?? { stars: 0, plays: 0 };
+/** Skarby rosną z ukończonymi poziomami WSZYSTKICH modułów; nigdy nie mniej niż wcześniej (sam moduł czytania). */
+export function itemsUnlockedCombined(s, readingLevels, allLevels, total = ITEMS_PER_WORLD) {
+  return Math.max(itemsUnlocked(s, readingLevels, total), itemsUnlocked(s, allLevels, total));
 }

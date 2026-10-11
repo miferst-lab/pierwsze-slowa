@@ -41,9 +41,9 @@ const others = (pool, not, n, off = 0) => rot(pool.filter((x) => x !== not), off
 const opts = (target, pool, off) => [target, ...others(pool, target, 2, off)];
 
 let levelNo = 0;
-const mk = (group, title, intro, tasks, preview = '') => {
+const mk = (group, title, intro, tasks, preview = '', learn = {}) => {
   const id = 'L' + String(++levelNo).padStart(2, '0');
-  return { id, num: levelNo, group, title, intro, preview, tasks: tasks.slice(0, 8).map((t, i) => ({ id: `${id}-${i + 1}`, ...t })) };
+  return { id, num: levelNo, group, title, intro, preview, learn, tasks: tasks.slice(0, 8).map((t, i) => ({ id: `${id}-${i + 1}`, ...t })) };
 };
 
 const learnedSounds = [];
@@ -61,7 +61,7 @@ function soundLevel(title, letters, intro) {
     } else tasks.push(hear(L, i + 1));
   });
   learnedSounds.push(...letters);
-  return mk('sounds', title, intro, tasks, letters.join(' '));
+  return mk('sounds', title, intro, tasks, letters.join(' '), { sounds: [...letters] });
 }
 
 const learnedCons = [];
@@ -77,7 +77,7 @@ function sylLevel(title, cons, intro) {
     mkHearC(C(2), 'i'), mkBuild(C(1), 'a'), mkHearV(C(2), 'y'), mkHearC(C(0), 'u'),
   ].map((t) => (t.options ? { ...t, options: [...new Set(t.options)] } : t));
   learnedCons.push(...cons);
-  return mk('syllables', title, intro, tasks, cons.map((c) => c + 'a').join(' '));
+  return mk('syllables', title, intro, tasks, cons.map((c) => c + 'a').join(' '), { syllables: cons.flatMap((c) => vs(c).map((v) => c + v)) });
 }
 
 const learnedWords = [];
@@ -94,7 +94,7 @@ function wordLevel(title, words, intro) {
     else if (type === 'pick') tasks.push({ type, kind: 'word', prompt: 'Które słowo pasuje do obrazka?', say: ['Które słowo pasuje do obrazka?'], art: def.art, options: opts(w, pool, i), answer: w });
     else tasks.push({ type, kind: 'word', prompt: 'Posłuchaj i dotknij obrazek.', say: ['Posłuchaj.', w], options: opts(def.art, pool.map((x) => WORDS[x].art), i), answer: def.art, word: w });
   }
-  return mk('words', title, intro, tasks, words.slice(0, 3).join(' · '));
+  return mk('words', title, intro, tasks, words.slice(0, 3).join(' · '), { words: [...words] });
 }
 
 function sentenceLevel(title, defs, intro) {

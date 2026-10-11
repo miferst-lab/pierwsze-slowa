@@ -6,7 +6,7 @@ import { join, relative } from 'node:path';
 const root = new URL('..', import.meta.url).pathname;
 const sw = readFileSync(join(root, 'sw.js'), 'utf8');
 const shell = [...sw.match(/const SHELL = \[([\s\S]*?)\];/)[1].matchAll(/'([^']+)'/g)].map((m) => m[1]);
-const walk = (d) => readdirSync(d).flatMap((n) => { const p = join(d, n); return statSync(p).isDirectory() ? (['node_modules', '.git', 'tests', 'tools', 'docs'].includes(n) ? [] : walk(p)) : [p]; });
+const walk = (d) => readdirSync(d).flatMap((n) => { const p = join(d, n); return statSync(p).isDirectory() ? ((n.startsWith('.') || ['node_modules', 'tests', 'tools', 'docs'].includes(n)) ? [] : walk(p)) : [p]; });
 
 test('sw: każdy plik z SHELL istnieje', () => { for (const f of shell) if (f !== './') assert.ok(existsSync(join(root, f)), f); });
 test('sw: wszystkie pliki js/css/html są w cache powłoki', () => {

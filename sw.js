@@ -3,13 +3,31 @@
 // Są cache'owane leniwie (przy pierwszym odtworzeniu, patrz handler fetch) oraz dociągane w tle po komunikacie
 // {type:'precache-audio'} wysyłanym przez stronę ~6 s po starcie (pomijane przy włączonym oszczędzaniu danych).
 // UWAGA: przy KAŻDEJ zmianie plików podnieś VERSION – stary cache zostanie usunięty przy aktywacji.
-const VERSION = 'v4';
+const VERSION = 'v5';
 const CACHE = `pierwsze-slowa-${VERSION}`;
 const SHELL = [
-  './', 'index.html', 'icon.svg', 'css/app.css', 'audio/manifest.json',
-  'js/app.js', 'js/parent.js', 'js/core/narrator.js', 'js/core/progress.js', 'js/core/say.js', 'js/core/lines.js', 'js/core/spoken.js', 'js/core/ui.js',
-  'js/art/words.js', 'js/art/worlds.js',
-  'modules/index.js', 'modules/reading/index.js', 'modules/reading/curriculum.js', 'modules/reading/runner.js', 'modules/math/index.js',
+  './',
+  'css/app.css',
+  'icon.svg',
+  'index.html',
+  'js/app.js',
+  'js/art/manip.js',
+  'js/art/words.js',
+  'js/art/worlds.js',
+  'js/core/lines.js',
+  'js/core/narrator.js',
+  'js/core/numerals.js',
+  'js/core/progress.js',
+  'js/core/say.js',
+  'js/core/spoken.js',
+  'js/core/ui.js',
+  'js/parent.js',
+  'modules/index.js',
+  'modules/math/index.js',
+  'modules/reading/curriculum.js',
+  'modules/reading/index.js',
+  'modules/reading/runner.js',
+  'audio/manifest.json',
 ];
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
