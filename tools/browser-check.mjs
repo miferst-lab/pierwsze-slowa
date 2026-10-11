@@ -201,11 +201,21 @@ try {
   for (const f of ['/audio/t-posu142uchaju2e.mp3', '/audio/s-m.mp3', '/audio/manifest.json']) if (report.audio[f]?.status !== 200) throw new Error('brak 200 dla ' + f + ': ' + JSON.stringify(report.audio));
   if (!/audio\/mpeg/.test(report.audio['/audio/s-m.mp3'].type ?? '')) throw new Error('zły content-type mp3: ' + report.audio['/audio/s-m.mp3'].type);
   ok(`nagrania: 3 pliki zagrane bez błędów pod /pierwsze-slowa/ (czasy ${ev.filter((e) => e.ev === 'ended').map((e) => e.dur.toFixed(2)).join(', ')} s)`);
-  await shot(page, '01-start-kosmos');
+  { // nowy gracz zaczyna w „Leśnej Wyprawie”; ekran startowy bez przewijania, wszystkie obrazki (portrety, grupa) się wczytały
+    const w0 = await page.evaluate(() => document.documentElement.dataset.world);
+    if (w0 !== 'lesna') throw new Error('domyślny świat nowego gracza powinien być lesna, jest ' + w0);
+    await noScroll(page, 'start lesna'); await sleep(300); await shot(page, '01-start-lesna');
+    const bad = await page.evaluate(() => [...document.images].filter((i) => !i.complete || i.naturalWidth === 0).map((i) => i.src));
+    if (bad.length || !(await page.$('.parade-img')) || !(await page.$('.start .mascot img.sprite'))) throw new Error('obrazki Leśnej Wyprawy nie wczytane: ' + bad);
+    ok('Leśna Wyprawa: świat domyślny, ekran startowy bez przewijania, obrazki (portret lisa, grupa) wczytane');
+  }
   // ekran startowy może się przewijać na bardzo niskich oknach; sprawdzamy tylko zadania
 
-  for (const w of ['dzungla', 'wyspy', 'kosmos']) { await chooseWorld(page, w); await sleep(300); await shot(page, `03-start-${w}`); }
-  ok('przełączanie światów na ekranie startowym');
+  for (const w of ['dzungla', 'wyspy', 'kosmos', 'lesna']) { await chooseWorld(page, w); await sleep(300); await shot(page, `03-start-${w}`); await noScroll(page, 'start ' + w); }
+  if ((await page.evaluate(() => JSON.parse(localStorage.getItem('pierwsze-slowa:v1')).world)) !== 'lesna') throw new Error('świat nie zapisany');
+  await click(page, '.world-btn'); const nw = await page.$$eval('.world-choice', (e) => e.length); await click(page, '.overlay .btn');
+  if (nw !== 4) throw new Error('powinny być 4 światy, jest ' + nw);
+  ok('przełączanie 4 światów na ekranie startowym (bez przewijania), wybór zapisany');
 
   await click(page, '.module-card[data-module="reading"]');
   await page.waitForSelector('.tile-level'); await shot(page, '04-mapa-poziomow');
@@ -234,7 +244,7 @@ try {
   // przeklikaj wszystkie pozostałe poziomy szybko (bez zrzutów), by sprawdzić każde zadanie z programu
   const ids = await page.$$eval('.tile-level[data-level]', (t) => t.map((x) => x.dataset.level));
   for (const lid of ids) {
-    if (['L01', 'L02', 'L03', 'L04', 'L05', 'L21', 'L22', 'L24'].includes(lid)) continue;
+    if (['L01', 'L03', 'L04', 'L05', 'L21', 'L22', 'L24'].includes(lid)) continue;
     await playLevel(page, lid, {}); await click(page, '.btn:not(.primary):not(.ghost)'); await page.waitForSelector('.tile-level');
   }
   ok('wszystkie ' + ids.length + ' poziomów rozwiązanych w przeglądarce');
@@ -266,7 +276,7 @@ try {
   ok(`matematyka: wszystkie ${mIds.length} poziomów rozwiązane w przeglądarce (typy: ${Object.keys(report.tasksSolved).filter((k) => k.startsWith('m:')).length})`);
   // zmiana świata w trakcie zadania matematycznego
   await click(page, '.tile-level[data-level="M07"]'); await page.waitForSelector('#stage');
-  for (const w of ['dzungla', 'wyspy', 'kosmos']) { await chooseWorld(page, w); await sleep(250); await shot(page, `16-matematyka-zadanie-swiat-${w}`); await noScroll(page, 'math zadanie ' + w); }
+  for (const w of ['dzungla', 'wyspy', 'kosmos', 'lesna']) { await chooseWorld(page, w); await sleep(250); await shot(page, `16-matematyka-zadanie-swiat-${w}`); await noScroll(page, 'math zadanie ' + w); }
   await click(page, '.back'); await page.waitForSelector('.tile-level');
   await page.evaluate(() => window.scrollTo(0, 0)); await page.$eval('.games', (e) => e.scrollIntoView()); await sleep(200); await shot(page, '17-mapa-matematyki-zabawy');
   // zabawy w matematyce
@@ -310,13 +320,14 @@ try {
 
   // zmiana świata w trakcie zadania
   await click(page, '.tile-level[data-level="L08"]'); await page.waitForSelector('#stage');
-  for (const w of ['dzungla', 'wyspy', 'kosmos']) { await chooseWorld(page, w); await sleep(250); await shot(page, `07-zadanie-swiat-${w}`); await noScroll(page, 'zadanie ' + w); }
+  for (const w of ['dzungla', 'wyspy', 'kosmos', 'lesna']) { await chooseWorld(page, w); await sleep(250); await shot(page, `07-zadanie-swiat-${w}`); await noScroll(page, 'zadanie ' + w); }
   ok('przełączenie świata w trakcie zadania');
   await click(page, '.back');
 
   // skarby
   await click(page, '.back'); await click(page, '.start-foot .btn:first-child'); await page.waitForSelector('.collection');
-  for (const w of ['kosmos', 'dzungla', 'wyspy']) { await chooseWorld(page, w); await sleep(250); await shot(page, `08-skarby-${w}`); }
+  for (const w of ['kosmos', 'dzungla', 'wyspy', 'lesna']) { await chooseWorld(page, w); await sleep(250); await shot(page, `08-skarby-${w}`); }
+  { const nb = await page.$$eval('.badge.got', (e) => e.length); if (nb !== 2) throw new Error('po wszystkich poziomach obie odznaki powinny być zdobyte, jest ' + nb); await page.$eval('.badges', (e) => e.scrollIntoView()); await sleep(200); await shot(page, '08-skarby-odznaki-lesna'); ok('odznaki „Odkrywca Liter” i „Mistrz Liczenia” zdobyte po ukończeniu wszystkich poziomów'); }
   const got = await page.$$eval('.coll.got', (e) => e.length); ok(`skarby: ${got} z 12 zebrane po wszystkich poziomach`);
   await click(page, '.back');
 
@@ -339,6 +350,7 @@ try {
   await page.evaluate(() => navigator.serviceWorker.ready); await sleep(800);
   await page.setOfflineMode(true); await page.reload({ waitUntil: 'domcontentloaded' });
   await page.waitForSelector('.module-card', { timeout: 6000 }); ok('offline po pierwszym wczytaniu: aplikacja startuje z cache');
+  { await sleep(500); const bad = await page.evaluate(() => [...document.images].filter((i) => !i.complete || i.naturalWidth === 0).map((i) => i.src)); if (bad.length) throw new Error('offline: obrazki nie wczytane z cache: ' + bad); ok('offline: portrety i grupa Leśnej Wyprawy wczytane z cache service workera'); }
   await page.setOfflineMode(false);
   await page.close();
 
@@ -348,7 +360,7 @@ try {
   await pr.waitForSelector('.module-card');
   if (await pr.$('.resume')) throw new Error('przycisk Kontynuuj widoczny bez zapisu');
   for (const [mod, lid, prefix] of [['reading', 'L02', 'L02'], ['math', 'M02', 'M02']]) {
-    await pr.evaluate((mod, lid, prefix) => localStorage.setItem('pierwsze-slowa:v1', JSON.stringify({ v: 1, unlockAll: true, world: 'dzungla',
+    await pr.evaluate((mod, lid, prefix) => localStorage.setItem('pierwsze-slowa:v1', JSON.stringify({ v: 1, unlockAll: true, world: mod === 'math' ? 'lesna' : 'dzungla',
       levels: { [lid]: { tasks: { [prefix + '-1']: 3, [prefix + '-2']: 2 }, done: false } }, last: { module: mod, level: lid, idx: 2 } })), mod, lid, prefix);
     await pr.reload({ waitUntil: 'networkidle0' }); await pr.waitForSelector('.resume');
     const txt = await pr.$eval('.resume', (b) => b.textContent);
@@ -357,7 +369,7 @@ try {
     await click(pr, '.resume'); await pr.waitForSelector('#stage');
     const cur = await pr.$$eval('.starstrip .sstar', (e) => ({ on: e.filter((x) => x.classList.contains('on')).length, cur: e.findIndex((x) => x.classList.contains('cur')) }));
     const world = await pr.evaluate(() => document.documentElement.dataset.world);
-    if (cur.on !== 2 || cur.cur !== 2 || world !== 'dzungla') throw new Error('Kontynuuj: zły punkt wznowienia ' + JSON.stringify({ cur, world }));
+    if (cur.on !== 2 || cur.cur !== 2 || world !== (mod === 'math' ? 'lesna' : 'dzungla')) throw new Error('Kontynuuj: zły punkt wznowienia ' + JSON.stringify({ cur, world }));
     await noScroll(pr, 'zadanie po Kontynuuj');
     const last = await pr.evaluate(() => JSON.parse(localStorage.getItem('pierwsze-slowa:v1')).last);
     if (last.module !== mod || last.level !== lid || last.idx !== 2) throw new Error('last nie zapisany: ' + JSON.stringify(last));
@@ -370,7 +382,7 @@ try {
   await p2.goto(BASE + '/?test=1', { waitUntil: 'networkidle0' });
   await p2.waitForSelector('.module-card'); await sleep(500);
   if (!(await p2.$eval('#voice-banner', (b) => b.hidden))) throw new Error('baner widoczny mimo głosu');
-  await shot(p2, '11-start-1920x1080');
+  await noScroll(p2, 'start 1920x1080'); await shot(p2, '11-start-1920x1080');
   const voiceName = await p2.evaluate(() => window.__ps.narrator.voice?.name);
   if (!/Zofia Online \(Natural\)/.test(voiceName)) throw new Error('ranking: oczekiwano Zofia Online (Natural), jest: ' + voiceName);
   ok('głos systemowy: ranking wybrał ' + voiceName);
