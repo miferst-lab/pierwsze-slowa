@@ -118,7 +118,7 @@ Trzy zabawy wspólne dla obu przedmiotów, bez czasu, żyć i porażek (błędny
 - **Ścieżka** – bohater skacze na jedną z trzech platform (planeta, kłoda, liść – zależnie od świata); przeszkody to tylko dekoracja.
 - **Balony** – unoszące się balony; przebij ten z właściwą odpowiedzią, błędne tylko się chwieją.
 
-Sterowanie: mysz i dotyk, strzałki lub WASD (Łap: kosz; Ścieżka: wybór platformy + Enter/spacja; Balony: celownik + spacja), a także tryb tylko-klawiaturowy: Tab przechodzi po elementach (ruch wstrzymuje się na czas fokusu), Enter wybiera.
+Sterowanie: mysz i dotyk, strzałki lub WASD (Łap: kosz; Ścieżka: wybór platformy + Enter/spacja; Balony: celownik + spacja), a także tryb tylko-klawiaturowy: Tab przechodzi po elementach (w Łap i Balonach ruch wstrzymuje się na czas fokusu), Enter wybiera.
 Zabawy odblokowują się po 3 ukończonych poziomach (węzły „Zabawa” na końcu każdej mapy), a po poziomach 4, 8, 12… pojawia się przycisk „Zabawa bonusowa”. Treść pochodzi z programu: tylko poznane głoski/sylaby/słowa albo liczby i działania z ukończonych poziomów.
 Prędkość: w panelu rodzica „Wolno (zalecane)” albo „Normalnie”; `prefers-reduced-motion` dodatkowo zwalnia i wyłącza kołysanie. Pętla `requestAnimationFrame` z czasem delta, pauza przy ukrytej karcie.
 

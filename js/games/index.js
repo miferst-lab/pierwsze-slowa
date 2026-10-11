@@ -100,7 +100,7 @@ export function runGame(ctx, box, { subject, gameId, onExit, bonus = false }) {
     raf = requestAnimationFrame(frame);
     const dt = Math.min(0.05, (t - lastT) / 1000 || 0); lastT = t;
     if (document.hidden || over) return;
-    if (keyboardFocus()) return; // tryb klawiaturowy: elementy stoją w miejscu, gdy wybierasz je Tab-em
+    if (gameId !== 'sciezka' && keyboardFocus()) return; // tryb klawiaturowy: elementy stoją w miejscu, gdy wybierasz je Tab-em
     game.update(dt);
   };
   const onVis = () => { if (document.hidden) narrator.cancel(); lastT = performance.now(); };

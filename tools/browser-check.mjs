@@ -299,7 +299,7 @@ try {
   const spokenParts = await page.evaluate(async () => {
     const { audioId } = await import('./js/core/say.js');
     const m = await (await fetch('audio/manifest.json')).json(); const have = new Set(Object.keys(m.clips));
-    const all = [...new Set(window.__ps.narrator.log.flat())];
+    const all = [...new Set(window.__ps.narrator.log.flat(Infinity))];
     return { n: all.length, missing: all.filter((p) => !have.has(audioId(p))) };
   });
   if (spokenParts.missing.length) throw new Error('wypowiedzi bez nagrania: ' + spokenParts.missing.join(' | '));
