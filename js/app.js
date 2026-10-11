@@ -85,16 +85,25 @@ function start() {
   root.append(h('div', { class: 'start' }, ctx.topbar({}),
     h('div', { class: 'hero' }, h('div', { class: 'mascot big', 'data-mascot': 0, html: m0.svg, 'aria-hidden': 'true' }),
       h('div', {}, h('h1', { class: 'logo' }, 'Pierwsze Słowa'), h('p', { class: 'lead on-bg' }, `Cześć Piotrku! Co dziś robimy?`))),
+    resumeBtn(),
     h('div', { class: 'module-row' }, cards),
     h('div', { class: 'start-foot' },
       h('button', { class: 'btn', type: 'button', onclick: () => go('collection') }, h('span', { html: STAR, class: 'ico star-ico', 'aria-hidden': 'true' }), `Moje skarby`),
       h('button', { class: 'btn ghost', type: 'button', onclick: () => go('parent') }, 'Dla rodzica'))));
   voiceBanner();
 }
-function openModule(m) {
+function resumeBtn() {
+  const r = P.resumeTarget(state, { reading: LEVELS, math: MATH_LEVELS });
+  if (!r) return null;
+  const m = MODULES.find((x) => x.id === r.module);
+  return h('button', { class: 'btn primary resume', type: 'button', 'data-resume': r.level.id, onclick: () => openModule(m, { resumeLevel: r.level }),
+    'aria-label': `Kontynuuj: ${m.title}, poziom ${r.level.num}, zadanie ${r.idx + 1} z ${r.tasks}` },
+    h('b', {}, 'Kontynuuj'), h('span', { class: 'resume-sub' }, `${m.title} · poziom ${r.level.num} · zadanie ${r.idx + 1}/${r.tasks}`));
+}
+function openModule(m, opts = {}) {
   ctx.onWorld = null; ctx.showBanner = false; voiceBanner(); clear(root);
   const box = h('div', { class: 'module-box', 'data-module-box': m.id }); root.append(box);
-  m.mount(ctx, box, { exit: start });
+  m.mount(ctx, box, { exit: start, resumeLevel: opts.resumeLevel });
 }
 function collection() {
   ctx.onWorld = collection; ctx.showBanner = false; voiceBanner(); clear(root);

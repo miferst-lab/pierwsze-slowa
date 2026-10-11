@@ -4,7 +4,7 @@ export const STATE_VERSION = 1;
 export const ITEMS_PER_WORLD = 12;
 
 export function defaultState() {
-  return { v: STATE_VERSION, world: 'kosmos', narrator: true, rate: 0.8, voiceMode: 'recorded', speed: 1, volume: 1, voiceURI: null, unlockAll: false, gameSpeed: 'slow', games: {}, levels: {}, hits: {}, misses: {}, updatedAt: 0 };
+  return { v: STATE_VERSION, world: 'kosmos', narrator: true, rate: 0.8, voiceMode: 'recorded', speed: 1, volume: 1, voiceURI: null, unlockAll: false, gameSpeed: 'slow', games: {}, levels: {}, hits: {}, misses: {}, last: null, updatedAt: 0 };
 }
 
 const isObj = (x) => x && typeof x === 'object' && !Array.isArray(x);
@@ -44,6 +44,9 @@ export function parseState(raw, worldIds = ['kosmos', 'dzungla', 'wyspy']) {
       for (const [tid, s] of Object.entries(lv.tasks)) if (Number.isInteger(s) && s >= 1 && s <= 3) tasks[tid] = s;
       d.levels[lid] = { tasks, done: lv.done === true };
     }
+  }
+  if (isObj(o.last) && (o.last.module === 'reading' || o.last.module === 'math') && typeof o.last.level === 'string' && /^[A-Za-z0-9_-]{1,20}$/.test(o.last.level)) {
+    d.last = { module: o.last.module, level: o.last.level, idx: Number.isInteger(o.last.idx) ? clamp(o.last.idx, 0, 200) : 0, world: d.world, at: Number.isFinite(o.last.at) ? o.last.at : 0 };
   }
   d.hits = cleanCounts(o.hits);
   d.misses = cleanCounts(o.misses);
@@ -125,4 +128,19 @@ export const gameInfo = (state, subject, id) => state.games[gameKey(subject, id)
 /** Skarby rosną z ukończonymi poziomami WSZYSTKICH modułów; nigdy nie mniej niż wcześniej (sam moduł czytania). */
 export function itemsUnlockedCombined(s, readingLevels, allLevels, total = ITEMS_PER_WORLD) {
   return Math.max(itemsUnlocked(s, readingLevels, total), itemsUnlocked(s, allLevels, total));
+}
+
+/** Zapamiętuje, gdzie dziecko skończyło: moduł, poziom i numer zadania (do przycisku „Kontynuuj”). */
+export function setLast(state, module, levelId, idx) {
+  state.last = { module, level: levelId, idx: Math.max(0, idx | 0), world: state.world, at: Date.now() };
+  return state.last;
+}
+/** Co wznowić: ostatni poziom (od pierwszego nieukończonego zadania); gdy ukończony – następny odblokowany poziom tego modułu. null = brak. */
+export function resumeTarget(state, levelsByModule) {
+  const l = state.last; if (!l) return null;
+  const levels = levelsByModule[l.module]; if (!levels) return null;
+  let i = levels.findIndex((x) => x.id === l.level); if (i < 0) return null;
+  if (isLevelDone(state, levels[i])) { if (i + 1 >= levels.length || !isUnlocked(state, levels, i + 1)) return null; i++; }
+  const level = levels[i];
+  return { module: l.module, level, idx: resumeIndex(state, level), tasks: level.tasks.length };
 }

@@ -342,6 +342,29 @@ try {
   await page.setOfflineMode(false);
   await page.close();
 
+  // ---------- Kontynuuj: wznowienie ostatniej sesji (moduł, poziom, zadanie) ----------
+  const pr = await newPage(1366, 768);
+  await pr.goto(BASE + '/?test=1', { waitUntil: 'networkidle0' });
+  await pr.waitForSelector('.module-card');
+  if (await pr.$('.resume')) throw new Error('przycisk Kontynuuj widoczny bez zapisu');
+  for (const [mod, lid, prefix] of [['reading', 'L02', 'L02'], ['math', 'M02', 'M02']]) {
+    await pr.evaluate((mod, lid, prefix) => localStorage.setItem('pierwsze-slowa:v1', JSON.stringify({ v: 1, unlockAll: true, world: 'dzungla',
+      levels: { [lid]: { tasks: { [prefix + '-1']: 3, [prefix + '-2']: 2 }, done: false } }, last: { module: mod, level: lid, idx: 2 } })), mod, lid, prefix);
+    await pr.reload({ waitUntil: 'networkidle0' }); await pr.waitForSelector('.resume');
+    const txt = await pr.$eval('.resume', (b) => b.textContent);
+    if (!/Kontynuuj/.test(txt) || !/zadanie 3/.test(txt)) throw new Error('Kontynuuj: zły opis: ' + txt);
+    await noScroll(pr, 'start z Kontynuuj'); await shot(pr, `20-start-kontynuuj-${mod}`);
+    await click(pr, '.resume'); await pr.waitForSelector('#stage');
+    const cur = await pr.$$eval('.starstrip .sstar', (e) => ({ on: e.filter((x) => x.classList.contains('on')).length, cur: e.findIndex((x) => x.classList.contains('cur')) }));
+    const world = await pr.evaluate(() => document.documentElement.dataset.world);
+    if (cur.on !== 2 || cur.cur !== 2 || world !== 'dzungla') throw new Error('Kontynuuj: zły punkt wznowienia ' + JSON.stringify({ cur, world }));
+    await noScroll(pr, 'zadanie po Kontynuuj');
+    const last = await pr.evaluate(() => JSON.parse(localStorage.getItem('pierwsze-slowa:v1')).last);
+    if (last.module !== mod || last.level !== lid || last.idx !== 2) throw new Error('last nie zapisany: ' + JSON.stringify(last));
+    ok(`Kontynuuj (${mod}): po przeładowaniu wraca do poziomu ${lid}, zadania 3 (2 gwiazdki zachowane), świat zachowany`);
+  }
+  await pr.close();
+
   // ---------- Faza 2: głos systemowy (atrapa: Paulina lokalna, Zofia Online (Natural), David) ----------
   const p2 = await newPage(1920, 1080, true);
   await p2.goto(BASE + '/?test=1', { waitUntil: 'networkidle0' });

@@ -177,6 +177,7 @@ export function runLevel(ctx, box, level, { onExit, onNext, onBonus }) {
   function showTask() {
     cleanup(); narrator.cancel();
     const task = level.tasks[idx];
+    P.setLast(state, 'reading', level.id, idx); ctx.save();
     clear(box);
     let wrongs = 0, finished = false;
     const stageEl = h('main', { class: 'stage t-' + task.type, id: 'stage' });

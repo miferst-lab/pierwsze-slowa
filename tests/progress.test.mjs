@@ -63,3 +63,23 @@ test('parseState: tryb głosu, tempo i głośność – domyślnie nagrany głos
   assert.equal(P.parseState({ v: 1, voiceMode: 'cokolwiek' }).voiceMode, 'recorded');
   assert.equal(P.parseState({ v: 1, speed: 'x' }).speed, 1);
 });
+
+import { MATH_LEVELS } from '../modules/math/curriculum.js';
+const LM = { reading: LEVELS, math: MATH_LEVELS };
+test('Kontynuuj: brak zapisu -> null; zapis ostatniego poziomu i zadania w localStorage', () => {
+  const st = mem(); const s = P.defaultState();
+  assert.equal(P.resumeTarget(s, LM), null);
+  const l = MATH_LEVELS[0]; P.recordTask(s, l, l.tasks[0].id, 3); P.setLast(s, 'math', l.id, 1); P.saveState(st, s);
+  const s2 = P.loadState(st); const r = P.resumeTarget(s2, LM);
+  assert.equal(r.module, 'math'); assert.equal(r.level.id, l.id); assert.equal(r.idx, 1);
+  assert.equal(s2.levels[l.id].tasks[l.tasks[0].id], 3);   // gwiazdki zachowane
+});
+test('Kontynuuj: ukończony poziom -> następny; ostatni poziom ukończony -> null; śmieci w last są odrzucane', () => {
+  const s = P.defaultState(); const l = LEVELS[0];
+  l.tasks.forEach((t) => P.recordTask(s, l, t.id, 3)); P.setLast(s, 'reading', l.id, l.tasks.length - 1);
+  assert.equal(P.resumeTarget(s, LM).level.id, LEVELS[1].id); assert.equal(P.resumeTarget(s, LM).idx, 0);
+  const z = P.defaultState(); z.last = { module: 'reading', level: 'nie-ma', idx: 0 }; assert.equal(P.resumeTarget(z, LM), null);
+  assert.equal(P.parseState({ v: 1, last: { module: 'x', level: 'L01' } }).last, null);
+  assert.equal(P.parseState({ v: 1, last: { module: 'reading', level: '<script>' } }).last, null);
+  assert.equal(P.parseState({ v: 1, last: { module: 'math', level: l.id, idx: 'a' } }).last.idx, 0);
+});

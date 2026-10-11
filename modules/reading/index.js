@@ -11,7 +11,7 @@ export default {
   tagline: 'Litery, sylaby, słowa i zdania',
   available: true,
   icon: `<svg viewBox='0 0 100 100' aria-hidden='true'><path d='M8 22q22-6 42 6v58Q30 74 8 80z' fill='#fff' stroke='#334' stroke-width='4' stroke-linejoin='round'/><path d='M92 22Q70 16 50 28v58q20-12 42-6z' fill='#fff7d6' stroke='#334' stroke-width='4' stroke-linejoin='round'/><text x='29' y='62' font-size='28' font-weight='800' text-anchor='middle' fill='#e0533d' font-family='Verdana,sans-serif'>A</text><text x='71' y='60' font-size='22' font-weight='800' text-anchor='middle' fill='#2f6fd0' font-family='Verdana,sans-serif'>ma</text></svg>`,
-  mount(ctx, box, { exit }) {
+  mount(ctx, box, { exit, resumeLevel }) {
     const showMap = () => {
       ctx.onWorld = null;
       clear(box);
@@ -48,6 +48,6 @@ export default {
       ctx.onWorld = null;
       runLevel(ctx, box, level, { onExit: showMap, onNext: start, onBonus: (l) => startBonus(ctx, box, 'reading', l, showMap) });
     };
-    showMap();
+    if (resumeLevel) start(resumeLevel); else showMap();
   },
 };

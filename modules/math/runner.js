@@ -197,6 +197,7 @@ export function runMathLevel(ctx, box, level, { onExit, onNext, onBonus }) {
   function showTask() {
     cleanup(); narrator.cancel();
     const task = level.tasks[idx];
+    P.setLast(state, 'math', level.id, idx); ctx.save();
     globalThis.__ps && (globalThis.__ps.task = task);
     clear(box);
     let wrongs = 0, finished = false;

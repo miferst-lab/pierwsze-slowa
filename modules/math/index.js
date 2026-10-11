@@ -11,7 +11,7 @@ export default {
   tagline: 'Liczenie, dodawanie, figury i zabawy',
   available: true,
   icon: `<svg viewBox='0 0 100 100' aria-hidden='true'><rect x='8' y='14' width='84' height='72' rx='18' fill='#fff' stroke='currentColor' stroke-width='4'/><text x='50' y='64' font-size='34' font-weight='800' text-anchor='middle' fill='#2f6fd0' font-family='Nunito,Segoe UI,Verdana,sans-serif'>1+2</text></svg>`,
-  mount(ctx, box, { exit }) {
+  mount(ctx, box, { exit, resumeLevel }) {
     const showMap = () => {
       ctx.onWorld = null; clear(box);
       const wrap = h('div', { class: 'scroll-screen' });
@@ -35,6 +35,6 @@ export default {
       box.append(wrap);
     };
     const start = (level) => { ctx.onWorld = null; runMathLevel(ctx, box, level, { onExit: showMap, onNext: start, onBonus: (l) => startBonus(ctx, box, 'math', l, showMap) }); };
-    showMap();
+    if (resumeLevel) start(resumeLevel); else showMap();
   },
 };
