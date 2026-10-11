@@ -9,43 +9,43 @@
   },
   "s-b": {
    "kind": "sound",
-   "dur": 0.38,
-   "bytes": 2348
+   "dur": 0.31,
+   "bytes": 1916
   },
   "s-c": {
    "kind": "sound",
-   "dur": 0.46,
-   "bytes": 2780
+   "dur": 0.31,
+   "bytes": 1916
   },
   "s-ch": {
    "kind": "sound",
-   "dur": 0.77,
-   "bytes": 4652
+   "dur": 0.74,
+   "bytes": 4508
   },
   "s-cz": {
    "kind": "sound",
-   "dur": 0.38,
-   "bytes": 2348
+   "dur": 0.26,
+   "bytes": 1628
   },
   "s-d": {
    "kind": "sound",
-   "dur": 0.41,
-   "bytes": 2492
+   "dur": 0.31,
+   "bytes": 1916
   },
   "s-du17a": {
    "kind": "sound",
-   "dur": 0.46,
-   "bytes": 2780
+   "dur": 0.34,
+   "bytes": 2060
   },
   "s-du17c": {
    "kind": "sound",
-   "dur": 0.46,
-   "bytes": 2780
+   "dur": 0.31,
+   "bytes": 1916
   },
   "s-dz": {
    "kind": "sound",
-   "dur": 0.46,
-   "bytes": 2780
+   "dur": 0.26,
+   "bytes": 1628
   },
   "s-e": {
    "kind": "sound",
@@ -54,13 +54,13 @@
   },
   "s-f": {
    "kind": "sound",
-   "dur": 0.77,
-   "bytes": 4652
+   "dur": 0.74,
+   "bytes": 4508
   },
   "s-g": {
    "kind": "sound",
-   "dur": 0.41,
-   "bytes": 2492
+   "dur": 0.34,
+   "bytes": 2060
   },
   "s-h": {
    "kind": "sound",
@@ -79,8 +79,8 @@
   },
   "s-k": {
    "kind": "sound",
-   "dur": 0.41,
-   "bytes": 2492
+   "dur": 0.26,
+   "bytes": 1628
   },
   "s-l": {
    "kind": "sound",
@@ -104,8 +104,8 @@
   },
   "s-p": {
    "kind": "sound",
-   "dur": 0.46,
-   "bytes": 2780
+   "dur": 0.24,
+   "bytes": 1484
   },
   "s-r": {
    "kind": "sound",
@@ -114,8 +114,8 @@
   },
   "s-rz": {
    "kind": "sound",
-   "dur": 0.77,
-   "bytes": 4652
+   "dur": 0.74,
+   "bytes": 4508
   },
   "s-s": {
    "kind": "sound",
@@ -129,8 +129,8 @@
   },
   "s-t": {
    "kind": "sound",
-   "dur": 0.36,
-   "bytes": 2204
+   "dur": 0.26,
+   "bytes": 1628
   },
   "s-u": {
    "kind": "sound",
@@ -144,8 +144,8 @@
   },
   "s-u107": {
    "kind": "sound",
-   "dur": 0.43,
-   "bytes": 2636
+   "dur": 0.36,
+   "bytes": 2204
   },
   "s-u119": {
    "kind": "sound",
@@ -154,8 +154,8 @@
   },
   "s-u142": {
    "kind": "sound",
-   "dur": 0.77,
-   "bytes": 4652
+   "dur": 0.74,
+   "bytes": 4508
   },
   "s-u144": {
    "kind": "sound",
@@ -169,13 +169,13 @@
   },
   "s-u17a": {
    "kind": "sound",
-   "dur": 0.77,
-   "bytes": 4652
+   "dur": 0.74,
+   "bytes": 4508
   },
   "s-u17c": {
    "kind": "sound",
-   "dur": 0.77,
-   "bytes": 4652
+   "dur": 0.74,
+   "bytes": 4508
   },
   "s-uf3": {
    "kind": "sound",
@@ -194,8 +194,8 @@
   },
   "s-z": {
    "kind": "sound",
-   "dur": 0.77,
-   "bytes": 4652
+   "dur": 0.74,
+   "bytes": 4508
   },
   "t-ala_ma_trzy_jabu142kau2e_dostau142a_jeszcze_dwau2e_ile_ma_terazu3f": {
    "kind": "problem",

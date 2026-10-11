@@ -46,6 +46,50 @@ SUSTAIN = {**{k: 0.70 for k in ['m', 'n', 'ń', 'l', 'ł', 'r', 'j', 'f', 's', '
            **{k: 0.45 for k in ['a', 'o', 'e', 'u', 'i', 'y', 'ą', 'ę', 'ó']}}
 
 
+# Spółgłoski, które Azure przy samym <phoneme> oddaje jako ledwo słyszalny pstryk albo czyta nazwą litery („ka”, „igrek”).
+# Zamiast tego syntetyzujemy zwykłą sylabę z samogłoską (NATURALNY tekst, bez IPA) i wycinamy samą spółgłoskę.
+# typ: stop = zwarta (+ ułamek samogłoski), aff = zwarto-szczelinowa, fric = szczelinowa (potem przedłużana), son = półsamogłoska (w, ł).
+CUT = {'k': ('ka', 'stop', 0.025), 'p': ('pa', 'stop', 0.025), 't': ('ta', 'stop', 0.025), 'b': ('ba', 'stop', 0.035), 'd': ('da', 'stop', 0.035),
+       'g': ('ga', 'stop', 0.035), 'c': ('ca', 'aff', 0.0), 'cz': ('cza', 'aff', 0.0), 'dz': ('dza', 'aff', 0.0), 'dź': ('dzia', 'aff', 0.0),
+       'dż': ('dża', 'aff', 0.0), 'ć': ('cia', 'aff', 0.0),
+       'f': ('fa', 'fric', 0), 's': ('sa', 'fric', 0), 'sz': ('sza', 'fric', 0), 'ch': ('cha', 'fric', 0), 'h': ('ha', 'fric', 0), 'ś': ('sia', 'fric', 0),
+       'z': ('za', 'fric', 0), 'ź': ('zia', 'fric', 0), 'ż': ('ża', 'fric', 0), 'rz': ('rza', 'fric', 0),
+       'w': ('wa', 'son', 0), 'ł': ('ła', 'son', 0)}
+FR = 0.01  # ramka 10 ms
+
+
+def cut_consonant(w, kind, tail):
+    """Zwraca samą spółgłoskę z nagrania sylaby 'Ca' (w = float32, g.SR)."""
+    h = int(FR * g.SR); n = len(w) // h
+    fr = w[:n * h].reshape(n, h)
+    r = np.sqrt((fr ** 2).mean(1)); z = (np.abs(np.diff(np.sign(fr), axis=1)) > 0).mean(1)
+    s = int(np.argmax(r > 0.005))
+    def onset(i0):   # początek samogłoski: głośna, niskie ZCR
+        for i in range(i0, n - 3):
+            if z[i] <= 0.14 and r[i] >= 0.6 * r[i:i + 15].max() and r[i:i + 3].min() > 0.02: return i
+        return None
+    if kind in ('stop', 'aff'):
+        o = onset(s + 1)
+        if o is None: raise RuntimeError('brak początku samogłoski')
+        end = o * h + int(tail * g.SR) if kind == 'stop' else o * h
+        return w[max(0, s * h - h):end]
+    if kind == 'fric':
+        best, cur, bs = (0, 0), 0, 0
+        for i in range(s, n):
+            if z[i] > 0.14 and r[i] > 0.0015:
+                if cur == 0: bs = i
+                cur += 1
+                if cur > best[1]: best = (bs, cur)
+            else: cur = 0
+        if best[1] < 5: raise RuntimeError('brak frykcji')
+        return w[(best[0] + 1) * h:(best[0] + best[1] - 1) * h]
+    # son (w, ł): skok głośności = początek samogłoski
+    base = float(r[s + 1:s + 5].mean())
+    for i in range(s + 5, n - 1):
+        if r[i] >= 2.0 * base and r[i] > 0.05: return w[max(0, s * h - h):i * h]
+    raise RuntimeError('brak skoku')
+
+
 def decode(data):
     with tempfile.NamedTemporaryFile(suffix='.mp3') as t:
         t.write(data); t.flush()
@@ -57,7 +101,7 @@ def stretch(w, target):
     import soundfile as sf
     f = target / (len(w) / g.SR)
     if f <= 1.05: return w
-    f = min(f, 3.0)
+    f = min(f, 10.0)
     with tempfile.TemporaryDirectory() as td:
         a, b = Path(td) / 'a.wav', Path(td) / 'b.wav'
         sf.write(a, w, g.SR)
@@ -67,6 +111,8 @@ def stretch(w, target):
 
 
 def build_ssml(voice, kind, part):
+    if kind == 'sound' and part[1:] in CUT:
+        return ssml(voice, f"<prosody rate='-15%'>{esc(CUT[part[1:]][0])}</prosody>")
     if kind == 'sound':
         k = part[1:]
         inner = f"<phoneme alphabet='ipa' ph='{IPA[k]}'>{esc(k)}</phoneme>"
@@ -126,6 +172,7 @@ def main():
                 w = decode(az.synth(build_ssml(args.voice, kind, part)))
                 w = w  # surowy dźwięk Azure
                 raw = round(float(np.abs(w).max()), 3)
+                if kind == 'sound' and part[1:] in CUT: w = cut_consonant(w, *CUT[part[1:]][1:])
                 w = g.trim_and_fade(w, top_db=40)
                 if kind == 'sound' and part[1:] in SUSTAIN: w = stretch(w, SUSTAIN[part[1:]])
             if jp: w = g.trim_and_fade(w, top_db=40)
