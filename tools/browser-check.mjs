@@ -369,6 +369,12 @@ try {
   const labels = await p2.$$eval('.voice-mode label', (l) => l.map((x) => x.textContent));
   if (!/Nagrany głos \(zalecany\)/.test(labels[0]) || !/Głos systemowy/.test(labels[1])) throw new Error('etykiety przełącznika: ' + labels);
   await p2.evaluate(() => document.querySelectorAll('details').forEach((d) => (d.open = true)));
+  if (!(await p2.$eval('#gspeed-slow', (r) => r.checked))) throw new Error('domyślne tempo zabaw powinno być „wolno”');
+  await click(p2, '#gspeed-normal'); await sleep(150);
+  if ((await p2.evaluate(() => JSON.parse(localStorage.getItem('pierwsze-slowa:v1')).gameSpeed)) !== 'normal') throw new Error('tempo zabaw nie zapisane');
+  await click(p2, '#gspeed-slow');
+  if (!(await p2.$('#math-progress')) || !(await p2.$('#games-progress'))) throw new Error('brak sekcji matematyki/zabaw w panelu rodzica');
+  ok('panel rodzica: postępy matematyki i zabaw, tempo zabaw wolno/normalnie zapamiętane');
   await shot(p2, '13-rodzic-lektor');
   await p2.evaluate(() => { window.__audio.length = 0; });
   await click(p2, '[data-play="sz"]'); await sleep(1700);

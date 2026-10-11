@@ -105,7 +105,7 @@ export function showParent(ctx, box) {
         weakMath.length ? h('ul', { id: 'math-weak' }, weakMath.map((w) => h('li', {}, `${TOPIC_NAMES[w.item.slice(2)]} – ${w.misses} pomyłek, ${w.hits} trafień`)), weakMathItems.map((w) => h('li', { class: 'muted' }, `działanie ${w.item.slice(2).replace('-', ' − ').replace('+', ' + ')} – ${w.misses} pomyłek`))) : h('p', { class: 'muted' }, 'Na razie brak danych z matematyki.')),
       h('section', { class: 'card', id: 'games-progress' }, h('h2', {}, 'Zabawy'),
         h('p', { class: 'muted' }, 'Zabawy zręcznościowe nie mają czasu ani porażek. Odblokowują się po trzech ukończonych poziomach, a co cztery poziomy czeka zabawa bonusowa. Treść zabaw wynika z tego, czego dziecko już się nauczyło.'),
-        h('div', { class: 'voice-mode', role: 'radiogroup', 'aria-label': 'Tempo zabaw' }, speedRadio('slow', 'Wolno (zalecane)', '– elementy poruszają się powoli.'), speedRadio('normal', 'Normalnie', '– około dwa razy szybciej.')),
+        h('div', { class: 'game-speed', role: 'radiogroup', 'aria-label': 'Tempo zabaw' }, speedRadio('slow', 'Wolno (zalecane)', '– elementy poruszają się powoli.'), speedRadio('normal', 'Normalnie', '– około dwa razy szybciej.')),
         h('table', { class: 'say-table game-table' }, h('thead', {}, h('tr', {}, ['Przedmiot', 'Zabawa', 'Najlepszy wynik', 'Rundy'].map((x) => h('th', {}, x)))), h('tbody', {}, gameRows))),
       h('section', { class: 'card' }, h('h2', {}, 'Do powtórzenia w czytaniu'),
         weak.length ? h('ul', {}, weak.map((w) => h('li', {}, `„${w.item}” – ${w.misses} ${w.misses === 1 ? 'pomyłka' : 'pomyłki/pomyłek'}, ${w.hits} trafień`))) : h('p', { class: 'muted' }, 'Na razie brak danych. Pojawią się, gdy Piotrek będzie ćwiczył.')),
