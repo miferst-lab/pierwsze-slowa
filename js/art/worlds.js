@@ -39,7 +39,7 @@ const kosmos = {
 const leaf = (col = '#2e9e4f') => p('M50 94Q8 70 14 20Q60 14 86 52Q80 82 50 94z', col) + ln('M50 94Q40 56 20 26', '#1b6b36', 3);
 const jungle = {
   id: 'dzungla', name: 'Zwierzątka z dżungli', short: 'Dżungla',
-  heroArt: `<img class='guide-img' src='art/guides/dzungla-macha.webp' alt='' width='279' height='420' draggable='false'>`,
+  heroArt: `<img class='guide-img' src='art/guides/dzungla-cieszy.webp' alt='' width='279' height='420' draggable='false'>`,
   css: { '--bg1': '#d7f0d9', '--bg2': '#bfe5c4', '--surface': '#ffffff', '--surface2': '#eef8ee', '--ink': '#1f3a27', '--ink-soft': '#3e5a46', '--title-ink': '#1f3a27', '--primary': '#26774a', '--primary-ink': '#ffffff', '--accent': '#ffe08a', '--accent-ink': '#3a2a00', '--line': '#5f8f6c', '--good': '#1f7a48', '--good-bg': '#e1f5e8' },
   bg: `<svg viewBox='0 0 160 90' preserveAspectRatio='xMidYMid slice' aria-hidden='true'><defs><linearGradient id='jg' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#d7f0d9'/><stop offset='1' stop-color='#bfe5c4'/></linearGradient></defs><rect width='160' height='90' fill='url(#jg)'/><path d='M0 90V62Q30 46 60 62T120 60T160 56V90z' fill='#a9d9b0' opacity='.7'/><path d='M0 90V74Q40 62 80 74T160 70V90z' fill='#94cc9d' opacity='.7'/><ellipse cx='28' cy='20' rx='26' ry='7' fill='#fff' opacity='.45'/><ellipse cx='128' cy='30' rx='20' ry='6' fill='#fff' opacity='.4'/></svg>`,
   mascots: [
@@ -67,7 +67,7 @@ const jungle = {
 const penguin = (body, belly, extra) => c(50, 54, 32, body).replace('/>', '/>') + e(50, 62, 20, 26, belly) + c(40, 42, 9, '#fff') + c(60, 42, 9, '#fff') + eye(41, 43, 3.5) + eye(59, 43, 3.5) + p('M43 50h14l-7 9z', '#ff8a00') + p('M14 60q-8 18 8 16zM86 60q8 18-8 16z', body) + e(38, 92, 10, 4, '#ff8a00') + e(62, 92, 10, 4, '#ff8a00') + (extra || '');
 const sea = {
   id: 'wyspy', name: 'Pingwiny z Wysp Palmowych', short: 'Wyspy Palmowe',
-  heroArt: `<img class='guide-img' src='art/guides/wyspy-stoi.webp' alt='' width='258' height='420' draggable='false'>`,
+  heroArt: `<img class='guide-img' src='art/guides/wyspy-macha.webp' alt='' width='258' height='420' draggable='false'>`,
   css: { '--bg1': '#d4effa', '--bg2': '#bfe6f2', '--surface': '#ffffff', '--surface2': '#eaf6fb', '--ink': '#173a4d', '--ink-soft': '#3a5a6c', '--title-ink': '#173a4d', '--primary': '#0b6f93', '--primary-ink': '#ffffff', '--accent': '#ffe08a', '--accent-ink': '#3a2a00', '--line': '#5b8ea5', '--good': '#1f7a48', '--good-bg': '#e1f5e8' },
   bg: `<svg viewBox='0 0 160 90' preserveAspectRatio='xMidYMid slice' aria-hidden='true'><defs><linearGradient id='wg' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#d4effa'/><stop offset='1' stop-color='#bfe6f2'/></linearGradient></defs><rect width='160' height='90' fill='url(#wg)'/><circle cx='128' cy='22' r='12' fill='#fff7d1' opacity='.9'/><path d='M0 90V66Q20 58 40 66T80 66T120 66T160 64V90z' fill='#a8dcea' opacity='.8'/><path d='M0 90V76Q20 70 40 76T80 76T120 76T160 74V90z' fill='#8ccfe0' opacity='.8'/><ellipse cx='36' cy='24' rx='24' ry='6' fill='#fff' opacity='.55'/></svg>`,
   mascots: [

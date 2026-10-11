@@ -3,16 +3,16 @@
 // Są cache'owane leniwie (przy pierwszym odtworzeniu, patrz handler fetch) oraz dociągane w tle po komunikacie
 // {type:'precache-audio'} wysyłanym przez stronę ~6 s po starcie (pomijane przy włączonym oszczędzaniu danych).
 // UWAGA: przy KAŻDEJ zmianie plików podnieś VERSION – stary cache zostanie usunięty przy aktywacji.
-const VERSION = 'v16';
+const VERSION = 'v17';
 const CACHE = `pierwsze-slowa-${VERSION}`;
 const SHELL = [
   './',
+  'art/guides/dzungla-cieszy.webp',
   'art/guides/dzungla-macha.webp',
-  'art/guides/dzungla-stoi.webp',
   'art/guides/kosmos-cieszy.webp',
   'art/guides/kosmos-stoi.webp',
   'art/guides/wyspy-cieszy.webp',
-  'art/guides/wyspy-stoi.webp',
+  'art/guides/wyspy-macha.webp',
   'art/lesna/ekipa.webp',
   'art/lesna/jez.webp',
   'art/lesna/lis-cieszy.webp',
@@ -27,6 +27,9 @@ const SHELL = [
   'art/lesna/wiewiorka.webp',
   'art/lesna/wyprawa.webp',
   'art/lesna/zajac.webp',
+  'art/ui/ramka-dzungla.webp',
+  'art/ui/ramka-kosmos.webp',
+  'art/ui/ramka-wyspy.webp',
   'art/words/mama.webp',
   'art/words/ryba.webp',
   'art/words/zaba.webp',

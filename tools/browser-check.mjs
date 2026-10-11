@@ -206,7 +206,7 @@ try {
     if (w0 !== 'lesna') throw new Error('domyślny świat nowego gracza powinien być lesna, jest ' + w0);
     await noScroll(page, 'start lesna'); await sleep(300); await shot(page, '01-start-lesna');
     const bad = await page.evaluate(() => [...document.images].filter((i) => !i.complete || i.naturalWidth === 0).map((i) => i.src));
-    if (bad.length || !(await page.$('.parade-img')) || !(await page.$('.start .mascot img.sprite'))) throw new Error('obrazki Leśnej Wyprawy nie wczytane: ' + bad);
+    if (bad.length || !(await page.$('.parade-img')) || !(await page.$('.start .mascot img.guide-img, .start .mascot img.fox-hero'))) throw new Error('obrazki Leśnej Wyprawy nie wczytane: ' + bad);
     ok('Leśna Wyprawa: świat domyślny, ekran startowy bez przewijania, obrazki (portret lisa, grupa) wczytane');
   }
   // ekran startowy może się przewijać na bardzo niskich oknach; sprawdzamy tylko zadania

@@ -109,5 +109,10 @@ img.sprite{display:block;width:100%;height:100%;object-fit:contain;border-radius
 .done-screen .card::before{content:'';position:absolute;left:-6px;bottom:-4px;width:clamp(110px,22vh,190px);height:clamp(140px,28vh,240px);background:var(--done-art) left bottom/contain no-repeat;pointer-events:none;animation:bounce .8s 2}
 [data-world="lesna"]{--done-art:url(../art/lesna/lis-cieszy.webp)}
 [data-world="kosmos"]{--done-art:url(../art/guides/kosmos-cieszy.webp)}
-[data-world="dzungla"]{--done-art:url(../art/guides/dzungla-stoi.webp)}
+[data-world="dzungla"]{--done-art:url(../art/guides/dzungla-macha.webp)}
 [data-world="wyspy"]{--done-art:url(../art/guides/wyspy-cieszy.webp)}
+/* ramki kart startowych w pozostałych światach (Artysta, p2_01/04/06; klucz zieleni z wnętrzem) */
+:is([data-world="kosmos"],[data-world="dzungla"],[data-world="wyspy"]) .start .module-card{border:22px solid transparent;border-radius:0;background:var(--surface) padding-box;box-shadow:none;padding:.3rem .5rem;width:min(38vw,330px);height:clamp(150px,29vh,230px)}
+[data-world="kosmos"] .start .module-card{border-image:url(../art/ui/ramka-kosmos.webp) 20% 12% fill/22px stretch}
+[data-world="dzungla"] .start .module-card{border-image:url(../art/ui/ramka-dzungla.webp) 20% 12% fill/22px stretch}
+[data-world="wyspy"] .start .module-card{border-image:url(../art/ui/ramka-wyspy.webp) 20% 12% fill/22px stretch}

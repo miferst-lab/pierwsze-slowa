@@ -25,7 +25,7 @@ def flood_from_edge(cand):
         cur = (np.array(im) > 0) & cand
     return cur
 
-def key(img, mode='auto'):
+def key(img, mode='auto', holes=False):
     a = np.array(img.convert('RGB'))
     if mode == 'auto':
         mode = 'green' if bg_mask(a, 'green')[:4].mean() > .5 else 'checker'
@@ -34,6 +34,9 @@ def key(img, mode='auto'):
         cand = np.array(Image.fromarray((cand * 255).astype('uint8')).filter(ImageFilter.MaxFilter(3))) > 0
         cand &= bg_mask(a, 'checker') | True
     bg = flood_from_edge(cand)
+    if holes:  # ramki: wnętrze otoczone ozdobą też jest tłem – usuń wyłącznie bardzo intensywną zieleń
+        r_, g_, b_ = [a[..., i].astype(int) for i in range(3)]
+        bg |= (g_ > 200) & (r_ < 90) & (b_ < 90)
     alpha = Image.fromarray(((~bg) * 255).astype('uint8')).filter(ImageFilter.MinFilter(3)).filter(ImageFilter.GaussianBlur(0.8))
     out = np.dstack([a, np.array(alpha)])
     if mode == 'green':  # despill: ogranicz zieleń na brzegu
@@ -42,9 +45,9 @@ def key(img, mode='auto'):
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser(); ap.add_argument('src'); ap.add_argument('dst')
-    ap.add_argument('--mode', default='auto'); ap.add_argument('--max', type=int, default=512); ap.add_argument('--crop', action='store_true')
+    ap.add_argument('--mode', default='auto'); ap.add_argument('--max', type=int, default=512); ap.add_argument('--crop', action='store_true'); ap.add_argument('--holes', action='store_true')
     o = ap.parse_args()
-    im, mode = key(Image.open(o.src), o.mode)
+    im, mode = key(Image.open(o.src), o.mode, o.holes)
     if o.crop and im.getbbox(): im = im.crop(im.getchannel('A').point(lambda v: 255 if v > 8 else 0).getbbox())
     im.thumbnail((o.max, o.max), Image.LANCZOS); im.save(o.dst, quality=86, method=6)
     print(o.dst, mode, im.size)

@@ -15,7 +15,7 @@ export const lesna = {
   parade: `<img class='parade-img' src='art/lesna/wyprawa.webp' alt='' width='960' height='587' draggable='false'>`,
   crewArt: `<img class='crew-img' src='art/lesna/ekipa.webp' alt='' width='960' height='595' draggable='false'>`,
   bg: '', // tło to zdjęcie-ilustracja z Artysty (css/lesna.css, #bg), z kremową nakładką dla kontrastu
-  heroArt: `<img class='fox-hero' src='art/lesna/lis-macha.webp' alt='' width='267' height='420' draggable='false'>`,
+  heroArt: `<img class='guide-img fox-hero' src='art/lesna/lis-macha.webp' alt='' width='267' height='420' draggable='false'>`,
   mascots: [
     { name: 'Lisek Odkrywca', bio: 'Sprytny lisek z plecakiem i mapą. Prowadzi całą wyprawę.', svg: portrait('lis') },
     { name: 'Miś z kompasem', bio: 'Niedźwiadek, który zawsze wie, w którą stronę iść.', svg: portrait('mis') },
