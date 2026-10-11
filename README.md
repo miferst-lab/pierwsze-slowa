@@ -7,7 +7,7 @@ za zadania są gwiazdki, a za ukończone poziomy – skarby w jednym z trzech ś
 **Wszystko działa na jednej domenie, bez żadnych zewnętrznych zapytań:** bez CDN-ów, czcionek Google, analityki,
 reklam, zakupów i logowania. Dzięki temu w Microsoft Family Safety wystarczy dodać jedną domenę do listy dozwolonych stron.
 
-Dwa moduły: **„Nauka czytania”** i **„Matematyka”** (klasa 1: liczenie do 10, 20 i 100, porównywanie, skład liczby, dodawanie i odejmowanie do 20 z przekraczaniem dziesiątki,
+Trzy moduły: **„Nauka czytania”**, **„Matematyka”** i **„Ćwiczenia wymowy”** (opis niżej) (klasa 1: liczenie do 10, 20 i 100, porównywanie, skład liczby, dodawanie i odejmowanie do 20 z przekraczaniem dziesiątki,
 proste zadania tekstowe, wzorki, figury, a na końcu miary, złote i zegar). Do tego trzy **zabawy zręcznościowe** (Łap i czytaj/licz, Ścieżka, Balony) bez czasu, żyć i porażek.
 Wygląd: pastelowe, spokojne światy, duże zaokrąglenia, miękkie cienie, systemowa czcionka (Segoe UI / Verdana – bez pobierania czcionek).
 
@@ -109,6 +109,18 @@ Typy zadań: `tapNum`, `count`, `make` (połóż na talerzu), `seq`, `order`, `c
 `pattern`, `shapeTap/shapeName/shapeSides`, `ruler`, `coinSum`, `coin100`, `pay`, `clock`, `clockPick`. Przedmioty do liczenia zależą od świata (gwiazdy/banany/ryby itd.).
 Liczby i rzeczowniki lektor składa z krótkich nagrań (`js/core/numerals.js`: „dwa jabłka”, „pięć jabłek”, „dwie gwiazdy”); do zadań tekstowych są pełne zdania.
 Postępy matematyki (gwiazdki, poziomy, trafienia i pomyłki z tematami „do powtórzenia”) są w tym samym `localStorage` i widać je w panelu rodzica. Poziomy matematyki wchodzą też do puli skarbów.
+
+## Ćwiczenia wymowy (11 głosek, 131 kroków)
+
+Trzeci moduł na ekranie startowym (`modules/pron/`): zabawowe ćwiczenia trudnych głosek – **to nie jest terapia**; przy stałych trudnościach z mową warto iść do logopedy (informacja jest też w panelu rodzica i na mapie głosek).
+
+- **Głoski** (jeden poziom P01…P11 na głoskę, wszystkie odblokowane – dziecko wybiera): R, SZ, CZ, Ż/RZ, DŻ, C, DZ, Ś, Ć, Ź, DŹ. Dodanie głoski = jeden wpis w `SOUND_DEFS` w `modules/pron/curriculum.js` (słowa, sylaby, zdania, ćwiczenia, klucz rysunku buzi) i `python tools/generate-audio.py` dla nowych nagrań.
+- **Kroki głoski (każdy z gwiazdkami, zapis, „Kontynuuj”):** 1) Posłuchaj (wzór lektora Azure + animowana buzia z boku), 2) sylaby (3 zadania: otwarte, odwrócone, grupy), 3) słowa (początek / środek / koniec słowa), 4) zdania i łamańce, 5) ćwiczenia: oddech (wiatraczek, „zimno–ciepło”), język (koniki, malarz, liczymy zęby), usta/policzki (uśmiech i dzióbek, balonik) – każde z prostą animacją.
+- **Samoocena zamiast oceniania:** „Powtórz” (ponowne odtworzenie wzoru, zmniejsza gwiazdki: 3 → 2 → 1) i „Super!” (zalicza krok). Gra niczego nie ocenia automatycznie.
+- **„Nagraj siebie”** (`modules/pron/recorder.js`): `getUserMedia` + `MediaRecorder`, przeglądarka sama pyta o zgodę; do 8 s; nagranie jest tylko w pamięci (`blob:` URL), odtwarzane obok wzoru i zwalniane przy opuszczeniu kroku/ekranu. Nic nie jest wysyłane ani zapisywane (test w `tests/pron.test.mjs` pilnuje, że moduł nie używa `localStorage`/`fetch`). Bez mikrofonu lub bez zgody pojawia się przyjazny komunikat i ćwiczenie działa dalej.
+- **Nagrania:** nowy rodzaj `drill` (sylaby-ćwiczenia czytane wolniej: SSML `rate=-30%`, np. „rrra”), pozostałe to słowa, zdania i polecenia ćwiczeń; głoski wzorcowe (#sz, #cz, …) już istniały. 250 nowych klipów, 1675 znaków Azure; wygenerowane przez `tools/generate-audio.py` (potrzebne: librosa, pyloudnorm, soundfile, scipy, ffmpeg).
+- Awatar lektorki i bohater dziecka działają tak jak w pozostałych modułach (nastrój awatara z rodzaju wypowiedzi).
+- Test w przeglądarce (`tools/browser-check.mjs`) używa atrapy mikrofonu: `--use-fake-ui-for-media-stream --use-fake-device-for-media-stream`.
 
 ## Zabawy zręcznościowe
 

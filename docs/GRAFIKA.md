@@ -54,3 +54,6 @@ Postacie w `art/kids/` to stylizowane podobizny dzieci Daniela (zdjęć oryginal
 - **Powitanie** na starcie używa imienia wybranego bohatera (Piotrku / Kubo / Saro). Jest to tekst, nie głos – bez nowego audio.
 - Niewykorzystane: lektorka_07 (małpka „mówi”, niespójna), `pom2_dzungla_malpka_macha` i inne pozy „macha” pomocników. Mapy poziomów: karty poziomów zasłaniają większość ilustracji ścieżki (poza lasem, gdzie karty idą wężykiem), ścieżka z grafiki nie jest zgrana z kartami.
 - Rozmiar `art/`: ok. 2,8 MB.
+
+## Ćwiczenia wymowy (grafika)
+Rysunki buzi (przekrój z boku, buzia z przodu, wiatraczek, zupa) są własnym SVG/CSS w `modules/pron/mouth.js` i `css/pron.css` – bez nowych plików graficznych. To uproszczone ilustracje poglądowe, nie schematy medyczne.

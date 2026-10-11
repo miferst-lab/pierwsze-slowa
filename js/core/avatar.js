@@ -16,7 +16,10 @@ export function initAvatar(ctx, narrator) {
   document.body.append(el);
   let timer = 0;
   const set = (mood) => { const w = ctx.world().id; const src = lektorSrc(w, mood); if (!img.src.endsWith(src)) img.src = src; el.dataset.mood = mood; };
-  const refresh = () => { document.documentElement.dataset.avatar = ctx.state.avatar === false ? 'off' : 'on'; el.classList.remove('talk'); set('mowi'); };
+  const preloaded = new Set();
+  const preload = () => { const w = ctx.world().id; for (const m of ['mowi', 'cieszy', 'mysli']) { const src = lektorSrc(w, m); if (!preloaded.has(src)) { preloaded.add(src); const i = new Image(); i.src = src; keep.push(i); } } };
+  const keep = []; // trzymamy obiekty, żeby przeglądarka nie przerywała ładowania
+  const refresh = () => { preload(); document.documentElement.dataset.avatar = ctx.state.avatar === false ? 'off' : 'on'; el.classList.remove('talk'); set('mowi'); };
   narrator.onSpeak((ev) => {
     clearTimeout(timer);
     if (ev.type === 'start') { set(ev.mood); el.classList.toggle('talk', !!ev.talk); }

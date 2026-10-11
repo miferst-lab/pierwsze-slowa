@@ -55,3 +55,4 @@
 @keyframes cnt{from{transform:translateX(0)}to{transform:translateX(60px)}}
 @media (prefers-reduced-motion:reduce){.mouth-svg *,.ex-svg *{animation:none!important}}
 @media (max-width:900px){.pron-main{flex-direction:column}}
+.recorder [hidden],.feedback [hidden]{display:none!important}
