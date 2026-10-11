@@ -3,6 +3,8 @@ import { h, clear, soundLabel } from './core/ui.js';
 import * as P from './core/progress.js';
 import { SAY, audioId } from './core/say.js';
 import { LEVELS } from '../modules/reading/curriculum.js';
+import { MATH_LEVELS, TOPIC_NAMES } from '../modules/math/curriculum.js';
+import { GAMES, GAME_IDS } from './games/phrases.js';
 import { WORLDS } from './art/worlds.js';
 
 const VOICE_HELP = [
@@ -29,9 +31,18 @@ export function showParent(ctx, box) {
   function dashboard() {
     clear(box);
     const { state, narrator } = ctx;
-    const done = P.completedCount(state, LEVELS);
-    const maxStars = LEVELS.reduce((s, l) => s + 3 * l.tasks.length, 0);
-    const weak = P.weakItems(state, 10);
+    const done = P.completedCount(state, LEVELS), mdone = P.completedCount(state, MATH_LEVELS);
+    const maxStars = LEVELS.reduce((s, l) => s + 3 * l.tasks.length, 0), mMaxStars = MATH_LEVELS.reduce((s, l) => s + 3 * l.tasks.length, 0);
+    const weakAll = P.weakItems(state, 200);
+    const weak = weakAll.filter((w) => !/^[mt]:/.test(w.item)).slice(0, 10);
+    const weakMath = weakAll.filter((w) => w.item.startsWith('t:') && TOPIC_NAMES[w.item.slice(2)]).slice(0, 6);
+    const weakMathItems = weakAll.filter((w) => /^m:\d+[+-]\d+$/.test(w.item)).slice(0, 5);
+    const speedRadio = (value, text, hint) => {
+      const input = h('input', { type: 'radio', name: 'game-speed', value, id: 'gspeed-' + value }); input.checked = state.gameSpeed === value;
+      input.addEventListener('change', () => { if (input.checked) { state.gameSpeed = value; ctx.save(); } });
+      return h('label', { class: 'row' }, input, ' ', h('b', {}, text), h('span', { class: 'muted' }, ' ' + hint));
+    };
+    const gameRows = ['reading', 'math'].flatMap((subj) => GAME_IDS.map((id) => { const g = P.gameInfo(state, subj, id); return h('tr', {}, h('td', {}, subj === 'math' ? 'Matematyka' : 'Czytanie'), h('td', {}, subj === 'math' ? GAMES[id].mathTitle : GAMES[id].title), h('td', {}, g.stars ? '★'.repeat(g.stars) + '☆'.repeat(3 - g.stars) : '–'), h('td', {}, `${g.plays}`)); }));
     const clipsTxt = narrator.hasClips ? `Nagrany głos jest dostępny (${narrator.manifest.size} nagrań, działa bez internetu).` : 'Brak plików z nagraniami – gra używa głosu systemowego.';
     const sysTxt = { ready: `Głos systemowy: ${narrator.voice?.name ?? ''}`, loading: 'Wyszukiwanie głosów systemowych…', none: 'Nie znaleziono polskiego głosu systemowego.', unsupported: 'Ta przeglądarka nie obsługuje syntezy mowy.' }[narrator.status];
     const statusTxt = `${clipsTxt} ${sysTxt}${!narrator.hasClips && ['none', 'unsupported'].includes(narrator.status) ? ' Dziecko widzi duży tekst zamiast mowy – zobacz instrukcję poniżej.' : ''}`;
@@ -87,7 +98,16 @@ export function showParent(ctx, box) {
         h('p', {}, `Ukończone poziomy: ${done} z ${LEVELS.length}. Gwiazdki: ${P.totalStars(state, LEVELS)} z ${maxStars}. Wybrany świat: ${WORLDS[state.world]?.name}.`),
         h('div', { class: 'lvl-table' }, LEVELS.map((l) => h('span', { class: 'lvl-chip' + (P.isLevelDone(state, l) ? ' ok' : '') }, `${l.num}. ${l.title}: `, P.isLevelDone(state, l) ? '★'.repeat(P.levelRating(state, l)) : `${P.tasksDone(state, l)}/${l.tasks.length}`))),
         h('label', { class: 'row' }, unlock, ' Odblokuj wszystkie poziomy (np. do sprawdzenia)')),
-      h('section', { class: 'card' }, h('h2', {}, 'Do powtórzenia'),
+      h('section', { class: 'card', id: 'math-progress' }, h('h2', {}, 'Matematyka'),
+        h('p', {}, `Ukończone poziomy: ${mdone} z ${MATH_LEVELS.length}. Gwiazdki: ${P.totalStars(state, MATH_LEVELS)} z ${mMaxStars}.`),
+        h('div', { class: 'lvl-table' }, MATH_LEVELS.map((l) => h('span', { class: 'lvl-chip' + (P.isLevelDone(state, l) ? ' ok' : '') }, `${l.num}. ${l.title}${l.optional ? ' (dodatkowy)' : ''}: `, P.isLevelDone(state, l) ? '★'.repeat(P.levelRating(state, l)) : `${P.tasksDone(state, l)}/${l.tasks.length}`))),
+        h('h3', {}, 'Do powtórzenia w matematyce'),
+        weakMath.length ? h('ul', { id: 'math-weak' }, weakMath.map((w) => h('li', {}, `${TOPIC_NAMES[w.item.slice(2)]} – ${w.misses} pomyłek, ${w.hits} trafień`)), weakMathItems.map((w) => h('li', { class: 'muted' }, `działanie ${w.item.slice(2).replace('-', ' − ').replace('+', ' + ')} – ${w.misses} pomyłek`))) : h('p', { class: 'muted' }, 'Na razie brak danych z matematyki.')),
+      h('section', { class: 'card', id: 'games-progress' }, h('h2', {}, 'Zabawy'),
+        h('p', { class: 'muted' }, 'Zabawy zręcznościowe nie mają czasu ani porażek. Odblokowują się po trzech ukończonych poziomach, a co cztery poziomy czeka zabawa bonusowa. Treść zabaw wynika z tego, czego dziecko już się nauczyło.'),
+        h('div', { class: 'voice-mode', role: 'radiogroup', 'aria-label': 'Tempo zabaw' }, speedRadio('slow', 'Wolno (zalecane)', '– elementy poruszają się powoli.'), speedRadio('normal', 'Normalnie', '– około dwa razy szybciej.')),
+        h('table', { class: 'say-table game-table' }, h('thead', {}, h('tr', {}, ['Przedmiot', 'Zabawa', 'Najlepszy wynik', 'Rundy'].map((x) => h('th', {}, x)))), h('tbody', {}, gameRows))),
+      h('section', { class: 'card' }, h('h2', {}, 'Do powtórzenia w czytaniu'),
         weak.length ? h('ul', {}, weak.map((w) => h('li', {}, `„${w.item}” – ${w.misses} ${w.misses === 1 ? 'pomyłka' : 'pomyłki/pomyłek'}, ${w.hits} trafień`))) : h('p', { class: 'muted' }, 'Na razie brak danych. Pojawią się, gdy Piotrek będzie ćwiczył.')),
       h('section', { class: 'card' }, h('h2', {}, 'Lektor (głos)'),
         h('p', { class: 'status ' + statusCls }, statusTxt),

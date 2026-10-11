@@ -162,10 +162,10 @@ const RENDER = {
 };
 export const TASK_RENDERERS = RENDER;
 
-export function runLevel(ctx, box, level, { onExit, onNext }) {
+export function runLevel(ctx, box, level, { onExit, onNext, onBonus }) {
   const { state, narrator } = ctx;
   let idx = P.resumeIndex(state, level);
-  const itemsBefore = P.itemsUnlocked(state, LEVELS);
+  const itemsBefore = P.itemsUnlockedCombined(state, LEVELS, ctx.allLevels);
   let cleanup = () => {};
 
   function strip() {
@@ -228,7 +228,7 @@ export function runLevel(ctx, box, level, { onExit, onNext }) {
   function showDone() {
     cleanup(); narrator.cancel(); clear(box);
     const rating = P.levelRating(state, level);
-    const itemsAfter = P.itemsUnlocked(state, LEVELS);
+    const itemsAfter = P.itemsUnlockedCombined(state, LEVELS, ctx.allLevels);
     const world = ctx.world();
     const fresh = world.items.slice(itemsBefore, itemsAfter);
     const nextLevel = LEVELS[level.num];
@@ -237,7 +237,7 @@ export function runLevel(ctx, box, level, { onExit, onNext }) {
     const reward = fresh.length ? h('div', { class: 'reward' }, h('p', {}, fresh.length > 1 ? 'Nowe skarby!' : 'Nowy skarb!'), h('div', { class: 'items' }, fresh.map((it) => h('figure', {}, h('div', { class: 'item-art', html: it.svg }), h('figcaption', {}, it.name))))) : h('p', { class: 'muted' }, 'Zbierasz kolejne skarby – już niedługo następny!');
     box.append(h('div', { class: 'done-screen' }, ctx.topbar({ back: 'Poziomy', onBack: onExit, title: level.title }),
       h('div', { class: 'card center' }, h('h2', {}, 'Poziom ukończony!'), stars, reward,
-        h('div', { class: 'btn-row' }, nextLevel && P.isUnlocked(state, LEVELS, nextLevel.num - 1) ? h('button', { class: 'btn primary', type: 'button', onclick: () => onNext(nextLevel) }, 'Następny poziom') : null,
+        h('div', { class: 'btn-row' }, onBonus && level.num % 4 === 0 ? h('button', { class: 'btn accent', type: 'button', id: 'bonus-btn', onclick: () => onBonus(level) }, 'Zabawa bonusowa!') : null, nextLevel && P.isUnlocked(state, LEVELS, nextLevel.num - 1) ? h('button', { class: 'btn primary', type: 'button', onclick: () => onNext(nextLevel) }, 'Następny poziom') : null,
           h('button', { class: 'btn', type: 'button', onclick: onExit }, 'Poziomy'),
           h('button', { class: 'btn ghost', type: 'button', onclick: () => ctx.go('collection') }, 'Moje skarby')))));
     narrator.speak([nextFinish()]);

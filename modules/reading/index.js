@@ -3,6 +3,7 @@ import { h, clear, STAR } from '../../js/core/ui.js';
 import * as P from '../../js/core/progress.js';
 import { LEVELS, GROUPS } from './curriculum.js';
 import { runLevel } from './runner.js';
+import { gamesSection, startBonus } from '../../js/games/map.js';
 
 export default {
   id: 'reading',
@@ -40,11 +41,12 @@ export default {
         }
         wrap.append(h('section', { class: 'group' }, h('h2', { class: 'on-bg' }, gname), row));
       }
+      wrap.append(gamesSection(ctx, 'reading', LEVELS, showMap, box));
       box.append(wrap);
     };
     const start = (level) => {
       ctx.onWorld = null;
-      runLevel(ctx, box, level, { onExit: showMap, onNext: start });
+      runLevel(ctx, box, level, { onExit: showMap, onNext: start, onBonus: (l) => startBonus(ctx, box, 'reading', l, showMap) });
     };
     showMap();
   },

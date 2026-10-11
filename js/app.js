@@ -5,6 +5,7 @@ import { Narrator } from './core/narrator.js';
 import { WORLDS, WORLD_IDS } from './art/worlds.js';
 import { MODULES } from '../modules/index.js';
 import { LEVELS } from '../modules/reading/curriculum.js';
+import { MATH_LEVELS } from '../modules/math/curriculum.js';
 import { showParent } from './parent.js';
 
 const root = document.getElementById('app');
@@ -16,6 +17,7 @@ applyVoice();
 
 const ctx = {
   state, narrator, onWorld: null, showBanner: true,
+  readingLevels: LEVELS, mathLevels: MATH_LEVELS, allLevels: [...LEVELS, ...MATH_LEVELS],
   save: () => P.saveState(globalThis.localStorage, state),
   world: () => WORLDS[state.world] ?? WORLDS.kosmos,
   mascot: (i) => ctx.world().mascots[i % ctx.world().mascots.length],
@@ -77,7 +79,6 @@ narrator.onChange(voiceBanner);
 function start() {
   ctx.onWorld = start; ctx.showBanner = true;
   clear(root);
-  const done = P.completedCount(state, LEVELS);
   const cards = MODULES.map((m) => h('button', { class: 'module-card' + (m.available ? '' : ' soon'), type: 'button', 'data-module': m.id, onclick: () => openModule(m) },
     h('span', { class: 'micon', html: m.icon }), h('span', { class: 'mtitle' }, m.title), h('span', { class: 'mtag' }, m.available ? m.tagline : 'Wkrótce')));
   const m0 = ctx.mascot(0);
@@ -98,7 +99,7 @@ function openModule(m) {
 function collection() {
   ctx.onWorld = collection; ctx.showBanner = false; voiceBanner(); clear(root);
   const w = ctx.world();
-  const got = P.itemsUnlocked(state, LEVELS);
+  const got = P.itemsUnlockedCombined(state, LEVELS, ctx.allLevels);
   const grid = h('div', { class: 'collection' }, w.items.map((it, i) => h('figure', { class: 'coll' + (i < got ? ' got' : ' locked'), 'aria-label': i < got ? it.name : 'Jeszcze nie zdobyty skarb' }, h('div', { class: 'item-art', html: it.svg }), h('figcaption', {}, i < got ? it.name : 'Ukończ kolejne poziomy'))));
   const crew = h('div', { class: 'crew' }, w.mascots.map((m) => h('figure', {}, h('div', { class: 'item-art', html: m.svg }), h('figcaption', {}, h('b', {}, m.name), h('br'), m.bio))));
   root.append(h('div', { class: 'scroll-screen' }, ctx.topbar({ back: 'Menu', onBack: start, title: 'Moje skarby' }),
