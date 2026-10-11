@@ -163,3 +163,5 @@ select{font:inherit;padding:.3rem;border-radius:10px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 @media (prefers-contrast:more){.opt,.btn,.card{border-width:5px}}
 .scroll-screen>.lead,.scroll-screen>h2{padding:0 1rem;max-width:1200px;margin-left:auto;margin-right:auto}
+.row input[type=radio]{width:24px;height:24px}
+.voice-mode{margin:.4rem 0}

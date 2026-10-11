@@ -7,6 +7,7 @@
   "scripts": {
     "test": "node --test tests/*.test.mjs",
     "check": "node tools/check-external.mjs",
+    "audio:list": "node tools/list-audio-ids.mjs",
     "serve": "python3 -m http.server 8000"
   }
 }

@@ -4,7 +4,7 @@ export const STATE_VERSION = 1;
 export const ITEMS_PER_WORLD = 12;
 
 export function defaultState() {
-  return { v: STATE_VERSION, world: 'kosmos', narrator: true, rate: 0.8, voiceURI: null, unlockAll: false, levels: {}, hits: {}, misses: {}, updatedAt: 0 };
+  return { v: STATE_VERSION, world: 'kosmos', narrator: true, rate: 0.8, voiceMode: 'recorded', speed: 1, volume: 1, voiceURI: null, unlockAll: false, levels: {}, hits: {}, misses: {}, updatedAt: 0 };
 }
 
 const isObj = (x) => x && typeof x === 'object' && !Array.isArray(x);
@@ -25,6 +25,9 @@ export function parseState(raw, worldIds = ['kosmos', 'dzungla', 'wyspy']) {
   if (typeof o.world === 'string' && worldIds.includes(o.world)) d.world = o.world;
   if (typeof o.narrator === 'boolean') d.narrator = o.narrator;
   if (Number.isFinite(o.rate)) d.rate = clamp(o.rate, 0.5, 1.2);
+  if (o.voiceMode === 'recorded' || o.voiceMode === 'system') d.voiceMode = o.voiceMode;
+  if (Number.isFinite(o.speed)) d.speed = clamp(o.speed, 0.7, 1.3);
+  if (Number.isFinite(o.volume)) d.volume = clamp(o.volume, 0.2, 1);
   if (typeof o.voiceURI === 'string') d.voiceURI = o.voiceURI.slice(0, 300);
   if (typeof o.unlockAll === 'boolean') d.unlockAll = o.unlockAll;
   if (isObj(o.levels)) {

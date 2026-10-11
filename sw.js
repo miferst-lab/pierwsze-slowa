@@ -1,10 +1,13 @@
 // Service worker: cache powłoki aplikacji (offline po pierwszym wczytaniu).
+// Nagrania lektora (audio/*.mp3, ok. 1,3 MB razem) NIE są w SHELL: pierwsze wczytanie zostaje lekkie.
+// Są cache'owane leniwie (przy pierwszym odtworzeniu, patrz handler fetch) oraz dociągane w tle po komunikacie
+// {type:'precache-audio'} wysyłanym przez stronę ~6 s po starcie (pomijane przy włączonym oszczędzaniu danych).
 // UWAGA: przy KAŻDEJ zmianie plików podnieś VERSION – stary cache zostanie usunięty przy aktywacji.
-const VERSION = 'v1';
+const VERSION = 'v2';
 const CACHE = `pierwsze-slowa-${VERSION}`;
 const SHELL = [
   './', 'index.html', 'icon.svg', 'css/app.css', 'audio/manifest.json',
-  'js/app.js', 'js/parent.js', 'js/core/narrator.js', 'js/core/progress.js', 'js/core/say.js', 'js/core/ui.js',
+  'js/app.js', 'js/parent.js', 'js/core/narrator.js', 'js/core/progress.js', 'js/core/say.js', 'js/core/lines.js', 'js/core/spoken.js', 'js/core/ui.js',
   'js/art/words.js', 'js/art/worlds.js',
   'modules/index.js', 'modules/reading/index.js', 'modules/reading/curriculum.js', 'modules/reading/runner.js', 'modules/math/index.js',
 ];
@@ -23,7 +26,28 @@ self.addEventListener('fetch', (e) => {
     return;
   }
   e.respondWith(caches.match(req, { ignoreSearch: true }).then((hit) => hit ?? fetch(req).then((res) => {
-    if (res.ok) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); }
+    if (res.ok && res.status === 200) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); }
     return res;
   })).catch(() => caches.match('index.html')));
+});
+
+// Dociąganie nagrań w tle (po 3 naraz). Błędy ignorujemy: lektor i tak pobierze brakujący plik przy odtwarzaniu.
+let precaching = false;
+self.addEventListener('message', (e) => {
+  if (e.data?.type !== 'precache-audio' || precaching) return;
+  precaching = true;
+  e.waitUntil((async () => {
+    try {
+      const cache = await caches.open(CACHE);
+      const res = await fetch('audio/manifest.json', { cache: 'no-cache' });
+      if (!res.ok) return;
+      await cache.put('audio/manifest.json', res.clone());
+      const j = await res.json();
+      const ids = Object.keys(j.clips ?? j);
+      const todo = [];
+      for (const id of ids) if (/^[st]-[a-z0-9_]+$/.test(id) && !(await cache.match(`audio/${id}.mp3`))) todo.push(`audio/${id}.mp3`);
+      const worker = async () => { for (let u; (u = todo.shift());) { try { const r = await fetch(u); if (r.ok && r.status === 200) await cache.put(u, r); } catch { /* offline – spróbujemy następnym razem */ } } };
+      await Promise.all([worker(), worker(), worker()]);
+    } catch { /* ignore */ } finally { precaching = false; }
+  })());
 });

@@ -14,3 +14,7 @@ test('sw: wszystkie pliki js/css/html są w cache powłoki', () => {
   for (const f of files) assert.ok(shell.includes(f), `brak w SHELL: ${f}`);
 });
 test('sw: wersja cache jest zdefiniowana i nazwa ma prefiks', () => { assert.match(sw, /const VERSION = 'v\d+'/); assert.match(sw, /pierwsze-slowa-\$\{VERSION\}/); });
+test('sw: nagrania audio są cache\'owane leniwie (nie w SHELL), a wiadomość precache-audio obsłużona', () => {
+  assert.ok(!shell.some((f) => f.endsWith('.mp3')), 'mp3 nie powinny być w SHELL (ciężki pierwszy start)');
+  assert.match(sw, /precache-audio/); assert.match(sw, /status === 200/);
+});

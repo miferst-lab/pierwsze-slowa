@@ -55,3 +55,11 @@ test('eksport/import i reset', () => {
   assert.equal(P.importJSON('nie json'), null); assert.equal(P.importJSON('{"v":2}'), null);
   const st = mem(); P.saveState(st, s); P.resetState(st); assert.equal(st.getItem(P.STORAGE_KEY), null);
 });
+test('parseState: tryb głosu, tempo i głośność – domyślnie nagrany głos, wartości poza zakresem poprawiane', () => {
+  const d = P.defaultState();
+  assert.equal(d.voiceMode, 'recorded'); assert.equal(d.speed, 1); assert.equal(d.volume, 1);
+  const s = P.parseState({ v: 1, voiceMode: 'system', speed: 9, volume: -3 });
+  assert.equal(s.voiceMode, 'system'); assert.equal(s.speed, 1.3); assert.equal(s.volume, 0.2);
+  assert.equal(P.parseState({ v: 1, voiceMode: 'cokolwiek' }).voiceMode, 'recorded');
+  assert.equal(P.parseState({ v: 1, speed: 'x' }).speed, 1);
+});

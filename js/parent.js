@@ -1,7 +1,7 @@
 // Panel rodzica: bramka (zadanie rachunkowe), postępy, słabe miejsca, lektor, dane.
 import { h, clear, soundLabel } from './core/ui.js';
 import * as P from './core/progress.js';
-import { SAY } from './core/say.js';
+import { SAY, audioId } from './core/say.js';
 import { LEVELS } from '../modules/reading/curriculum.js';
 import { WORLDS } from './art/worlds.js';
 
@@ -10,7 +10,7 @@ const VOICE_HELP = [
   'W sekcji „Zarządzaj głosami” (lub „Głosy”) kliknij „Dodaj głosy”.',
   'Wpisz „polski” i zaznacz „Polski (Polska)”, potem „Dodaj”. Poczekaj, aż głos się pobierze (to potrzebuje internetu tylko raz).',
   'Zamknij WSZYSTKIE okna przeglądarki i uruchom ją ponownie. W Edge lub Chrome pojawi się głos Microsoft Paulina lub Zofia.',
-  'Aplikacja używa głosów lokalnych (działają bez internetu). Głosy „Online (Natural)” w Edge wymagają połączenia i mogą być blokowane przez Family Safety – nie są potrzebne.',
+  'Domyślnie gra używa nagranego głosu i nie potrzebuje głosu systemowego. Głos systemowy to rezerwa: gra wybiera najlepszy polski głos (najpierw „Online (Natural)”, np. Microsoft Zofia, potem Paulina/Zofia lokalna). Głosy „Online” Edge pobiera sam z internetu – to robi przeglądarka, nie gra – i mogą być blokowane przez Family Safety.',
 ];
 
 export function showParent(ctx, box) {
@@ -32,22 +32,42 @@ export function showParent(ctx, box) {
     const done = P.completedCount(state, LEVELS);
     const maxStars = LEVELS.reduce((s, l) => s + 3 * l.tasks.length, 0);
     const weak = P.weakItems(state, 10);
-    const statusTxt = { ready: `Znaleziono polski głos: ${narrator.voice?.name ?? ''}`, loading: 'Wyszukiwanie głosów…', none: 'Nie znaleziono polskiego głosu – dziecko widzi duży tekst zamiast mowy. Zobacz instrukcję poniżej.', unsupported: 'Ta przeglądarka nie obsługuje syntezy mowy. Użyj Edge lub Chrome.' }[narrator.status];
+    const clipsTxt = narrator.hasClips ? `Nagrany głos jest dostępny (${narrator.manifest.size} nagrań, działa bez internetu).` : 'Brak plików z nagraniami – gra używa głosu systemowego.';
+    const sysTxt = { ready: `Głos systemowy: ${narrator.voice?.name ?? ''}`, loading: 'Wyszukiwanie głosów systemowych…', none: 'Nie znaleziono polskiego głosu systemowego.', unsupported: 'Ta przeglądarka nie obsługuje syntezy mowy.' }[narrator.status];
+    const statusTxt = `${clipsTxt} ${sysTxt}${!narrator.hasClips && ['none', 'unsupported'].includes(narrator.status) ? ' Dziecko widzi duży tekst zamiast mowy – zobacz instrukcję poniżej.' : ''}`;
+    const statusCls = narrator.hasClips || narrator.status === 'ready' ? 'ready' : narrator.status;
 
-    const rate = h('input', { type: 'range', min: '0.5', max: '1.1', step: '0.05', value: state.rate, id: 'rate', 'aria-label': 'Tempo lektora' });
-    const rateOut = h('output', { for: 'rate' }, state.rate.toFixed(2));
-    rate.addEventListener('input', () => { state.rate = Number(rate.value); narrator.rate = state.rate; rateOut.textContent = state.rate.toFixed(2); ctx.save(); });
-    rate.addEventListener('change', () => narrator.speak(['Tak brzmi lektor w tym tempie.']));
+    const slider = (id, label, min, max, key, fmt, onSet) => {
+      const input = h('input', { type: 'range', min: String(min), max: String(max), step: '0.05', value: String(state[key]), id, 'aria-label': label });
+      const out = h('output', { for: id }, fmt(state[key]));
+      input.addEventListener('input', () => { state[key] = Number(input.value); onSet(); out.textContent = fmt(state[key]); ctx.save(); });
+      input.addEventListener('change', () => narrator.speak(['Tak brzmi lektor w tym tempie.'], { force: true }));
+      return h('label', { class: 'row' }, label + ': ', input, ' ', out);
+    };
+    const speed = slider('speed', 'Tempo', 0.7, 1.3, 'speed', (v) => `${Math.round(v * 100)}%`, () => { narrator.speed = state.speed; });
+    const volume = slider('volume', 'Głośność', 0.2, 1, 'volume', (v) => `${Math.round(v * 100)}%`, () => { narrator.volume = state.volume; });
+    const radio = (value, text, hint) => {
+      const input = h('input', { type: 'radio', name: 'voice-mode', value, id: 'mode-' + value });
+      input.checked = state.voiceMode === value;
+      input.addEventListener('change', () => { if (!input.checked) return; state.voiceMode = value; narrator.mode = value; ctx.save(); narrator.speak(['Cześć Piotrku! Zaczynamy czytać.'], { force: true }); });
+      return h('label', { class: 'row' }, input, ' ', h('b', {}, text), h('span', { class: 'muted' }, ' ' + hint));
+    };
     const onoff = h('input', { type: 'checkbox', id: 'narr-on', checked: state.narrator ? '' : null });
     onoff.checked = state.narrator;
     onoff.addEventListener('change', () => { state.narrator = onoff.checked; narrator.enabled = state.narrator; ctx.save(); ctx.refreshControls(); });
-    const sel = h('select', { id: 'voice-sel', 'aria-label': 'Głos' }, h('option', { value: '' }, 'Automatycznie (zalecane)'), narrator.plVoices.map((v) => h('option', { value: v.voiceURI }, `${v.name}${v.localService ? '' : ' (online)'}`)));
+    const sel = h('select', { id: 'voice-sel', 'aria-label': 'Głos systemowy' }, h('option', { value: '' }, 'Automatycznie (najlepszy polski głos)'), narrator.plVoices.map((v) => h('option', { value: v.voiceURI }, `${v.name}${/natural/i.test(v.name) ? ' ★' : ''}${v.localService ? '' : ' (online)'}`)));
     sel.value = state.voiceURI ?? '';
-    sel.addEventListener('change', () => { state.voiceURI = sel.value || null; narrator.setPreferred(state.voiceURI); ctx.save(); });
+    sel.addEventListener('change', () => { state.voiceURI = sel.value || null; narrator.setPreferred(state.voiceURI); ctx.save(); narrator.speak(['Cześć Piotrku! Zaczynamy czytać.'], { mode: 'system', force: true }); });
     const unlock = h('input', { type: 'checkbox', id: 'unlock-all' }); unlock.checked = state.unlockAll;
     unlock.addEventListener('change', () => { state.unlockAll = unlock.checked; ctx.save(); });
 
-    const soundRows = Object.entries(SAY).map(([k, v]) => h('tr', {}, h('td', {}, soundLabel(k)), h('td', {}, v), h('td', {}, h('button', { class: 'btn small', type: 'button', onclick: () => narrator.speak(['#' + k]) }, 'Odtwórz'))));
+    const play = (k, mode) => narrator.speak(['#' + k], { mode, force: true });
+    const soundRows = Object.entries(SAY).map(([k, v]) => h('tr', {}, h('td', {}, soundLabel(k)), h('td', { class: 'muted' }, v),
+      h('td', {}, h('button', { class: 'btn small', type: 'button', 'data-play': k, disabled: narrator.manifest.has(audioId('#' + k)) ? null : '', onclick: () => play(k, 'recorded') }, 'Nagranie'),
+        ' ', h('button', { class: 'btn small ghost', type: 'button', disabled: narrator.status === 'ready' ? null : '', onclick: () => play(k, 'system') }, 'Głos systemowy'))));
+    const playAll = h('button', { class: 'btn', type: 'button', id: 'play-all-sounds', onclick: async () => {
+      for (const k of Object.keys(SAY)) { await narrator.speak(['#' + k], { mode: 'recorded', force: true }); await new Promise((r) => setTimeout(r, 250)); }
+    } }, 'Odtwórz wszystkie nagrane głoski');
 
     let resetArmed = false;
     const resetBtn = h('button', { class: 'btn danger', type: 'button' }, 'Zresetuj postępy');
@@ -70,13 +90,16 @@ export function showParent(ctx, box) {
       h('section', { class: 'card' }, h('h2', {}, 'Do powtórzenia'),
         weak.length ? h('ul', {}, weak.map((w) => h('li', {}, `„${w.item}” – ${w.misses} ${w.misses === 1 ? 'pomyłka' : 'pomyłki/pomyłek'}, ${w.hits} trafień`))) : h('p', { class: 'muted' }, 'Na razie brak danych. Pojawią się, gdy Piotrek będzie ćwiczył.')),
       h('section', { class: 'card' }, h('h2', {}, 'Lektor (głos)'),
-        h('p', { class: 'status ' + narrator.status }, statusTxt),
+        h('p', { class: 'status ' + statusCls }, statusTxt),
         h('label', { class: 'row' }, onoff, ' Lektor włączony'),
-        h('label', { class: 'row' }, 'Tempo: ', rate, ' ', rateOut, h('span', { class: 'muted' }, ' (0,8 = spokojnie, dla dzieci)')),
-        h('label', { class: 'row' }, 'Głos: ', sel),
-        h('div', { class: 'btn-row' }, h('button', { class: 'btn', type: 'button', onclick: () => narrator.speak(['Cześć Piotrku! Zaczynamy czytać.']) }, 'Wypróbuj głos')),
-        h('details', {}, h('summary', {}, 'Jak zainstalować polski głos w Windows 11'), h('ol', {}, VOICE_HELP.map((t) => h('li', {}, t)))),
-        h('details', {}, h('summary', {}, 'Test głosek (tabela wymowy)'), h('p', { class: 'muted' }, 'Lektor czyta pojedynczą literę jej nazwą („em”), więc głoski mają własne nośniki. Jeśli któraś brzmi źle, popraw ją w pliku js/core/say.js.'), h('table', { class: 'say-table' }, h('tbody', {}, soundRows)))),
+        h('div', { class: 'voice-mode', role: 'radiogroup', 'aria-label': 'Rodzaj głosu' },
+          radio('recorded', 'Nagrany głos (zalecany)', '– ten sam miły, kobiecy głos na każdym komputerze, działa bez internetu.'),
+          radio('system', 'Głos systemowy', '– głos z Windows/przeglądarki (jakość zależy od komputera).')),
+        speed, volume,
+        h('label', { class: 'row' }, 'Głos systemowy: ', sel),
+        h('div', { class: 'btn-row' }, h('button', { class: 'btn', type: 'button', onclick: () => narrator.speak(['Cześć Piotrku! Zaczynamy czytać.'], { force: true }) }, 'Wypróbuj głos')),
+        h('details', {}, h('summary', {}, 'Jak zainstalować polski głos w Windows 11 (dla głosu systemowego)'), h('ol', {}, VOICE_HELP.map((t) => h('li', {}, t)))),
+        h('details', {}, h('summary', {}, 'Test głosek'), h('p', { class: 'muted' }, 'Odtwarza nagrane głoski (spółgłoski ciągłe jak „mmm”, „sss” są wydłużone). Przycisk „Głos systemowy” pokazuje, jak czyta je syntezator przeglądarki (tabela wymowy w js/core/say.js).'), h('div', { class: 'btn-row' }, playAll), h('table', { class: 'say-table' }, h('tbody', {}, soundRows)))),
       h('section', { class: 'card' }, h('h2', {}, 'Dane'),
         h('p', { class: 'muted' }, 'Postępy są zapisane tylko w tej przeglądarce (localStorage). Nic nie jest wysyłane do internetu.'),
         h('div', { class: 'btn-row' }, exportBtn, resetBtn))));

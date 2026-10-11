@@ -4,37 +4,59 @@
 // Użycie: PUPPETEER_CORE=/ścieżka/do/puppeteer-core node tools/browser-check.mjs [katalog-zrzutów]
 import { createRequire } from 'node:module';
 import { spawn } from 'node:child_process';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync, symlinkSync, rmSync, mkdtempSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 
 const require = createRequire(import.meta.url);
 const puppeteer = require(process.env.PUPPETEER_CORE ?? 'puppeteer-core');
 const CHROME = process.env.CHROME ?? '/usr/bin/google-chrome';
 const OUT = process.argv[2] ?? '/workspace/pierwsze-slowa-shots';
-const PORT = 8765, ORIGIN = `http://localhost:${PORT}`;
+// Grę serwujemy pod PODŚCIEŻKĄ /pierwsze-slowa/ (jak GitHub Pages), żeby sprawdzić, że ścieżki do audio i service workera są względne.
+const PORT = 8765, ORIGIN = `http://localhost:${PORT}`, BASE = `${ORIGIN}/pierwsze-slowa`;
 mkdirSync(OUT, { recursive: true });
 const root = new URL('..', import.meta.url).pathname;
-const server = spawn('python3', ['-m', 'http.server', String(PORT)], { cwd: root, stdio: 'ignore' });
+const serveDir = mkdtempSync(join(tmpdir(), 'ps-serve-'));
+symlinkSync(root.replace(/\/$/, ''), join(serveDir, 'pierwsze-slowa'));
+const server = spawn('python3', ['-m', 'http.server', String(PORT)], { cwd: serveDir, stdio: 'ignore' });
 await new Promise((r) => setTimeout(r, 800));
 
-const report = { consoleErrors: [], pageErrors: [], externalRequests: [], failedRequests: [], noScrollViolations: [], steps: [], tasksSolved: {}, spoken: [] };
+const report = { consoleErrors: [], pageErrors: [], externalRequests: [], failedRequests: [], noScrollViolations: [], steps: [], tasksSolved: {}, spoken: [], audio: {} };
 const ok = (m) => { report.steps.push(m); console.log('✔', m); };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const browser = await puppeteer.launch({ executablePath: CHROME, headless: true, args: ['--no-sandbox', '--disable-gpu', '--autoplay-policy=no-user-gesture-required'] });
 
-async function newPage(w = 1366, h = 768, stub = false) {
+const STUB_VOICES = [
+  { name: 'Microsoft David - English (United States)', lang: 'en-US', localService: true, voiceURI: 'stub-david' },
+  { name: 'Microsoft Paulina - Polish (Poland)', lang: 'pl-PL', localService: true, voiceURI: 'stub-paulina', default: true },
+  { name: 'Microsoft Zofia Online (Natural) - Polish (Poland)', lang: 'pl-PL', localService: false, voiceURI: 'stub-zofia-online' },
+];
+async function newPage(w = 1366, h = 768, stub = false, { collect = true } = {}) {
   const page = await browser.newPage();
   await page.setViewport({ width: w, height: h });
-  page.on('console', (m) => { if (['error', 'warning'].includes(m.type())) report.consoleErrors.push(`${m.type()}: ${m.text()} @${m.location()?.url ?? ''}`); });
+  if (collect) {
+    page.on('console', (m) => { if (['error', 'warning'].includes(m.type())) report.consoleErrors.push(`${m.type()}: ${m.text()} @${m.location()?.url ?? ''}`); });
+    page.on('requestfailed', (r) => report.failedRequests.push(r.url() + ' ' + r.failure()?.errorText));
+    page.on('response', (r) => { if (r.status() >= 400) report.failedRequests.push(r.status() + ' ' + r.url()); });
+  }
+  page.on('response', (r) => { const u = r.url(); if (u.includes('/audio/')) report.audio[u.replace(BASE, '')] = { status: r.status(), type: r.headers()['content-type'], bytes: Number(r.headers()['content-length'] ?? 0) }; });
   page.on('pageerror', (e) => report.pageErrors.push(String(e)));
   page.on('request', (r) => { const u = r.url(); if (!u.startsWith(ORIGIN) && !u.startsWith('data:') && !u.startsWith('blob:')) report.externalRequests.push(u); });
-  page.on('requestfailed', (r) => report.failedRequests.push(r.url() + ' ' + r.failure()?.errorText));
-  page.on('response', (r) => { if (r.status() >= 400) report.failedRequests.push(r.status() + ' ' + r.url()); });
-  if (stub) await page.evaluateOnNewDocument(() => {
-    const voice = { name: 'Stub Paulina', lang: 'pl-PL', localService: true, voiceURI: 'stub-paulina', default: true };
-    window.__spoken = [];
-    const synth = { getVoices: () => [voice], speak(u) { window.__spoken.push({ text: u.text, rate: Math.round(u.rate * 100) / 100, lang: u.lang }); setTimeout(() => u.onend?.(), 30); }, cancel() {}, addEventListener() {} };
-    Object.defineProperty(window, 'speechSynthesis', { value: synth, configurable: true });
+  // zdarzenia elementów <audio> (play/ended/error) – do sprawdzenia, że nagrania naprawdę grają
+  await page.evaluateOnNewDocument(() => {
+    window.__audio = [];
+    const Orig = window.Audio;
+    window.Audio = function (src) {
+      const a = new Orig(src);
+      for (const ev of ['playing', 'ended', 'error']) a.addEventListener(ev, () => window.__audio.push({ ev, dur: a.duration, rate: a.playbackRate, vol: a.volume }));
+      return a;
+    };
   });
+  if (stub) await page.evaluateOnNewDocument((voices) => {
+    window.__spoken = [];
+    const synth = { getVoices: () => voices, speak(u) { window.__spoken.push({ text: u.text, rate: Math.round(u.rate * 100) / 100, volume: Math.round(u.volume * 100) / 100, pitch: u.pitch, lang: u.lang, voice: u.voice?.name }); setTimeout(() => u.onend?.(), 30); }, cancel() {}, addEventListener() {} };
+    Object.defineProperty(window, 'speechSynthesis', { value: synth, configurable: true });
+  }, STUB_VOICES);
   return page;
 }
 const shot = (page, name) => page.screenshot({ path: `${OUT}/${name}.png` });
@@ -61,7 +83,7 @@ async function solveCurrentTask(page, { tryWrongFirst = false, shotName = null, 
     await wrong.click(); await sleep(150);
     const msg = await page.$eval('.bubble', (b) => b.textContent);
     if (!/jeszcze raz/i.test(msg)) throw new Error('brak łagodnej informacji po błędnej odpowiedzi: ' + msg);
-    if (/źle|błąd|nie /i.test(msg)) throw new Error('niełagodny komunikat: ' + msg);
+    if (/źle|błąd/i.test(msg)) throw new Error('niełagodny komunikat: ' + msg);
   }
   if (type === 'readtap') { for (const w of await page.$$('.tapword')) await w.click(); }
   else if (type === 'build') {
@@ -102,11 +124,21 @@ async function playLevel(page, levelId, opts = {}) {
 try {
   // ---------- Faza 1: bez głosu polskiego (headless Chrome na Linuksie zwykle nie ma głosów) ----------
   const page = await newPage();
-  await page.goto(ORIGIN + '/?test=1', { waitUntil: 'networkidle0' });
+  await page.goto(BASE + '/?test=1', { waitUntil: 'networkidle0' });
   await page.waitForSelector('.module-card');
   await sleep(3500); // czas na wykrycie braku głosów
   const banner = await page.$eval('#voice-banner', (b) => !b.hidden && b.textContent);
-  ok('ekran startowy; baner braku głosu: ' + (banner || 'brak (są głosy)'));
+  if (banner) throw new Error('baner braku głosu mimo nagrań: ' + banner);
+  ok('ekran startowy; baner braku głosu ukryty (są nagrania, brak głosu systemowego w headless Chrome)');
+  await page.evaluate(() => { window.__ps.narrator.log = []; });
+  // nagrania naprawdę grają: pliki ładują się spod podścieżki /pierwsze-slowa/audio/, elementy <audio> kończą bez błędów
+  const ev = await page.evaluate(async () => { await window.__ps.narrator.speak(['Posłuchaj.', '#m', 'Brawo!']); return window.__audio; });
+  const ended = ev.filter((e) => e.ev === 'ended').length, errs = ev.filter((e) => e.ev === 'error').length;
+  if (ended !== 3 || errs) throw new Error('nagrania nie zagrały poprawnie: ' + JSON.stringify(ev));
+  if (!ev.every((e) => e.dur > 0.2 && e.dur < 5)) throw new Error('dziwny czas nagrań: ' + JSON.stringify(ev));
+  for (const f of ['/audio/t-posu142uchaju2e.mp3', '/audio/s-m.mp3', '/audio/manifest.json']) if (report.audio[f]?.status !== 200) throw new Error('brak 200 dla ' + f + ': ' + JSON.stringify(report.audio));
+  if (!/audio\/mpeg/.test(report.audio['/audio/s-m.mp3'].type ?? '')) throw new Error('zły content-type mp3: ' + report.audio['/audio/s-m.mp3'].type);
+  ok(`nagrania: 3 pliki zagrane bez błędów pod /pierwsze-slowa/ (czasy ${ev.filter((e) => e.ev === 'ended').map((e) => e.dur.toFixed(2)).join(', ')} s)`);
   await shot(page, '01-start-kosmos');
   // ekran startowy może się przewijać na bardzo niskich oknach; sprawdzamy tylko zadania
 
@@ -149,6 +181,17 @@ try {
     await playLevel(page, lid, {}); await click(page, '.btn:not(.primary):not(.ghost)'); await page.waitForSelector('.tile-level');
   }
   ok('wszystkie ' + ids.length + ' poziomów rozwiązanych w przeglądarce');
+  // każda wypowiedź, którą lektor naprawdę wypowiedział w całej grze, ma nagranie w manifeście
+  const spokenParts = await page.evaluate(async () => {
+    const { audioId } = await import('./js/core/say.js');
+    const m = await (await fetch('audio/manifest.json')).json(); const have = new Set(Object.keys(m.clips));
+    const all = [...new Set(window.__ps.narrator.log.flat())];
+    return { n: all.length, missing: all.filter((p) => !have.has(audioId(p))) };
+  });
+  if (spokenParts.missing.length) throw new Error('wypowiedzi bez nagrania: ' + spokenParts.missing.join(' | '));
+  ok(`lektor wypowiedział ${spokenParts.n} różnych tekstów w całej grze – wszystkie mają nagranie`);
+  const plays = await page.evaluate(() => window.__audio.filter((e) => e.ev === 'error').length);
+  if (plays) throw new Error('błędy elementów audio podczas gry: ' + plays);
   await shot(page, '06-mapa-po-ukonczeniu');
 
   // zmiana świata w trakcie zadania
@@ -169,7 +212,7 @@ try {
   const q = await page.$eval('.gate .lead', (e) => e.textContent); const [a, b] = q.match(/\d+/g).map(Number);
   await page.type('#gate-in', String(a + b + 1)); await click(page, '.gate .btn.primary'); await sleep(200);
   if (!(await page.$('#gate-in'))) throw new Error('bramka przepuściła zły wynik');
-  await page.type('#gate-in', String(a + b)); await click(page, '.gate .btn.primary'); await page.waitForSelector('#rate');
+  await page.type('#gate-in', String(a + b)); await click(page, '.gate .btn.primary'); await page.waitForSelector('#speed');
   await page.evaluate(() => document.querySelectorAll('details').forEach((d) => (d.open = true)));
   await shot(page, '10-rodzic-panel'); ok('panel rodzica: bramka i dashboard');
   // reset
@@ -178,34 +221,90 @@ try {
   ok('reset postępów: ' + (after === null ? 'localStorage wyczyszczony' : 'zapis po resecie: ' + after.slice(0, 30)));
 
   // offline (service worker)
-  await page.goto(ORIGIN + '/', { waitUntil: 'networkidle0' });
+  await page.goto(BASE + '/', { waitUntil: 'networkidle0' });
   await page.evaluate(() => navigator.serviceWorker.ready); await sleep(800);
   await page.setOfflineMode(true); await page.reload({ waitUntil: 'domcontentloaded' });
   await page.waitForSelector('.module-card', { timeout: 6000 }); ok('offline po pierwszym wczytaniu: aplikacja startuje z cache');
   await page.setOfflineMode(false);
   await page.close();
 
-  // ---------- Faza 2: pełny ekran 1920x1080 i atrapa polskiego głosu ----------
+  // ---------- Faza 2: głos systemowy (atrapa: Paulina lokalna, Zofia Online (Natural), David) ----------
   const p2 = await newPage(1920, 1080, true);
-  await p2.goto(ORIGIN + '/?test=1', { waitUntil: 'networkidle0' });
+  await p2.goto(BASE + '/?test=1', { waitUntil: 'networkidle0' });
   await p2.waitForSelector('.module-card'); await sleep(500);
   if (!(await p2.$eval('#voice-banner', (b) => b.hidden))) throw new Error('baner widoczny mimo głosu');
   await shot(p2, '11-start-1920x1080');
+  const voiceName = await p2.evaluate(() => window.__ps.narrator.voice?.name);
+  if (!/Zofia Online \(Natural\)/.test(voiceName)) throw new Error('ranking: oczekiwano Zofia Online (Natural), jest: ' + voiceName);
+  ok('głos systemowy: ranking wybrał ' + voiceName);
+  // domyślnie gra nagrania (atrapa syntezatora milczy)
   await p2.evaluate(() => localStorage.setItem('pierwsze-slowa:v1', JSON.stringify({ v: 1, unlockAll: true })));
   await p2.reload({ waitUntil: 'networkidle0' }); await click(p2, '.module-card[data-module="reading"]'); await click(p2, '.tile-level[data-level="L03"]');
-  await p2.waitForSelector('#stage'); await sleep(700);
+  await p2.waitForSelector('#stage'); await sleep(3200);
   await shot(p2, '12-zadanie-1920x1080-hear');
   await noScroll(p2, '1920 hear');
-  let spoken = await p2.evaluate(() => window.__spoken.map((s) => s.text + '@' + s.rate)); report.spoken.push(...spoken);
-  if (!spoken.some((s) => /^mmm@0\.8$/.test(s))) throw new Error('lektor nie powiedział „mmm” z tempem 0.8: ' + spoken);
-  await click(p2, '.btn.listen'); await sleep(500);
-  spoken = await p2.evaluate(() => window.__spoken.map((s) => s.text)); ok('lektor (atrapa): wypowiedzi: ' + [...new Set(spoken)].join(' | '));
-  await p2.evaluate(() => { window.__ps.state.rate = 1; });
+  const rec = await p2.evaluate(() => ({ spoken: window.__spoken.length, played: window.__audio.filter((e) => e.ev === 'ended').length }));
+  if (rec.spoken !== 0 || rec.played < 2) throw new Error('domyślnie powinny grać nagrania: ' + JSON.stringify(rec));
+  ok(`domyślnie nagrany głos (${rec.played} nagrań, syntezator milczy)`);
+  // panel rodzica: przełącznik, suwaki, test głosek
+  await click(p2, '.back'); await click(p2, '.back');
+  await click(p2, '.start-foot .btn.ghost'); await p2.waitForSelector('#gate-in');
+  const q2 = await p2.$eval('.gate .lead', (e) => e.textContent); const [ga, gb] = q2.match(/\d+/g).map(Number);
+  await p2.type('#gate-in', String(ga + gb)); await click(p2, '.gate .btn.primary'); await p2.waitForSelector('#speed');
+  if (!(await p2.$eval('#mode-recorded', (r) => r.checked))) throw new Error('domyślnie powinien być „Nagrany głos”');
+  const labels = await p2.$$eval('.voice-mode label', (l) => l.map((x) => x.textContent));
+  if (!/Nagrany głos \(zalecany\)/.test(labels[0]) || !/Głos systemowy/.test(labels[1])) throw new Error('etykiety przełącznika: ' + labels);
+  await p2.evaluate(() => document.querySelectorAll('details').forEach((d) => (d.open = true)));
+  await shot(p2, '13-rodzic-lektor');
+  await p2.evaluate(() => { window.__audio.length = 0; });
+  await click(p2, '[data-play="sz"]'); await sleep(1700);
+  const tg = await p2.evaluate(() => window.__audio.map((e) => e.ev));
+  if (!tg.includes('ended') || tg.includes('error')) throw new Error('Test głosek (nagranie) nie zagrał: ' + tg);
+  ok('panel rodzica: „Test głosek” gra nagrane głoski');
+  await p2.$eval('#speed', (el) => { el.value = '1.3'; el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); });
+  await p2.$eval('#volume', (el) => { el.value = '0.5'; el.dispatchEvent(new Event('input', { bubbles: true })); });
+  await sleep(1500);
+  const ev2 = await p2.evaluate(() => window.__audio.filter((e) => e.ev === 'playing').pop());
+  if (Math.abs(ev2.rate - 1.3) > 0.01 || Math.abs(ev2.vol - 0.5) > 0.01) throw new Error('suwaki nie wpływają na odtwarzanie: ' + JSON.stringify(ev2));
+  await click(p2, '#mode-system'); await sleep(300);
+  const stored = await p2.evaluate(() => JSON.parse(localStorage.getItem('pierwsze-slowa:v1')));
+  if (stored.voiceMode !== 'system' || stored.speed !== 1.3 || stored.volume !== 0.5) throw new Error('ustawienia nie zapisane: ' + JSON.stringify(stored));
+  ok('panel rodzica: tryb głosu, tempo i głośność działają i są zapamiętane');
+  // głos systemowy: parametry głosek (wolniej, głośniej) vs zdań, pitch, wybór głosu
+  await p2.evaluate(() => { const s = window.__ps.state; s.speed = 1; s.volume = 1; window.__ps.applyVoice(); window.__spoken.length = 0; });
+  await p2.evaluate(async () => { const n = window.__ps.narrator; await n.speak(['#m', 'ma', 'To jest dom.', 'Brawo!'], { force: true }); });
+  const sp = await p2.evaluate(() => window.__spoken);
+  const by = Object.fromEntries(sp.map((x) => [x.text, x]));
+  if (by.mmm?.rate !== 0.65 || by.mmm?.volume !== 1) throw new Error('głoska: ' + JSON.stringify(by.mmm));
+  if (by.ma?.rate !== 0.65) throw new Error('sylaba: ' + JSON.stringify(by.ma));
+  if (by['To jest dom.']?.rate !== 0.85 || by['To jest dom.']?.volume !== 0.9) throw new Error('zdanie: ' + JSON.stringify(by['To jest dom.']));
+  if (!(by['Brawo!']?.pitch > by['To jest dom.']?.pitch - 0.001) || by['Brawo!'].pitch > 1.15 + 1e-9) throw new Error('pochwała pitch: ' + JSON.stringify(by['Brawo!']));
+  if (!sp.every((x) => x.lang === 'pl-PL')) throw new Error('zły język: ' + JSON.stringify(sp.map((x) => x.lang)));
+  ok('głos systemowy: głoski/sylaby rate 0.65 vol 1.0; zdania rate 0.85 vol 0.9; pitch 1.12–1.15; głos Zofia Online (Natural)');
+  await p2.select('#voice-sel', 'stub-paulina'); await sleep(200);
+  await p2.reload({ waitUntil: 'networkidle0' });
+  const remembered = await p2.evaluate(() => window.__ps.narrator.voice?.name);
+  if (!/Paulina/.test(remembered)) throw new Error('wybór głosu nie zapamiętany: ' + remembered);
+  ok('wybór głosu systemowego zapamiętany po przeładowaniu: ' + remembered);
   await p2.close();
+
+  // ---------- Faza 3: brak plików audio (404) – gra działa dalej, mówi głosem systemowym ----------
+  const p3 = await newPage(1366, 768, true, { collect: false });
+  await p3.setRequestInterception(true);
+  p3.on('request', (r) => (r.url().includes('/audio/') ? r.respond({ status: 404, body: 'nie ma' }) : r.continue()));
+  await p3.goto(BASE + '/?test=1', { waitUntil: 'networkidle0' });
+  await p3.waitForSelector('.module-card'); await sleep(500);
+  await click(p3, '.module-card[data-module="reading"]'); await click(p3, '.tile-level[data-level="L01"]');
+  await p3.waitForSelector('#stage'); await sleep(900);
+  await solveCurrentTask(p3, { tryWrongFirst: true, label: 'bez audio' });
+  const sp3 = await p3.evaluate(() => window.__spoken.map((x) => x.text));
+  if (!sp3.length) throw new Error('bez plików audio lektor powinien mówić głosem systemowym');
+  ok('bez plików audio (404): zadanie rozwiązane, mowa przez głos systemowy: ' + [...new Set(sp3)].slice(0, 5).join(' | '));
+  await p3.close();
 } catch (e) {
   console.error('BŁĄD TESTU:', e); report.fatal = String(e.stack ?? e);
 }
-await browser.close(); server.kill();
+await browser.close(); server.kill(); rmSync(serveDir, { recursive: true, force: true });
 writeFileSync(`${OUT}/report.json`, JSON.stringify(report, null, 2));
 const bad = report.fatal || report.pageErrors.length || report.externalRequests.length || report.consoleErrors.length || report.failedRequests.length || report.noScrollViolations.length;
 console.log('\nPodsumowanie:', JSON.stringify({ tasksSolved: report.tasksSolved, consoleErrors: report.consoleErrors.length, pageErrors: report.pageErrors.length, externalRequests: report.externalRequests.length, failedRequests: report.failedRequests.length, noScrollViolations: report.noScrollViolations.length }));

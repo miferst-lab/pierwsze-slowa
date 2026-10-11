@@ -1,7 +1,7 @@
 # Pierwsze Słowa
 
 Statyczna gra w przeglądarce do nauki czytania po polsku dla pierwszoklasisty (prototyp dla Piotrka, 7 lat).
-Litery i głoski → sylaby → słowa → zdania → krótkie czytanki. Lektor czyta po polsku (synteza mowy przeglądarki),
+Litery i głoski → sylaby → słowa → zdania → krótkie czytanki. Lektor czyta po polsku: domyślnie NAGRANYM, miłym kobiecym głosem (neuronowy TTS, nagrania są w repozytorium), a zapasowo głosem systemowym przeglądarki,
 za zadania są gwiazdki, a za ukończone poziomy – skarby w jednym z trzech światów.
 
 **Wszystko działa na jednej domenie, bez żadnych zewnętrznych zapytań:** bez CDN-ów, czcionek Google, analityki,
@@ -25,27 +25,34 @@ wymagają serwera HTTP). Parametr `?test=1` w adresie znaczy poprawne odpowiedzi
 ```bash
 npm test                         # node --test tests/*.test.mjs (bez zależności)
 npm run check                    # node tools/check-external.mjs – brak zewnętrznych adresów w plikach aplikacji
+npm run audio:list               # lista wszystkich wypowiedzi lektora (id, rodzaj, tekst)
 PUPPETEER_CORE=/ścieżka/do/puppeteer-core node tools/browser-check.mjs [katalog-na-zrzuty]
 ```
 
 - `tests/curriculum.test.mjs` – poprawność programu: unikalne id, każde zadanie ma odpowiedź w opcjach, każda głoska ma wpis „say”, ilustracje istnieją, litery poznane przed użyciem w sylabie itd.
 - `tests/progress.test.mjs` – zapis/odczyt postępów, odporność na uszkodzone dane, gwiazdki, odblokowania, reset.
-- `tests/narrator.test.mjs` – wybór polskiego głosu, identyfikatory nagrań. `tests/sw.test.mjs` – lista plików w cache.
+- `tests/narrator.test.mjs` – ranking głosów (Natural/Online pierwsze), parametry głosu systemowego (głoski wolniej/głośniej), identyfikatory nagrań. `tests/lines.test.mjs` – pochwały: warianty bez powtórzeń z rzędu.
+- `tests/audio.test.mjs` – każda wypowiedź w grze ma id i nagranie, manifest = pliki na dysku, poprawne mp3, razem < 15 MB. `tests/sw.test.mjs` – lista plików w cache.
 - `tools/check-external.mjs` – szuka `http://`, `https://`, `//host`, `@import` w plikach aplikacji (wyjątek: `xmlns`, komentarze).
 - `tools/browser-check.mjs` – prawdziwy headless Chrome (puppeteer-core): przeklikuje wszystkie poziomy i typy zadań, światy, panel rodzica, tryb offline;
-  sprawdza błędy konsoli, zewnętrzne żądania i brak przewijania w zadaniach; robi zrzuty ekranu. Z atrapą polskiego głosu sprawdza też, co mówi lektor.
+  serwowany pod podścieżką `/pierwsze-slowa/` (jak GitHub Pages); sprawdza błędy konsoli, zewnętrzne żądania i brak przewijania w zadaniach; robi zrzuty ekranu.
+  Sprawdza też, że nagrania naprawdę grają (zdarzenia `<audio>`, status 200, `audio/mpeg`), że każda wypowiedź z całej gry ma nagranie, panel rodzica (przełącznik głosu, suwaki, „Test głosek”),
+  głos systemowy z atrapą (ranking głosów, tempo/głośność/pitch) oraz działanie gry, gdy plików audio nie ma (404).
 
 ## Struktura
 
 ```
 index.html            jedyna strona (CSP: tylko własna domena)
 css/app.css           style (duże cele dotykowe, wysoki kontrast, prefers-reduced-motion)
-sw.js                 service worker – działanie offline (podnoś VERSION przy zmianach!)
-audio/                opcjonalne nagrania lektora + manifest.json (patrz audio/README.md)
+sw.js                 service worker – działanie offline (podnoś VERSION przy zmianach!); nagrania cache'owane leniwie + w tle
+tools/generate-audio.py  generator nagrań (lokalny neuronowy TTS, bez plików modelu w repo)
+audio/                nagrania lektora (mp3) + manifest.json (generowane), VOICE-LICENSE.md (patrz audio/README.md)
 js/app.js             start, nawigacja, ekran startowy, skarby, przełącznik światów
 js/parent.js          panel rodzica (bramka 7+8, postępy, lektor, dane)
-js/core/say.js        TABELA WYMOWY głosek + identyfikatory nagrań
-js/core/narrator.js   lektor: głosy, kolejka wypowiedzi, nagrania, zachowanie bez głosu
+js/core/say.js        TABELA WYMOWY głosek (dla głosu systemowego) + identyfikatory nagrań
+js/core/lines.js      pochwały, zachęty, teksty końca poziomu + losowanie wariantów bez powtórzeń z rzędu
+js/core/spoken.js     spis WSZYSTKICH wypowiedzi z rodzajem (głoska/sylaba/słowo/zdanie/pochwała…) – źródło prawdy dla nagrań i testów
+js/core/narrator.js   lektor: nagrania (domyślnie) + głos systemowy (ranking głosów), kolejka wypowiedzi, tempo/głośność
 js/core/progress.js   postępy w localStorage (klucz pierwsze-slowa:v1), czyste funkcje
 js/core/ui.js         drobne narzędzia DOM
 js/art/words.js       ilustracje słów (inline SVG)
@@ -131,3 +138,34 @@ To czysta strona statyczna – wystarczy wgrać zawartość katalogu (bez `tests
 - **Adres i publikację wybiera i zatwierdza Daniel.** Przed publikacją: przejrzeć tekst w panelu rodzica i sprawdzić głos na komputerze Piotrka.
 - Aplikacja działa offline po pierwszym wczytaniu (service worker). Przy każdym wdrożeniu zmień `VERSION` w `sw.js`, inaczej dzieci zobaczą starą wersję z cache.
 - Podkatalog (np. `/pierwsze-slowa/` na GitHub Pages) też działa – wszystkie ścieżki są względne.
+
+## Lektor i nagrania
+
+Domyślnie lektor odtwarza **nagrania** (`audio/<id>.mp3`, mono 22,05 kHz, 56 kb/s, razem ok. 1,3 MB) – Piotrek słyszy ten sam głos na każdym komputerze, także bez internetu.
+Zapasowo (brak plików, błąd odtwarzania albo wybór rodzica „Głos systemowy”) działa `speechSynthesis`:
+
+- ranking głosów: wybór rodzica → polski głos z „Natural”/„Online” (np. *Microsoft Zofia Online (Natural)*) → Paulina/Zofia lokalna → dowolny `pl-PL`; głosy męskie na końcu;
+- głoski i sylaby: `rate 0.65`, `volume 1.0`; zdania: `rate 0.85`, `volume 0.9`; `pitch` 1.12 (pochwały 1.15); suwaki w panelu rodzica skalują tempo (70–130%) i głośność;
+- głosy „Online” Edge pobiera sam z internetu – to robi przeglądarka, nie gra (gra nie wysyła własnych żądań poza domenę); dlatego domyślne są nagrania.
+
+Głos: **NeonGeckoCom/tts-vits-mai-pl** (Coqui VITS, kobieta, polski; model BSD-3-Clause, dane M-AILABS z wyraźną zgodą na użycie komercyjne) – szczegóły i dowody licencji w `audio/VOICE-LICENSE.md`.
+
+### Jak wygenerować nagrania od nowa (po zmianie zdań/poziomów)
+
+```bash
+python3 -m venv .venv-tts && . .venv-tts/bin/activate
+pip install --extra-index-url https://download.pytorch.org/whl/cpu torch torchaudio coqui-tts torchcodec \
+    "transformers>=4.57,<5" huggingface_hub pyloudnorm soundfile librosa scipy numpy
+python tools/generate-audio.py --download      # pobiera model (ok. 110 MB) do ~/.cache/pierwsze-slowa-tts
+python tools/generate-audio.py                 # tylko brakujące nagrania; --force = wszystko, --only s-m,t-mama = wybrane
+npm test                                       # sprawdza, że manifest = pliki = lista wypowiedzi
+```
+
+Skrypt sam bierze listę wypowiedzi z `js/core/spoken.js` (przez `tools/list-audio-ids.mjs --json`), aktualizuje `audio/manifest.json` i zapisuje raport jakości `docs/audio-report.json` (głośność, szczyt, czas, cechy widma i lista „podejrzanych” nagrań).
+Nowe zdanie w programie = jeden przebieg skryptu. Wymaga `ffmpeg` (libmp3lame, rubberband) i `node`. Pliku modelu nie ma w repozytorium.
+
+### Cache offline (service worker)
+
+Nagrania **nie** są w cache powłoki (pierwsze wczytanie zostaje lekkie). Są cache'owane leniwie przy pierwszym odtworzeniu, a ok. 6 s po starcie strona prosi service worker o dociągnięcie reszty w tle (3 pliki naraz; pomijane przy włączonym oszczędzaniu danych) – razem 1,3 MB, więc po pierwszej wizycie wszystko działa offline.
+Lektor pobiera pliki zwykłym `fetch` (całe pliki, bez nagłówka Range) i gra z `blob:`, dzięki czemu odpowiedzi trafiają do cache, a ścieżki są względne (działają pod `/pierwsze-slowa/`).
+Po zmianie nagrań podnieś `VERSION` w `sw.js`.

@@ -11,14 +11,15 @@ const root = document.getElementById('app');
 const bg = document.getElementById('bg');
 const state = P.loadState(globalThis.localStorage, WORLD_IDS);
 const narrator = new Narrator();
-narrator.enabled = state.narrator; narrator.rate = state.rate; narrator.preferredURI = state.voiceURI;
+const applyVoice = () => { narrator.enabled = state.narrator; narrator.mode = state.voiceMode; narrator.speed = state.speed; narrator.volume = state.volume; narrator.preferredURI = state.voiceURI; };
+applyVoice();
 
 const ctx = {
   state, narrator, onWorld: null, showBanner: true,
   save: () => P.saveState(globalThis.localStorage, state),
   world: () => WORLDS[state.world] ?? WORLDS.kosmos,
   mascot: (i) => ctx.world().mascots[i % ctx.world().mascots.length],
-  resetAll() { Object.assign(state, P.resetState(globalThis.localStorage)); applyTheme(); narrator.enabled = true; narrator.rate = state.rate; narrator.preferredURI = null; narrator.refresh?.(); },
+  resetAll() { Object.assign(state, P.resetState(globalThis.localStorage)); applyTheme(); applyVoice(); narrator.refresh?.(); },
   go: (name) => go(name),
   toast(text) {
     const t = h('div', { class: 'toast', role: 'status' }, text); document.body.append(t); setTimeout(() => t.remove(), 2600);
@@ -66,7 +67,7 @@ function openWorlds() {
 
 function voiceBanner() {
   const el = document.getElementById('voice-banner');
-  const bad = ctx.showBanner && state.narrator && (narrator.status === 'none' || narrator.status === 'unsupported');
+  const bad = ctx.showBanner && state.narrator && !narrator.hasClips && (narrator.status === 'none' || narrator.status === 'unsupported');
   el.hidden = !bad;
   el.innerHTML = '';
   if (bad) el.append(h('span', {}, 'Brak polskiego głosu lektora – zadania pokazują duży tekst. '), h('button', { class: 'btn small', type: 'button', onclick: () => go('parent') }, 'Dla rodzica: jak to naprawić'));
@@ -110,8 +111,13 @@ function go(name) {
 
 applyTheme();
 start();
-narrator.init().then(() => { voiceBanner(); });
+narrator.init().then(() => { voiceBanner(); precacheAudioLater(); });
 if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
   navigator.serviceWorker.register('sw.js').catch(() => { /* offline-first jest dodatkiem */ });
 }
-globalThis.__ps = { state, narrator };
+/** Po pierwszym wczytaniu, gdy strona „ostygnie”, service worker dociąga resztę nagrań w tle (offline bez gadania syntezatora). */
+function precacheAudioLater() {
+  if (!narrator.hasClips || !('serviceWorker' in navigator) || navigator.connection?.saveData) return;
+  setTimeout(() => navigator.serviceWorker.ready.then((reg) => reg.active?.postMessage({ type: 'precache-audio' })).catch(() => {}), 6000);
+}
+globalThis.__ps = { state, narrator, applyVoice };

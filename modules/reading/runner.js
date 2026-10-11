@@ -5,8 +5,10 @@ import { stripPunct } from '../../js/core/say.js';
 import * as P from '../../js/core/progress.js';
 import { LEVELS } from './curriculum.js';
 
-const PRAISE = ['Brawo!', 'Świetnie!', 'Super!', 'Tak jest!', 'Pięknie!', 'Doskonale!'];
-const RETRY = ['Prawie! Spróbuj jeszcze raz.', 'Nic nie szkodzi. Spróbuj jeszcze raz.', 'Posłuchaj jeszcze raz i spróbuj.'];
+import { PRAISE, RETRY, FINISH, variantPicker } from '../../js/core/lines.js';
+
+// jedno losowanie na całą grę: wariant nigdy nie powtarza się dwa razy z rzędu (także między zadaniami)
+const nextPraise = variantPicker(PRAISE), nextRetry = variantPicker(RETRY), nextFinish = variantPicker(FINISH);
 const testMode = () => new URLSearchParams(globalThis.location?.search ?? '').has('test');
 const sayPart = (task, v) => (task.kind === 'sound' ? '#' + v : v);
 const label = (task, v) => (task.kind === 'sound' ? soundLabel(v) : v);
@@ -165,7 +167,6 @@ export function runLevel(ctx, box, level, { onExit, onNext }) {
   let idx = P.resumeIndex(state, level);
   const itemsBefore = P.itemsUnlocked(state, LEVELS);
   let cleanup = () => {};
-  const praiseIdx = () => Math.floor(Math.random() * PRAISE.length);
 
   function strip() {
     const s = h('div', { class: 'starstrip', role: 'img', 'aria-label': `Gwiazdki: ${P.tasksDone(state, level)} z ${level.tasks.length} zadań` });
@@ -195,7 +196,7 @@ export function runLevel(ctx, box, level, { onExit, onNext }) {
         P.recordHit(state, item);
         P.recordTask(state, level, task.id, stars);
         ctx.save();
-        const word = PRAISE[praiseIdx()];
+        const word = nextPraise();
         bubble.textContent = `${word} ${'★'.repeat(stars)}`;
         mascot.classList.add('cheer');
         const s = strip(); bar.querySelector('.starstrip').replaceWith(s);
@@ -206,9 +207,10 @@ export function runLevel(ctx, box, level, { onExit, onNext }) {
       wrong(item) {
         if (finished) return;
         wrongs++; P.recordMiss(state, item); ctx.save();
-        bubble.textContent = RETRY[(wrongs - 1) % RETRY.length];
+        const retry = nextRetry();
+        bubble.textContent = retry;
         mascot.classList.remove('cheer'); void mascot.offsetWidth; mascot.classList.add('think');
-        narrator.speak(['Spróbuj jeszcze raz.', ...task.say.filter((p, i) => i > 0 || task.type !== 'story')]);
+        narrator.speak([retry, ...task.say.filter((p, i) => i > 0 || task.type !== 'story')]);
         r?.hint?.(wrongs);
       },
     };
@@ -238,7 +240,7 @@ export function runLevel(ctx, box, level, { onExit, onNext }) {
         h('div', { class: 'btn-row' }, nextLevel && P.isUnlocked(state, LEVELS, nextLevel.num - 1) ? h('button', { class: 'btn primary', type: 'button', onclick: () => onNext(nextLevel) }, 'Następny poziom') : null,
           h('button', { class: 'btn', type: 'button', onclick: onExit }, 'Poziomy'),
           h('button', { class: 'btn ghost', type: 'button', onclick: () => ctx.go('collection') }, 'Moje skarby')))));
-    narrator.speak(['Brawo! Ukończyłeś poziom.']);
+    narrator.speak([nextFinish()]);
   }
 
   showTask();
