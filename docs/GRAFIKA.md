@@ -44,3 +44,13 @@ pomocnicy (małpka, miś polarny), pozy „myśli”.
 
 ### UWAGA: gra tylko rodzinna
 Postacie w `art/kids/` to stylizowane podobizny dzieci Daniela (zdjęć oryginalnych w repo nie ma). Dlatego **gra jest przeznaczona wyłącznie do użytku rodzinnego**: przed jakimkolwiek publicznym udostępnieniem trzeba ustawić repozytorium (i stronę GitHub Pages) jako prywatne albo usunąć `art/kids/` i wpisy w `js/art/kids.js`.
+
+## Zestaw 6 (11.10.2026) – drugi przebieg integracji
+
+- **Pozy bohatera** (`art/kids/<wariant>-<poza>.webp`, 20 plików z `dz_*` + istniejące „stoi”): `macha` na ekranie startowym, `cieszy` na ekranie nagrody (`--done-art`) i po dobrej odpowiedzi, `mysli` po pomyłce/podpowiedzi, `stoi` w pozostałych miejscach (mały bohater w stopce zadań; poza zmienia się z klasami `.cheer`/`.think`). Brak `dz_sara_sarna_mysli` (dziewczynka poza stylem – pominięta): Sara-sarna używa wtedy pozy „stoi”.
+- **Pomocnicy 2** (`art/helpers/`): robot (kosmos), małpka (dżungla), foka (wyspy), jeż (las) – ekrany ukończenia poziomu i zabawy, po prawej stronie karty.
+- **Sceny** (`art/scenes/*.webp`, 3:2, `background-size:cover`, środek bezpieczny): tła zadań (kosmos/dżungla/wyspy; las zostaje `tlo-lesna.webp`), mapy poziomów (4 światy) i ekrany startowe (4 światy), każde z półprzezroczystą nakładką w kolorze świata (`--ov`, `--ov-task/-start/-map` w `css/lesna.css`), żeby kontrast tekstu się nie zmienił. Wybór sceny: `html:has(.start|.tiles-grid)`.
+- **Awatar lektorki** (`js/core/avatar.js`, `art/lektor/`): mała postać przy zadaniu (lisica z mapą / robot / sowa / miś polarny). Podskakuje, gdy gra lektor; „cieszy się” po pochwale, „myśli” po pomyłce – nastrój wynika z rodzaju wypowiedzi w `Narrator.speak` (zdarzenia `onSpeak`), więc działa też przy wyłączonym dźwięku. Dżungla: Artysta dał „mówi” tylko jako małpkę, więc mówienie = sowa „cieszy się” z podskokiem. Wyłączenie: Dla rodzica → „Awatar lektora” (`state.avatar`). Awatar jest ukryty na ekranach startu, map, skarbów i ukończenia oraz poniżej 1000 px szerokości.
+- **Powitanie** na starcie używa imienia wybranego bohatera (Piotrku / Kubo / Saro). Jest to tekst, nie głos – bez nowego audio.
+- Niewykorzystane: lektorka_07 (małpka „mówi”, niespójna), `pom2_dzungla_malpka_macha` i inne pozy „macha” pomocników. Mapy poziomów: karty poziomów zasłaniają większość ilustracji ścieżki (poza lasem, gdzie karty idą wężykiem), ścieżka z grafiki nie jest zgrana z kartami.
+- Rozmiar `art/`: ok. 2,8 MB.
