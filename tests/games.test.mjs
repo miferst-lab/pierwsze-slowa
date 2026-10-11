@@ -95,3 +95,16 @@ test('postęp zabaw: zapis najlepszych gwiazdek, parsowanie odporne na śmieci',
   const bad = parseState(JSON.stringify({ v: STATE_VERSION, gameSpeed: 'warp', games: { 'x:y': { stars: 9 }, 'math:lap': { stars: 99, plays: -3 }, 'reading:lap': 5 } }));
   assert.equal(bad.gameSpeed, 'slow'); assert.deepEqual(Object.keys(bad.games), ['math:lap']); assert.equal(bad.games['math:lap'].stars, 3);
 });
+
+test('każdy element, który lektor może wypowiedzieć w zabawie, ma nagranie (manifest)', async () => {
+  const { readFileSync } = await import('node:fs'); const { audioId } = await import('../js/core/say.js'); const { resolvePart } = await import('../modules/math/say.js');
+  const have = new Set(Object.keys(JSON.parse(readFileSync(new URL('../audio/manifest.json', import.meta.url), 'utf8')).clips));
+  const rand = seeded(21), st = { ...defaultState(), unlockAll: true };
+  for (const subject of ['reading', 'math']) {
+    const L = subject === 'math' ? learnedMath(st, MATH_LEVELS) : learnedReading(st, LEVELS);
+    for (let i = 0; i < 400; i++) for (const game of ['catch', 'path', 'balloons']) {
+      const q = makeQuestion(subject, L, game, rand, { n: 6 });
+      for (const p of [...q.ask.say, q.correct.say]) { const parts = [typeof p === 'string' ? p : resolvePart(p)].flat(Infinity); for (const x of parts) assert.ok(have.has(audioId(x)), `brak nagrania: ${x}`); }
+    }
+  }
+});

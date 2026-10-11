@@ -77,7 +77,7 @@ function sylLevel(title, cons, intro) {
     mkHearC(C(2), 'i'), mkBuild(C(1), 'a'), mkHearV(C(2), 'y'), mkHearC(C(0), 'u'),
   ].map((t) => (t.options ? { ...t, options: [...new Set(t.options)] } : t));
   learnedCons.push(...cons);
-  return mk('syllables', title, intro, tasks, cons.map((c) => c + 'a').join(' '), { syllables: cons.flatMap((c) => vs(c).map((v) => c + v)) });
+  return mk('syllables', title, intro, tasks, cons.map((c) => c + 'a').join(' '), { syllables: [...new Set(tasks.filter((t) => t.type === 'hear' && t.kind === 'syl').map((t) => t.answer))] });
 }
 
 const learnedWords = [];
