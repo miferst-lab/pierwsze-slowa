@@ -83,7 +83,7 @@ function start() {
     h('span', { class: 'micon', html: m.icon }), h('span', { class: 'mtitle' }, m.title), h('span', { class: 'mtag' }, m.available ? m.tagline : 'Wkrótce')));
   const m0 = ctx.mascot(0), w0 = ctx.world();
   root.append(h('div', { class: 'start' + (w0.parade ? ' has-parade' : '') }, ctx.topbar({}),
-    h('div', { class: 'hero' }, h('div', { class: 'mascot big', 'data-mascot': 0, html: m0.svg, 'aria-hidden': 'true' }),
+    h('div', { class: 'hero' }, h('div', { class: 'mascot big' + (w0.heroArt ? ' fox' : ''), 'data-mascot': w0.heroArt ? null : 0, html: w0.heroArt ?? m0.svg, 'aria-hidden': 'true' }),
       h('div', {}, h('h1', { class: 'logo' }, 'Pierwsze Słowa'), h('p', { class: 'lead on-bg' }, `Cześć Piotrku! Co dziś robimy?`))),
     resumeBtn(),
     h('div', { class: 'module-row' }, cards),

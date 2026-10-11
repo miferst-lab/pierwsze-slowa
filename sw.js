@@ -3,15 +3,21 @@
 // Są cache'owane leniwie (przy pierwszym odtworzeniu, patrz handler fetch) oraz dociągane w tle po komunikacie
 // {type:'precache-audio'} wysyłanym przez stronę ~6 s po starcie (pomijane przy włączonym oszczędzaniu danych).
 // UWAGA: przy KAŻDEJ zmianie plików podnieś VERSION – stary cache zostanie usunięty przy aktywacji.
-const VERSION = 'v13';
+const VERSION = 'v15';
 const CACHE = `pierwsze-slowa-${VERSION}`;
 const SHELL = [
   './',
   'art/lesna/ekipa.webp',
   'art/lesna/jez.webp',
+  'art/lesna/lis-cieszy.webp',
+  'art/lesna/lis-macha.webp',
   'art/lesna/lis.webp',
   'art/lesna/mis.webp',
   'art/lesna/sowa.webp',
+  'art/lesna/tlo-dzungla.webp',
+  'art/lesna/tlo-kosmos.webp',
+  'art/lesna/tlo-lesna.webp',
+  'art/lesna/tlo-wyspy.webp',
   'art/lesna/wiewiorka.webp',
   'art/lesna/wyprawa.webp',
   'art/lesna/zajac.webp',

@@ -5,7 +5,7 @@ img.sprite{display:block;width:100%;height:100%;object-fit:contain;border-radius
 .item-art img.sprite{box-shadow:0 0 0 3px #f2b84b,0 0 0 5px #8a5a2b}
 .g-sciezka .hero img.sprite{box-shadow:0 0 0 2px #f2b84b,0 0 0 4px #8a5a2b}
 .parade,.crew-art{pointer-events:none}
-.parade-img,.crew-img{display:block;width:100%;height:auto;-webkit-mask-image:radial-gradient(ellipse 62% 66% at 50% 50%,#000 55%,transparent 100%);mask-image:radial-gradient(ellipse 62% 66% at 50% 50%,#000 55%,transparent 100%)}
+.parade-img,.crew-img{display:block;width:100%;height:auto;-webkit-mask-image:radial-gradient(ellipse 56% 60% at 50% 52%,#000 58%,transparent 100%);mask-image:radial-gradient(ellipse 56% 60% at 50% 52%,#000 58%,transparent 100%)}
 .crew-art{max-width:560px;margin:0 auto .6rem;padding:0 1rem}
 .badges{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;padding:0 1rem}
 .badge{width:220px;background:var(--surface);border:3px solid var(--line);border-radius:var(--r-m);padding:.6rem;box-shadow:var(--shadow-s)}
@@ -65,7 +65,7 @@ img.sprite{display:block;width:100%;height:100%;object-fit:contain;border-radius
 [data-world="lesna"] .mtag{color:var(--ink-soft)}
 [data-world="lesna"] .start .resume{background:var(--grain),linear-gradient(180deg,#3f8650,#2f6b3a)}
 /* mapa poziomów: kręta ścieżka z drewnianych desek i tabliczki poziomów */
-[data-world="lesna"] .tiles-grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem .9rem;padding:1.6rem 0 1rem;position:relative}
+[data-world="lesna"] .tiles-grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:2rem .9rem;padding:1.6rem 0 1rem;position:relative}
 [data-world="lesna"] .tile-level{position:relative;background:var(--grain),linear-gradient(180deg,#fff7e2,#f8e6bd);border:3px solid #8a5a2b;border-radius:22px 22px 16px 16px;box-shadow:0 5px 0 #6b4220,0 9px 14px rgba(92,58,28,.18),var(--stitch);min-height:140px}
 [data-world="lesna"] .tile-level:nth-child(4n+2){transform:translateY(18px)}
 [data-world="lesna"] .tile-level:nth-child(4n){transform:translateY(-14px)}
@@ -81,8 +81,8 @@ img.sprite{display:block;width:100%;height:100%;object-fit:contain;border-radius
 [data-world="lesna"] .group h2{display:inline-block;background:var(--grain),var(--wood);border:3px solid #8a5a2b;border-radius:14px;padding:.05em .8em;box-shadow:0 3px 0 #6b4220}
 /* nagrody */
 [data-world="lesna"] .done-screen .card{position:relative;padding-top:2.4rem}
-[data-world="lesna"] .done-screen .card::before{content:'';position:absolute;left:50%;top:-52px;width:96px;height:96px;margin-left:-48px;border-radius:50%;background:url(../art/lesna/lis.webp) center/cover;box-shadow:0 0 0 4px #f2b84b,0 0 0 8px #8a5a2b;animation:bounce .8s 2}
-[data-world="lesna"] .done-screen{padding-top:56px}
+[data-world="lesna"] .done-screen .card::before{content:'';position:absolute;left:-8px;bottom:-4px;width:clamp(110px,22vh,190px);height:clamp(140px,28vh,240px);background:url(../art/lesna/lis-cieszy.webp) left bottom/contain no-repeat;pointer-events:none;animation:bounce .8s 2}
+[data-world="lesna"] .done-screen .card{margin-left:auto;margin-right:auto}
 [data-world="lesna"] .item-art{filter:drop-shadow(0 3px 2px rgba(92,58,28,.25))}
 [data-world="lesna"] .coll.got{border-color:#c8921a;box-shadow:0 0 0 2px #f2b84b,var(--shadow-s)}
 /* zabawy */
@@ -92,6 +92,16 @@ img.sprite{display:block;width:100%;height:100%;object-fit:contain;border-radius
 [data-world="lesna"] .balloon{border-color:#8a5a2b;box-shadow:var(--shadow-s)}
 [data-world="lesna"] .world-choice.sel{border-color:var(--good)}
 [data-world="lesna"] .start .micon{width:40%;max-width:clamp(60px,11vh,100px)}
-[data-world="lesna"] .start .module-card{min-height:0;height:clamp(130px,25vh,210px);justify-content:center;padding:.6rem .8rem}
+[data-world="lesna"] .start .module-card{min-height:0;height:clamp(140px,28vh,225px);justify-content:center;padding:.6rem .8rem}
 [data-world="lesna"] .start .hero{margin:.4rem 0 .2rem}
 [data-world="lesna"] .start .mtitle{font-size:clamp(1.4rem,3.6vh,2rem)}
+[data-world="lesna"] .mascot.big.fox{width:auto;height:clamp(120px,22vh,190px);margin-bottom:-.5rem}
+[data-world="lesna"] .mascot.big.fox img{width:auto;height:100%}
+/* tła światów: ilustracje Artysty + półprzezroczysta nakładka w kolorze świata (kontrast tekstu na tle) */
+#bg{background-size:cover;background-position:center}
+[data-world="lesna"] #bg{background-image:linear-gradient(rgba(255,243,214,.62),rgba(251,220,176,.5)),url(../art/lesna/tlo-lesna.webp)}
+[data-world="kosmos"] #bg{background-image:linear-gradient(rgba(220,214,247,.66),rgba(195,205,242,.6)),url(../art/lesna/tlo-kosmos.webp)}
+[data-world="dzungla"] #bg{background-image:linear-gradient(rgba(215,240,217,.66),rgba(191,229,196,.6)),url(../art/lesna/tlo-dzungla.webp)}
+[data-world="wyspy"] #bg{background-image:linear-gradient(rgba(212,239,250,.66),rgba(191,230,242,.6)),url(../art/lesna/tlo-wyspy.webp)}
+[data-world] #bg svg{opacity:.3}
+[data-world="lesna"] #bg svg{display:none}

@@ -14,19 +14,8 @@ export const lesna = {
   // zdjęcia grup (bez napisów) – używane na ekranie startowym i w „Twojej ekipie”
   parade: `<img class='parade-img' src='art/lesna/wyprawa.webp' alt='' width='960' height='587' draggable='false'>`,
   crewArt: `<img class='crew-img' src='art/lesna/ekipa.webp' alt='' width='960' height='595' draggable='false'>`,
-  bg: `<svg viewBox='0 0 160 90' preserveAspectRatio='xMidYMid slice' aria-hidden='true'><defs>
-    <linearGradient id='lg' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#fff3d6'/><stop offset='.6' stop-color='#fdebc8'/><stop offset='1' stop-color='#fbdcb0'/></linearGradient>
-    <linearGradient id='lray' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#fff' stop-opacity='.55'/><stop offset='1' stop-color='#fff' stop-opacity='0'/></linearGradient>
-    <radialGradient id='lglow' cx='.5' cy='0' r='.8'><stop offset='0' stop-color='#fff6c8' stop-opacity='.9'/><stop offset='1' stop-color='#fff6c8' stop-opacity='0'/></radialGradient></defs>
-    <rect width='160' height='90' fill='url(#lg)'/><rect width='160' height='90' fill='url(#lglow)'/>
-    <polygon points='62,0 78,0 58,90 24,90' fill='url(#lray)'/><polygon points='86,0 96,0 104,90 74,90' fill='url(#lray)' opacity='.7'/><polygon points='108,0 120,0 146,90 112,90' fill='url(#lray)' opacity='.6'/>
-    <g fill='#c9a06a' opacity='.22'><rect x='30' y='0' width='7' height='70' rx='3'/><rect x='118' y='0' width='9' height='72' rx='4'/><rect x='88' y='0' width='4' height='60' rx='2'/></g>
-    <path d='M0 90V74Q30 62 60 72T120 70T160 66V90z' fill='#e9d49e' opacity='.75'/><path d='M0 90V80Q40 72 80 80T160 78V90z' fill='#cfd9a0' opacity='.8'/>
-    <g fill='#7fa850' opacity='.9'><path d='M0 0H30Q22 10 14 8Q16 20 4 22Q8 30 0 34z'/><path d='M160 0H128Q138 8 146 6Q142 18 154 22Q150 30 160 34z'/></g>
-    <g fill='#5f8f40' opacity='.85'><path d='M0 0H16Q10 6 6 4Q6 12 0 16z'/><path d='M160 0H144Q150 6 154 4Q154 12 160 16z'/></g>
-    <g fill='#8fb35c' opacity='.7'><ellipse cx='10' cy='24' rx='5' ry='2.6' transform='rotate(40 10 24)'/><ellipse cx='20' cy='14' rx='5' ry='2.6' transform='rotate(25 20 14)'/><ellipse cx='150' cy='24' rx='5' ry='2.6' transform='rotate(-40 150 24)'/><ellipse cx='140' cy='14' rx='5' ry='2.6' transform='rotate(-25 140 14)'/></g>
-    <g fill='#e0a24a' opacity='.7'><ellipse cx='44' cy='20' rx='2.6' ry='1.4' transform='rotate(30 44 20)'/><ellipse cx='108' cy='34' rx='2.6' ry='1.4' transform='rotate(-30 108 34)'/><ellipse cx='70' cy='50' rx='2.4' ry='1.3' transform='rotate(50 70 50)'/><ellipse cx='132' cy='56' rx='2.4' ry='1.3' transform='rotate(-20 132 56)'/></g>
-    <g fill='#6f9a4a' opacity='.8'><path d='M4 90Q6 80 12 76Q10 84 14 90z'/><path d='M12 90Q16 78 24 74Q20 84 22 90z'/><path d='M150 90Q146 80 140 76Q142 84 138 90z'/><path d='M140 90Q136 78 128 74Q132 84 130 90z'/></g></svg>`,
+  bg: '', // tło to zdjęcie-ilustracja z Artysty (css/lesna.css, #bg), z kremową nakładką dla kontrastu
+  heroArt: `<img class='fox-hero' src='art/lesna/lis-macha.webp' alt='' width='267' height='420' draggable='false'>`,
   mascots: [
     { name: 'Lisek Odkrywca', bio: 'Sprytny lisek z plecakiem i mapą. Prowadzi całą wyprawę.', svg: portrait('lis') },
     { name: 'Miś z kompasem', bio: 'Niedźwiadek, który zawsze wie, w którą stronę iść.', svg: portrait('mis') },
