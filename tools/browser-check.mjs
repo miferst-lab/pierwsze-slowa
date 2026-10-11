@@ -322,6 +322,19 @@ try {
   await click(page, '.tile-level[data-level="L08"]'); await page.waitForSelector('#stage');
   for (const w of ['dzungla', 'wyspy', 'kosmos', 'lesna']) { await chooseWorld(page, w); await sleep(250); await shot(page, `07-zadanie-swiat-${w}`); await noScroll(page, 'zadanie ' + w); }
   ok('przełączenie świata w trakcie zadania');
+  // awatar lektorki + poza bohatera w stopce
+  for (const w of ['dzungla', 'wyspy', 'kosmos', 'lesna']) {
+    await chooseWorld(page, w); await sleep(250);
+    const av = await page.evaluate(() => { const i = document.querySelector('#lektor img'); const r = i?.getBoundingClientRect(); return { ok: !!i && i.complete && i.naturalWidth > 0, vis: !!r && r.width > 20 && getComputedStyle(document.querySelector('#lektor')).display !== 'none', src: i?.src, kid: document.querySelector('.feedback .mascot img.kid-img')?.complete };
+    });
+    if (!av.ok || !av.vis || !av.kid) throw new Error('awatar lektorki niewidoczny lub bez obrazka w świecie ' + w + ' ' + JSON.stringify(av));
+    if (!av.src.includes('art/lektor/' + w)) throw new Error('zły awatar dla świata ' + w + ': ' + av.src);
+  }
+  await page.evaluate(() => { document.documentElement.dataset.avatar = 'off'; });
+  if ((await page.$eval('#lektor', (e) => getComputedStyle(e).display)) !== 'none') throw new Error('przełącznik awatara nie ukrywa lektorki');
+  await page.evaluate(() => { document.documentElement.dataset.avatar = 'on'; });
+  const mood = await page.evaluate(() => new Promise((res) => { const n = globalThis.__ps.narrator; const seen = []; n.onSpeak((e) => { if (e.type === 'start') seen.push(e.mood); }); n.speak(['Brawo!']); n.speak(['Spróbuj jeszcze raz.']); setTimeout(() => res({ seen, now: document.querySelector('#lektor').dataset.mood, src: document.querySelector('#lektor img').src }), 150); }));
+  ok('awatar lektorki: widoczny w 4 światach, przełącznik ukrywa; nastroje ' + mood.seen.join('/') + ' (teraz ' + mood.now + ')');
   await click(page, '.back');
 
   // skarby

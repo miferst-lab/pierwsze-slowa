@@ -10,7 +10,7 @@ wycinamy tylko fragmenty bez tekstu albo rysujemy elementy od nowa.
 | `lis.webp`, `mis.webp`, `sowa.webp`, `wiewiorka.webp`, `zajac.webp`, `jez.webp` | makiety `zwierzatka-odkrywcy` i `przytulne-zwierzatka` | okrągłe portrety (`tools/make-art.py`) |
 | `wyprawa.webp`, `ekipa.webp` | te same makiety | kadr grupy bez napisów, brzegi wtapiane maską CSS |
 | `lis-macha.webp`, `lis-cieszy.webp` | `new2/07_lis_macha_green`, `06_lis_cieszy_sie_green` | klucz zielonego tła + despill (`tools/key-art.py`) |
-| `tlo-lesna.webp`, `tlo-kosmos.webp`, `tlo-dzungla.webp`, `tlo-wyspy.webp` | `new2/01–04_tlo_*` | zmniejszone, nakładka w kolorze świata (kontrast) |
+| `tlo-lesna.webp` (tła kosmos/dżungla/wyspy z new2 zastąpiły sceny z zestawu 6) | `new2/01–04_tlo_*` | zmniejszone, nakładka w kolorze świata (kontrast) |
 
 ## Oryginalne SVG/CSS (własne, rysowane w kodzie)
 - 12 skarbów (żołądź, liść dębu, muchomor, kompas, mapa, latarnia, gwiazdka, puchar, skrzynia, namiot, szyszka, plecak) – `js/art/lesna.js`

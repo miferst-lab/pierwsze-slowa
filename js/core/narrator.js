@@ -55,9 +55,18 @@ export class Narrator {
     this.status = this.synth ? 'loading' : 'unsupported'; // loading | ready | none | unsupported   (głos systemowy)
     this.enabled = true; this.mode = 'recorded'; this.speed = 1; this.volume = 1; this.preferredURI = null;
     this.voice = null; this.plVoices = []; this.manifest = new Set(); this.kinds = new Map();
-    this.token = 0; this.current = null; this.listeners = new Set(); this.blobs = new Map(); this.log = null;
+    this.token = 0; this.current = null; this.speakListeners = new Set(); this.listeners = new Set(); this.blobs = new Map(); this.log = null;
   }
   onChange(fn) { this.listeners.add(fn); return () => this.listeners.delete(fn); }
+  /** Zdarzenia mówienia dla awatara lektorki: {type:'start', mood:'mowi'|'cieszy'|'mysli', talk} i {type:'end'}. */
+  onSpeak(fn) { this.speakListeners.add(fn); return () => this.speakListeners.delete(fn); }
+  emitSpeak(ev) { this.speakListeners.forEach((f) => { try { f(ev); } catch { /* awatar nie może psuć mowy */ } }); }
+  /** Nastrój z rodzaju wypowiedzi: pochwała/zakończenie => cieszy, ponowna próba => mysli, reszta => mowi. */
+  moodOf(list) {
+    let kinds = [];
+    try { kinds = list.flat().map((p) => this.kindOf(p)); } catch { /* nietypowa część – zwykły nastrój */ }
+    return kinds.includes('retry') ? 'mysli' : kinds.some((k) => k === 'praise' || k === 'finish') ? 'cieszy' : 'mowi';
+  }
   emit() { this.listeners.forEach((f) => f(this.status)); }
   get hasClips() { return this.manifest.size > 0; }
   /** Czy da się cokolwiek usłyszeć (nagrania lub głos systemowy)? */
@@ -98,7 +107,7 @@ export class Narrator {
   }
 
   cancel() {
-    this.token++;
+    this.token++; this.emitSpeak({ type: 'end' });
     try { this.synth?.cancel(); } catch { /* ignore */ }
     if (this.current?.pause) { try { this.current.pause(); } catch { /* ignore */ } }
     this.current = null;
@@ -108,8 +117,9 @@ export class Narrator {
   async speak(parts, opts = {}) {
     const t = ++this.token;
     try { this.synth?.cancel(); } catch { /* ignore */ }
-    if (!this.enabled && !opts.force) return;
     const list = Array.isArray(parts) ? parts : [parts];
+    if (!this.enabled && !opts.force) { this.emitSpeak({ type: 'start', mood: this.moodOf(list), talk: false }); this.emitSpeak({ type: 'end' }); return; }
+    this.emitSpeak({ type: 'start', mood: this.moodOf(list), talk: true });
     this.log?.push(list);
     // element listy może być tablicą = „ciasna grupa” (np. ['dwadzieścia', 'trzy', 'jabłka']): krótsze przerwy, jak w mowie ciągłej
     const seq = [];
@@ -122,6 +132,7 @@ export class Narrator {
       if (t !== this.token) return;
       if (i < seq.length - 1) await new Promise((r) => setTimeout(r, seq[i + 1].tight ? 40 : 130));
     }
+    if (t === this.token) this.emitSpeak({ type: 'end' });
   }
   one(part, t, mode) {
     const id = audioId(part);

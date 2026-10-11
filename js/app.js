@@ -3,7 +3,8 @@ import { h, clear, STAR } from './core/ui.js';
 import * as P from './core/progress.js';
 import { Narrator } from './core/narrator.js';
 import { WORLDS, WORLD_IDS } from './art/worlds.js';
-import { KIDS, kidById, kidHeroHtml, kidDoneUrl } from './art/kids.js';
+import { KIDS, kidById, kidHeroHtml, kidDoneUrl, kidImg } from './art/kids.js';
+import { initAvatar } from './core/avatar.js';
 import { MODULES } from '../modules/index.js';
 import { LEVELS } from '../modules/reading/curriculum.js';
 import { MATH_LEVELS } from '../modules/math/curriculum.js';
@@ -50,6 +51,8 @@ function applyTheme() {
   for (const [k, v] of Object.entries(w.css)) document.documentElement.style.setProperty(k, v);
   bg.innerHTML = w.bg;
   document.documentElement.dataset.world = w.id;
+  document.documentElement.dataset.avatar = state.avatar === false ? 'off' : 'on';
+  avatar?.refresh();
   const kid = ctx.kid();
   if (kid) document.documentElement.style.setProperty('--done-art', `url("${kidDoneUrl(kid, w.id)}")`); else document.documentElement.style.removeProperty('--done-art');
   document.querySelectorAll('[data-mascot]').forEach((el) => { el.innerHTML = ctx.mascot(Number(el.dataset.mascot)).svg; });
@@ -103,7 +106,7 @@ function start() {
   const m0 = ctx.mascot(0), w0 = ctx.world(), kid0 = ctx.kid(), hero0 = kid0 ? kidHeroHtml(kid0, w0.id) : w0.heroArt;
   root.append(h('div', { class: 'start' + (w0.parade ? ' has-parade' : '') }, ctx.topbar({}),
     h('div', { class: 'hero' }, h('div', { class: 'mascot big' + (hero0 ? ' guide' : ''), 'data-mascot': hero0 ? null : 0, html: hero0 ?? m0.svg, 'aria-hidden': 'true' }),
-      h('div', {}, h('h1', { class: 'logo' }, 'Pierwsze Słowa'), h('p', { class: 'lead on-bg' }, `Cześć Piotrku! Co dziś robimy?`))),
+      h('div', {}, h('h1', { class: 'logo' }, 'Pierwsze Słowa'), h('p', { class: 'lead on-bg' }, `Cześć ${kid0?.voc ?? 'Piotrku'}! Co dziś robimy?`))),
     resumeBtn(),
     h('div', { class: 'module-row' }, cards),
     h('div', { class: 'start-foot' },
@@ -145,7 +148,20 @@ function go(name) {
   ({ start, collection, parent: () => { clear(root); showParent(ctx, root); } }[name] ?? start)();
 }
 
+let avatar = null;
+// Mały bohater w stopce zadań (zamiast okrągłego portretu): poza zależy od klas .cheer / .think ustawianych przez zadania.
+function poseMascots() {
+  const kid = ctx.kid(); if (!kid) return;
+  document.querySelectorAll('.feedback .mascot').forEach((el) => {
+    const pose = el.classList.contains('think') ? 'mysli' : el.classList.contains('cheer') ? 'cieszy' : 'stoi';
+    if (el.dataset.pose === pose && el.dataset.kid === kid.id) return;
+    el.dataset.pose = pose; el.dataset.kid = kid.id; el.classList.add('kid-pose'); el.removeAttribute('data-mascot');
+    el.innerHTML = kidImg(kid, ctx.world().id, pose, 'kid-img');
+  });
+}
+new MutationObserver(poseMascots).observe(root, { subtree: true, childList: true, attributes: true, attributeFilter: ['class'] });
 applyTheme();
+avatar = initAvatar(ctx, narrator); ctx.avatar = avatar;
 start();
 narrator.init().then(() => { voiceBanner(); precacheAudioLater(); });
 if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {

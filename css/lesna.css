@@ -96,10 +96,6 @@ img.sprite{display:block;width:100%;height:100%;object-fit:contain;border-radius
 [data-world="lesna"] .start .mtitle{font-size:clamp(1.4rem,3.6vh,2rem)}
 /* tła światów: ilustracje Artysty + półprzezroczysta nakładka w kolorze świata (kontrast tekstu na tle) */
 #bg{background-size:cover;background-position:center}
-[data-world="lesna"] #bg{background-image:linear-gradient(rgba(255,243,214,.62),rgba(251,220,176,.5)),url(../art/lesna/tlo-lesna.webp)}
-[data-world="kosmos"] #bg{background-image:linear-gradient(rgba(220,214,247,.66),rgba(195,205,242,.6)),url(../art/lesna/tlo-kosmos.webp)}
-[data-world="dzungla"] #bg{background-image:linear-gradient(rgba(215,240,217,.66),rgba(191,229,196,.6)),url(../art/lesna/tlo-dzungla.webp)}
-[data-world="wyspy"] #bg{background-image:linear-gradient(rgba(212,239,250,.66),rgba(191,230,242,.6)),url(../art/lesna/tlo-wyspy.webp)}
 [data-world] #bg svg{opacity:.3}
 [data-world="lesna"] #bg svg{display:none}
 /* przewodnik świata (Artysta): duża postać na starcie i przy nagrodzie – wspólne dla wszystkich światów */
@@ -124,3 +120,31 @@ img.sprite{display:block;width:100%;height:100%;object-fit:contain;border-radius
 [data-world="wyspy"] .bstar.on{background-image:url(../art/stars/wyspy.webp)}
 .badge-img{display:block;width:auto;height:100%;margin:0 auto}
 img.sprite.face{border-radius:50%}
+
+/* ===== Zestaw 6: tła zadań / mapy poziomów / sceny startowe (Artysta, 3:2 -> cover, środek bezpieczny) ===== */
+:root{--ov-task:.62;--ov-start:.22;--ov-map:.4}
+[data-world="lesna"]{--ov:255,243,214;--bg-task:url(../art/lesna/tlo-lesna.webp);--bg-map:url(../art/scenes/mapa-lesna.webp);--bg-start:url(../art/scenes/start-lesna.webp)}
+[data-world="kosmos"]{--ov:226,220,248;--bg-task:url(../art/scenes/zad-kosmos.webp);--bg-map:url(../art/scenes/mapa-kosmos.webp);--bg-start:url(../art/scenes/start-kosmos.webp)}
+[data-world="dzungla"]{--ov:222,242,224;--bg-task:url(../art/scenes/zad-dzungla.webp);--bg-map:url(../art/scenes/mapa-dzungla.webp);--bg-start:url(../art/scenes/start-dzungla.webp)}
+[data-world="wyspy"]{--ov:218,241,251;--bg-task:url(../art/scenes/zad-wyspy.webp);--bg-map:url(../art/scenes/mapa-wyspy.webp);--bg-start:url(../art/scenes/start-wyspy.webp)}
+#bg{background-size:cover;background-position:center 58%;background-image:linear-gradient(rgba(var(--ov),var(--ov-task)),rgba(var(--ov),var(--ov-task))),var(--bg-task)}
+html:has(.tiles-grid) #bg{background-image:linear-gradient(rgba(var(--ov),var(--ov-map)),rgba(var(--ov),var(--ov-map))),var(--bg-map)}
+html:has(.start) #bg{background-image:linear-gradient(rgba(var(--ov),var(--ov-start)),rgba(var(--ov),var(--ov-start))),var(--bg-start)}
+/* pomocnik na ekranach ukończenia (zestaw 6, pom2_*) */
+[data-world="lesna"]{--helper-art:url(../art/helpers/lesna-cieszy.webp)}
+[data-world="kosmos"]{--helper-art:url(../art/helpers/kosmos-cieszy.webp)}
+[data-world="dzungla"]{--helper-art:url(../art/helpers/dzungla-cieszy.webp)}
+[data-world="wyspy"]{--helper-art:url(../art/helpers/wyspy-cieszy.webp)}
+.done-screen .card::after{content:'';position:absolute;right:-6px;bottom:-4px;width:clamp(90px,17vh,150px);height:clamp(120px,24vh,200px);background:var(--helper-art) right bottom/contain no-repeat;pointer-events:none;animation:bounce .8s 2 .3s}
+/* mały bohater w stopce zadań: poza zmienia się z klasami .cheer / .think */
+.feedback .mascot.kid-pose{width:auto;height:clamp(86px,15vh,120px)}
+.feedback .mascot.kid-pose img{height:100%;width:auto;display:block;filter:drop-shadow(0 3px 3px rgba(40,30,20,.25))}
+/* awatar lektorki */
+#lektor{position:fixed;left:clamp(8px,1.6vw,28px);top:clamp(70px,13vh,110px);z-index:3;pointer-events:none;height:clamp(96px,19vh,170px)}
+#lektor img{height:100%;width:auto;display:block;filter:drop-shadow(0 4px 4px rgba(40,30,20,.3));transform-origin:50% 100%}
+#lektor.talk img{animation:lektor-talk .45s ease-in-out infinite alternate}
+#lektor[data-mood="cieszy"] img{animation:bounce .8s 2}
+html:has(.start) #lektor,html:has(.scroll-screen) #lektor,html:has(.tiles-grid) #lektor,html:has(.done-screen) #lektor,html[data-avatar="off"] #lektor{display:none}
+@keyframes lektor-talk{from{transform:translateY(0) scale(1)}to{transform:translateY(-6px) scale(1.04,.98)}}
+@media (max-width:1000px){#lektor{display:none}}
+@media (prefers-reduced-motion:reduce){#lektor.talk img,#lektor[data-mood="cieszy"] img{animation:none}}
