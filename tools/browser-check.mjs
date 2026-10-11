@@ -11,7 +11,7 @@ import { join } from 'node:path';
 const require = createRequire(import.meta.url);
 const puppeteer = require(process.env.PUPPETEER_CORE ?? 'puppeteer-core');
 const CHROME = process.env.CHROME ?? '/usr/bin/google-chrome';
-const OUT = process.argv[2] ?? '/workspace/pierwsze-slowa-shots';
+const OUT = process.argv[2] ?? '/workspace/pierwsze-slowa-shots-v2';
 // Grę serwujemy pod PODŚCIEŻKĄ /pierwsze-slowa/ (jak GitHub Pages), żeby sprawdzić, że ścieżki do audio i service workera są względne.
 const PORT = 8765, ORIGIN = `http://localhost:${PORT}`, BASE = `${ORIGIN}/pierwsze-slowa`;
 mkdirSync(OUT, { recursive: true });
@@ -121,6 +121,68 @@ async function playLevel(page, levelId, opts = {}) {
   await page.waitForSelector('.done-screen', { timeout: 4000 });
 }
 
+/* ---------- matematyka i zabawy ---------- */
+async function solveMathTask(page, { tryWrong = false, shotName = null, label = '' } = {}) {
+  await page.waitForSelector('#stage', { timeout: 5000 });
+  const task = await page.evaluate(() => window.__ps.task);
+  const type = task.type; await sleep(300);
+  if (shotName) await shot(page, shotName.replace('{type}', type));
+  await noScroll(page, `${label} ${type}`);
+  const gentle = async () => { const msg = await page.$eval('.bubble', (b) => b.textContent); if (!/jeszcze raz|spróbuj|sprawdź|policz/i.test(msg) || /źle|błąd/i.test(msg)) throw new Error('niełagodny komunikat: ' + msg); };
+  if (tryWrong && task.options && !['cmpGroups'].includes(type)) { const w = await page.$('.opt:not([data-correct])'); if (w) { await w.click(); await sleep(120); await gentle(); } }
+  if (tryWrong && ['make', 'frame', 'pay'].includes(type)) { await click(page, '#done-btn'); await sleep(120); await gentle(); }
+  if (type === 'order') {
+    const sorted = [...task.nums].sort((a, b) => (task.dir === 'asc' ? a - b : b - a));
+    for (const n of sorted) { await click(page, `.tile[data-n="${n}"]`); await sleep(40); }
+  } else if (type === 'make') {
+    for (let i = 0; i < task.n; i++) await page.click('.pile .manip');
+    await click(page, '#done-btn');
+  } else if (type === 'frame') {
+    for (let i = 0; i < task.add; i++) await page.click('.cell.empty');
+    await click(page, '#done-btn');
+  } else if (type === 'pay') {
+    let left = task.amount;
+    for (const v of [10, 5, 2, 1]) while (left >= v && (await page.$(`.tray .moneybtn[data-v="${v}"]`))) { await page.click(`.tray .moneybtn[data-v="${v}"]`); left -= v; }
+    if (left) throw new Error('nie da się zapłacić ' + task.amount);
+    await click(page, '#done-btn');
+  } else await click(page, '.opt[data-correct]');
+  await page.waitForSelector('.next:not([hidden])', { timeout: 4000 });
+  report.tasksSolved['m:' + type] = (report.tasksSolved['m:' + type] ?? 0) + 1;
+  await click(page, '.next');
+  return type;
+}
+async function playMathLevel(page, id, opts = {}) {
+  await click(page, `.tile-level[data-level="${id}"]`);
+  for (let i = 0; i < 10; i++) {
+    if (await page.$('.done-screen')) break;
+    await solveMathTask(page, { ...opts, tryWrong: opts.tryWrong && i % 2 === 0, label: id });
+    await sleep(60);
+  }
+  await page.waitForSelector('.done-screen', { timeout: 4000 });
+  const st = await page.evaluate((i) => window.__ps.state.levels[i], id);
+  if (!st?.done || !Object.values(st.tasks).every((x) => x >= 1)) throw new Error('gwiazdki nie przyznane za ' + id + ': ' + JSON.stringify(st));
+}
+async function playGame(page, subject, gameId, { shotMid = null, keyboard = false } = {}) {
+  await click(page, `.tile-game[data-game="${gameId}"]`);
+  await page.waitForSelector('.game-field', { timeout: 5000 });
+  if (shotMid) { await sleep(2200); await shot(page, shotMid); }
+  await noScroll(page, `${subject} ${gameId}`);
+  const t0 = Date.now(); let hits = 0, lastHits = -1;
+  while (!(await page.$('.game-done')) && Date.now() - t0 < 90000) {
+    const info = await page.evaluate(() => ({ c: window.__ps.game?.tracker.correct, w: window.__ps.game?.tracker.wrongs }));
+    if (info.c !== lastHits) { lastHits = info.c; hits++; }
+    const el = await page.$('.game-field [data-correct]:not(.caught):not(.popped)');
+    if (!el) { await sleep(150); continue; }
+    if (info.w === 0 && info.c === 0) { const bad = await page.$('.game-field .gitem:not([data-correct]):not(.drift)'); if (bad) { await bad.click().catch(() => {}); await sleep(200); } } // jedna celowa pomyłka: łagodna reakcja
+    if (keyboard) { await el.focus().catch(() => {}); await page.keyboard.press('Enter').catch(() => {}); } else await el.click().catch(() => {});
+    await sleep(200);
+  }
+  await page.waitForSelector('.game-done', { timeout: 5000 });
+  const g = await page.evaluate((s, i) => ({ info: window.__ps.state.games[s + ':' + i], t: window.__ps.game.tracker.correct }), subject, gameId);
+  if (!g.info || g.info.stars < 1 || g.t < 6) throw new Error(`zabawa ${subject}:${gameId} bez gwiazdki: ` + JSON.stringify(g));
+  return g.info;
+}
+
 try {
   // ---------- Faza 1: bez głosu polskiego (headless Chrome na Linuksie zwykle nie ma głosów) ----------
   const page = await newPage();
@@ -141,11 +203,6 @@ try {
   ok(`nagrania: 3 pliki zagrane bez błędów pod /pierwsze-slowa/ (czasy ${ev.filter((e) => e.ev === 'ended').map((e) => e.dur.toFixed(2)).join(', ')} s)`);
   await shot(page, '01-start-kosmos');
   // ekran startowy może się przewijać na bardzo niskich oknach; sprawdzamy tylko zadania
-
-  await click(page, '.module-card[data-module="math"]');
-  await page.waitForFunction(() => document.body.textContent.includes('Wkrótce!'));
-  await shot(page, '02-matematyka-wkrotce'); ok('matematyka: ekran „Wkrótce!”');
-  await click(page, '.back');
 
   for (const w of ['dzungla', 'wyspy', 'kosmos']) { await chooseWorld(page, w); await sleep(300); await shot(page, `03-start-${w}`); }
   ok('przełączanie światów na ekranie startowym');
@@ -175,12 +232,69 @@ try {
     await click(page, '.btn:not(.primary):not(.ghost)'); await page.waitForSelector('.tile-level');
   }
   // przeklikaj wszystkie pozostałe poziomy szybko (bez zrzutów), by sprawdzić każde zadanie z programu
-  const ids = await page.$$eval('.tile-level', (t) => t.map((x) => x.dataset.level));
+  const ids = await page.$$eval('.tile-level[data-level]', (t) => t.map((x) => x.dataset.level));
   for (const lid of ids) {
     if (['L01', 'L02', 'L03', 'L04', 'L05', 'L21', 'L22', 'L24'].includes(lid)) continue;
     await playLevel(page, lid, {}); await click(page, '.btn:not(.primary):not(.ghost)'); await page.waitForSelector('.tile-level');
   }
   ok('wszystkie ' + ids.length + ' poziomów rozwiązanych w przeglądarce');
+
+  // ---------- matematyka (świat Kosmos, potem pozostałe) ----------
+  await click(page, '.back'); await page.waitForSelector('.module-card');
+  await click(page, '.module-card[data-module="math"]'); await page.waitForSelector('.tile-level[data-level="M01"]');
+  await shot(page, '14-mapa-matematyki');
+  if (!(await page.$('.tile-level.locked'))) { /* unlockAll włączone wcześniej */ }
+  // podpowiedź po drugiej pomyłce (pulsujący poprawny przycisk) i brak negatywnych komunikatów
+  await page.evaluate(() => { window.__ps.state.unlockAll = false; });
+  await click(page, '.tile-level[data-level="M01"]'); await page.waitForSelector('#stage');
+  const ts = await page.evaluate(() => window.__ps.task.type);
+  if (ts === 'count' || ts === 'tapNum') { await click(page, '.opt:not([data-correct])'); await sleep(100); await page.evaluate(() => document.querySelector('.opt.soft')?.classList.remove('soft')); const w2 = await page.$('.opt:not([data-correct]):not(.soft)'); if (w2) await w2.click(); await sleep(150); if (!(await page.$('.opt[data-correct].pulse'))) throw new Error('brak podpowiedzi po drugiej pomyłce'); ok('matematyka: łagodna reakcja i podpowiedź po drugiej pomyłce'); }
+  await click(page, '.back'); await page.waitForSelector('.tile-level');
+  const mIds = await page.$$eval('.tile-level[data-level]', (t) => t.map((x) => x.dataset.level));
+  // naturalnie: M01 (z pomyłkami), potem odblokowanie M02
+  await playMathLevel(page, 'M01', { tryWrong: true, shotName: 'math-M01-{type}' }); await sleep(900); await shot(page, '15-matematyka-poziom-ukonczony');
+  await click(page, '.btn:not(.primary):not(.accent):not(.ghost)'); await page.waitForSelector('.tile-level');
+  if (await page.$('.tile-level[data-level="M02"].locked')) throw new Error('M02 nie odblokowany po M01');
+  ok('matematyka: M01 ukończony (gwiazdki zapisane), M02 odblokowany');
+  await page.evaluate(() => { window.__ps.state.unlockAll = true; });
+  await click(page, '.back'); await click(page, '.module-card[data-module="math"]'); await page.waitForSelector('.tile-level');
+  const shots = new Set(['M04', 'M06', 'M09', 'M13', 'M16', 'M18', 'M20', 'M23', 'M24', 'M25', 'M19', 'M10', 'M03']);
+  for (const id of mIds) {
+    await playMathLevel(page, id, { tryWrong: id !== 'M01', shotName: shots.has(id) ? `math-${id}-{type}` : null });
+    await click(page, '.btn:not(.primary):not(.accent):not(.ghost)'); await page.waitForSelector('.tile-level');
+  }
+  ok(`matematyka: wszystkie ${mIds.length} poziomów rozwiązane w przeglądarce (typy: ${Object.keys(report.tasksSolved).filter((k) => k.startsWith('m:')).length})`);
+  // zmiana świata w trakcie zadania matematycznego
+  await click(page, '.tile-level[data-level="M07"]'); await page.waitForSelector('#stage');
+  for (const w of ['dzungla', 'wyspy', 'kosmos']) { await chooseWorld(page, w); await sleep(250); await shot(page, `16-matematyka-zadanie-swiat-${w}`); await noScroll(page, 'math zadanie ' + w); }
+  await click(page, '.back'); await page.waitForSelector('.tile-level');
+  await page.evaluate(() => window.scrollTo(0, 0)); await page.$eval('.games', (e) => e.scrollIntoView()); await sleep(200); await shot(page, '17-mapa-matematyki-zabawy');
+  // zabawy w matematyce
+  for (const g of ['lap', 'sciezka', 'balony']) {
+    const info = await playGame(page, 'math', g, { shotMid: `game-math-${g}-mid` });
+    await sleep(300); await shot(page, `game-math-${g}-done`); ok(`zabawa math:${g}: ukończona, gwiazdki ${info.stars}`);
+    await click(page, '.game-done .btn:not(.primary)'); await page.waitForSelector('.tile-game');
+  }
+  await click(page, '.back'); await click(page, '.module-card[data-module="reading"]'); await page.waitForSelector('.tile-level');
+  await page.$eval('.games', (e) => e.scrollIntoView());
+  for (const g of ['lap', 'sciezka', 'balony']) {
+    const info = await playGame(page, 'reading', g, { shotMid: `game-reading-${g}-mid`, keyboard: g === 'sciezka' });
+    await sleep(300); await shot(page, `game-reading-${g}-done`); ok(`zabawa reading:${g}: ukończona, gwiazdki ${info.stars}${g === 'sciezka' ? ' (klawiatura: fokus + Enter)' : ''}`);
+    await click(page, '.game-done .btn:not(.primary)'); await page.waitForSelector('.tile-game');
+  }
+  // sterowanie strzałkami: Ścieżka (wybór pasa + Enter) i Łap (kosz)
+  await page.$eval('.games', (e) => e.scrollIntoView()); await click(page, '.tile-game[data-game="sciezka"]'); await page.waitForSelector('.platform'); await sleep(400);
+  await page.evaluate(() => document.activeElement?.blur()); await page.keyboard.press('ArrowRight'); await page.keyboard.press('ArrowLeft'); await page.keyboard.press('ArrowLeft');
+  if (!(await page.$('.platform.sel'))) throw new Error('brak zaznaczenia pasa po strzałkach');
+  await page.keyboard.press('Enter'); await sleep(1500);
+  const moved = await page.evaluate(() => { const hh = document.querySelector('.hero'); return parseFloat(hh.style.left) !== 50 || parseFloat(hh.style.top) !== 86; });
+  ok('zabawy: sterowanie strzałkami i Enter (Ścieżka) – bohater idzie na wybraną platformę' + (moved ? '' : ' (już wrócił)'));
+  await click(page, '.back'); await page.waitForSelector('.tile-level');
+  // bonus po poziomie 4
+  await playLevel(page, 'L04', {}); await page.waitForSelector('#bonus-btn', { timeout: 3000 }); await shot(page, '18-poziom-4-zabawa-bonusowa');
+  await click(page, '#bonus-btn'); await page.waitForSelector('.game-field'); await shot(page, '19-bonus-zabawa'); ok('zabawa bonusowa po poziomie 4 (czytanie)');
+  await click(page, '.back'); await page.waitForSelector('.tile-level');
+
   // każda wypowiedź, którą lektor naprawdę wypowiedział w całej grze, ma nagranie w manifeście
   const spokenParts = await page.evaluate(async () => {
     const { audioId } = await import('./js/core/say.js');

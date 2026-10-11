@@ -1,13 +1,15 @@
 # Pierwsze Słowa
 
-Statyczna gra w przeglądarce do nauki czytania po polsku dla pierwszoklasisty (prototyp dla Piotrka, 7 lat).
+Statyczna gra w przeglądarce do nauki czytania i matematyki po polsku dla pierwszoklasisty (dla Piotrka, 7 lat).
 Litery i głoski → sylaby → słowa → zdania → krótkie czytanki. Lektor czyta po polsku: domyślnie NAGRANYM, miłym kobiecym głosem (neuronowy TTS, nagrania są w repozytorium), a zapasowo głosem systemowym przeglądarki,
 za zadania są gwiazdki, a za ukończone poziomy – skarby w jednym z trzech światów.
 
 **Wszystko działa na jednej domenie, bez żadnych zewnętrznych zapytań:** bez CDN-ów, czcionek Google, analityki,
 reklam, zakupów i logowania. Dzięki temu w Microsoft Family Safety wystarczy dodać jedną domenę do listy dozwolonych stron.
 
-Dostępne jest tylko „Nauka czytania”. „Matematyka” to przygotowany, pusty moduł z ekranem „Wkrótce!”.
+Dwa moduły: **„Nauka czytania”** i **„Matematyka”** (klasa 1: liczenie do 10, 20 i 100, porównywanie, skład liczby, dodawanie i odejmowanie do 20 z przekraczaniem dziesiątki,
+proste zadania tekstowe, wzorki, figury, a na końcu miary, złote i zegar). Do tego trzy **zabawy zręcznościowe** (Łap i czytaj/licz, Ścieżka, Balony) bez czasu, żyć i porażek.
+Wygląd: pastelowe, spokojne światy, duże zaokrąglenia, miękkie cienie, systemowa czcionka (Segoe UI / Verdana – bez pobierania czcionek).
 
 ## Uruchomienie lokalnie
 
@@ -23,15 +25,19 @@ wymagają serwera HTTP). Parametr `?test=1` w adresie znaczy poprawne odpowiedzi
 ## Testy i sprawdzenia
 
 ```bash
-npm test                         # node --test tests/*.test.mjs (bez zależności)
+npm test                         # node --test tests/*.test.mjs (bez zależności; ok. 80 testów)
 npm run check                    # node tools/check-external.mjs – brak zewnętrznych adresów w plikach aplikacji
 npm run audio:list               # lista wszystkich wypowiedzi lektora (id, rodzaj, tekst)
-PUPPETEER_CORE=/ścieżka/do/puppeteer-core node tools/browser-check.mjs [katalog-na-zrzuty]
+PUPPETEER_CORE=/workspace/tools-pptr/node_modules/puppeteer-core node tools/browser-check.mjs [katalog-na-zrzuty]
 ```
 
 - `tests/curriculum.test.mjs` – poprawność programu: unikalne id, każde zadanie ma odpowiedź w opcjach, każda głoska ma wpis „say”, ilustracje istnieją, litery poznane przed użyciem w sylabie itd.
 - `tests/progress.test.mjs` – zapis/odczyt postępów, odporność na uszkodzone dane, gwiazdki, odblokowania, reset.
 - `tests/narrator.test.mjs` – ranking głosów (Natural/Online pierwsze), parametry głosu systemowego (głoski wolniej/głośniej), identyfikatory nagrań. `tests/lines.test.mjs` – pochwały: warianty bez powtórzeń z rzędu.
+- `tests/numerals.test.mjs` – polskie liczebniki 0–100 (rodzaj: jedna/dwie), odmiana rzeczownika 1 / 2–4 / 5+ / 12–14 („dwa jabłka”, „pięć jabłek”, „dwanaście bananów”).
+- `tests/math.test.mjs` – program matematyki: unikalne id, odpowiedź w opcjach, wszystkie działania i zadania tekstowe liczone ponownie, zakresy 10 → 20 → 100, poprawna odmiana w tekstach.
+- `tests/games.test.mjs` – czysta logika zabaw: dobór treści z tego, co poznane, harmonogram pojawiania się elementów (fałszywy zegar), punktacja, prędkości, zapis postępów zabaw.
+- `tests/contrast.test.mjs` – kontrast WCAG AA (tekst ≥ 4,5:1, elementy interfejsu ≥ 3:1) liczony po tokenach palety w każdym świecie.
 - `tests/audio.test.mjs` – każda wypowiedź w grze ma id i nagranie, manifest = pliki na dysku, poprawne mp3, razem < 15 MB. `tests/sw.test.mjs` – lista plików w cache.
 - `tools/check-external.mjs` – szuka `http://`, `https://`, `//host`, `@import` w plikach aplikacji (wyjątek: `xmlns`, komentarze).
 - `tools/browser-check.mjs` – prawdziwy headless Chrome (puppeteer-core): przeklikuje wszystkie poziomy i typy zadań, światy, panel rodzica, tryb offline;
@@ -43,7 +49,7 @@ PUPPETEER_CORE=/ścieżka/do/puppeteer-core node tools/browser-check.mjs [katalo
 
 ```
 index.html            jedyna strona (CSP: tylko własna domena)
-css/app.css           style (duże cele dotykowe, wysoki kontrast, prefers-reduced-motion)
+css/app.css           style oparte na tokenach (zmienne CSS ustawiane per świat w js/art/worlds.js), prefers-reduced-motion
 sw.js                 service worker – działanie offline (podnoś VERSION przy zmianach!); nagrania cache'owane leniwie + w tle
 tools/generate-audio.py  generator nagrań (Azure Neural TTS, REST; klucz tylko ze zmiennej środowiskowej)
 tools/generate-audio-offline.py  zapasowy generator w pełni offline (Coqui VITS, licencja BSD-3; nieużywany domyślnie)
@@ -57,16 +63,17 @@ js/core/narrator.js   lektor: nagrania (domyślnie) + głos systemowy (ranking g
 js/core/progress.js   postępy w localStorage (klucz pierwsze-slowa:v1), czyste funkcje
 js/core/ui.js         drobne narzędzia DOM
 js/art/words.js       ilustracje słów (inline SVG)
+js/art/manip.js       przedmioty do liczenia (per świat), ramki dziesiątki, monety, zegar, linijka, figury (inline SVG)
+js/core/numerals.js   polskie liczebniki i odmiana rzeczowników (1–100)
+js/games/             zabawy: index.js (silnik + 3 gry), logic.js (czysta logika), phrases.js (polecenia lektora), map.js (węzły „Zabawa”, bonus)
 js/art/worlds.js      3 światy: motyw, tło, maskotki, skarby (inline SVG)
 modules/index.js      rejestr modułów
 modules/reading/      curriculum.js (program jako dane), runner.js (zadania), index.js (mapa poziomów)
-modules/math/         pusty moduł „Wkrótce!” z tym samym interfejsem
+modules/math/         curriculum.js (25 poziomów, ok. 190 zadań), say.js (składanie wypowiedzi z liczebników), runner.js (zadania), index.js (mapa)
 tests/ tools/         testy i narzędzia (nie trafiają do cache aplikacji)
 ```
 
-Moduł to obiekt `{ id, title, tagline, available, icon, mount(ctx, box, { exit }) }`. Aby dodać matematykę:
-uzupełnij `modules/math/` (własny `curriculum.js`, ekrany), skorzystaj z `ctx.narrator`, `ctx.state`, `ctx.topbar`, ustaw `available: true`.
-Nic więcej w aplikacji nie trzeba zmieniać (kartę na ekranie startowym tworzy rejestr modułów).
+Moduł to obiekt `{ id, title, tagline, available, icon, mount(ctx, box, { exit }) }`; kartę na ekranie startowym tworzy rejestr modułów (`modules/index.js`).
 
 ## Program nauki (25 poziomów, ok. 170 zadań)
 
@@ -87,6 +94,33 @@ Typy zadań: `hear` (posłuchaj i dotknij literę/sylabę), `initial` (który ob
 
 Bez presji czasu i bez negatywnych dźwięków: po błędzie pojawia się „Spróbuj jeszcze raz”, lektor powtarza polecenie, a po drugiej pomyłce poprawna odpowiedź delikatnie pulsuje.
 Gwiazdki za zadanie: 3 (bez pomyłki), 2 (jedna pomyłka), 1 (więcej). Kolejny poziom odblokowuje się po ukończeniu poprzedniego.
+
+## Matematyka (25 poziomów, 191 zadań)
+
+| Grupa | Poziomy | Zawartość |
+|---|---|---|
+| Liczby do 10 | 1–10 | liczenie do 5 i 10, brakująca liczba i porządek, więcej/mniej/tyle samo, znaki < > =, skład liczby, pary do 10, dodawanie do 5 i do 10, odejmowanie do 10 |
+| Liczby do 20 | 11–16 | liczenie do 20, dziesiątki i jedności, dodawanie i odejmowanie do 20 bez i z przekraczaniem dziesiątki (ramki dziesiątki → symbole) |
+| Zadania i wzory | 17–20 | zadania tekstowe z dodawaniem i odejmowaniem (16 różnych), wzorki i ciągi, figury (koło, kwadrat, trójkąt, prostokąt) |
+| Liczby do 100 | 21–22 | dziesiątkami, ciąg liczb, porządkowanie, porównywanie |
+| Dodatkowe | 23–25 | długość w cm (linijka), złote (1, 2, 5, 10 zł; 1 zł = 100 groszy), zegar – pełne godziny |
+
+Typy zadań: `tapNum`, `count`, `make` (połóż na talerzu), `seq`, `order`, `cmpGroups`, `cmpWords`, `sign`, `eq` (działanie z brakującą liczbą), `frame` (ramka dziesiątki), `problem` (zadanie tekstowe),
+`pattern`, `shapeTap/shapeName/shapeSides`, `ruler`, `coinSum`, `coin100`, `pay`, `clock`, `clockPick`. Przedmioty do liczenia zależą od świata (gwiazdy/banany/ryby itd.).
+Liczby i rzeczowniki lektor składa z krótkich nagrań (`js/core/numerals.js`: „dwa jabłka”, „pięć jabłek”, „dwie gwiazdy”); do zadań tekstowych są pełne zdania.
+Postępy matematyki (gwiazdki, poziomy, trafienia i pomyłki z tematami „do powtórzenia”) są w tym samym `localStorage` i widać je w panelu rodzica. Poziomy matematyki wchodzą też do puli skarbów.
+
+## Zabawy zręcznościowe
+
+Trzy zabawy wspólne dla obu przedmiotów, bez czasu, żyć i porażek (błędny element tylko odpływa albo się chwieje, a lektor powtarza polecenie). Runda kończy się po 6 trafieniach (1–3 gwiazdki za mniej pomyłek):
+
+- **Łap i czytaj / Łap i licz** – z góry spadają głoski, sylaby, słowa albo liczby i wyniki; kosz łapie to, o co prosi lektor („Złap sylabę ma”, „Ile to jest trzy plus dwa? Złap wynik.”).
+- **Ścieżka** – bohater skacze na jedną z trzech platform (planeta, kłoda, liść – zależnie od świata); przeszkody to tylko dekoracja.
+- **Balony** – unoszące się balony; przebij ten z właściwą odpowiedzią, błędne tylko się chwieją.
+
+Sterowanie: mysz i dotyk, strzałki lub WASD (Łap: kosz; Ścieżka: wybór platformy + Enter/spacja; Balony: celownik + spacja), a także tryb tylko-klawiaturowy: Tab przechodzi po elementach (ruch wstrzymuje się na czas fokusu), Enter wybiera.
+Zabawy odblokowują się po 3 ukończonych poziomach (węzły „Zabawa” na końcu każdej mapy), a po poziomach 4, 8, 12… pojawia się przycisk „Zabawa bonusowa”. Treść pochodzi z programu: tylko poznane głoski/sylaby/słowa albo liczby i działania z ukończonych poziomów.
+Prędkość: w panelu rodzica „Wolno (zalecane)” albo „Normalnie”; `prefers-reduced-motion` dodatkowo zwalnia i wyłącza kołysanie. Pętla `requestAnimationFrame` z czasem delta, pauza przy ukrytej karcie.
 
 ## Jak dodać poziom lub zadanie
 
@@ -136,13 +170,14 @@ To czysta strona statyczna – wystarczy wgrać zawartość katalogu (bez `tests
 
 - Family Safety wymaga **dokładnej domeny** na liście dozwolonych stron; aplikacja nie łączy się z niczym innym, więc to jedyny wpis.
 - Zalecana jest **własna domena** (np. `pierwsze-slowa.pl`): adres się nie zmieni przy przenosinach hostingu, a domyślne adresy `*.github.io`/`*.vercel.app` bywają trudniejsze do utrzymania na liście.
+- Po zmianie plików uruchom `node tools/sync-sw.mjs --bump` (uzupełnia listę plików powłoki w `sw.js` i podnosi `VERSION`).
 - **Adres i publikację wybiera i zatwierdza Daniel.** Przed publikacją: przejrzeć tekst w panelu rodzica i sprawdzić głos na komputerze Piotrka.
 - Aplikacja działa offline po pierwszym wczytaniu (service worker). Przy każdym wdrożeniu zmień `VERSION` w `sw.js`, inaczej dzieci zobaczą starą wersję z cache.
 - Podkatalog (np. `/pierwsze-slowa/` na GitHub Pages) też działa – wszystkie ścieżki są względne.
 
 ## Lektor i nagrania
 
-Domyślnie lektor odtwarza **nagrania** (`audio/<id>.mp3`, mono 24 kHz, 48 kb/s, razem ok. 1,4 MB) – Piotrek słyszy ten sam głos na każdym komputerze, także bez internetu.
+Domyślnie lektor odtwarza **nagrania** (`audio/<id>.mp3`, mono 24 kHz, 48 kb/s, razem ok. 2,9 MB) – Piotrek słyszy ten sam głos na każdym komputerze, także bez internetu.
 Zapasowo (brak plików, błąd odtwarzania albo wybór rodzica „Głos systemowy”) działa `speechSynthesis`:
 
 - ranking głosów: wybór rodzica → polski głos z „Natural”/„Online” (np. *Microsoft Zofia Online (Natural)*) → Paulina/Zofia lokalna → dowolny `pl-PL`; głosy męskie na końcu;
@@ -164,10 +199,10 @@ npm test                                                    # manifest = pliki =
 
 Skrypt bierze listę wypowiedzi z `js/core/spoken.js` (przez `tools/list-audio-ids.mjs --json`), wysyła SSML (`<prosody>`: głoski i sylaby rate −25% i głośno, zdania −8%, pochwały pitch +6% / rate −3%; pojedyncze głoski przez `<phoneme alphabet="ipa">` i wydłużenie ciągłych), normalizuje głośność, koduje mp3, aktualizuje `audio/manifest.json` i zapisuje `docs/audio-report.json`.
 Czytanki „Przeczytaj wszystko” są sklejane lokalnie z nagrań pojedynczych zdań (bez dodatkowych znaków).
-**Limit darmowego poziomu F0:** twardy limit 4500 znaków na uruchomienie, odpowiedzi cache'owane po haszu SSML w `~/.cache/pierwsze-slowa-azure` (niezmienione nagrania nie są pobierane ponownie), po HTTP 401/403/429 skrypt kończy działanie bez ponawiania. Pełne wygenerowanie to ok. 1,5 tys. znaków.
+**Limit darmowego poziomu F0:** twardy limit 4500 znaków na uruchomienie, odpowiedzi cache'owane po haszu SSML w `~/.cache/pierwsze-slowa-azure` (niezmienione nagrania nie są pobierane ponownie), po HTTP 401/403/429 skrypt kończy działanie bez ponawiania. Nagrania do matematyki i zabaw dodały 165 klipów (ok. 2,65 tys. znaków; liczby 0–100 jako osobne klipy, odmienione rzeczowniki, spójniki „plus/minus”, 16 zadań tekstowych, polecenia zabaw). Limit na uruchomienie można świadomie podnieść zmienną `PS_CHAR_CAP`; `python tools/generate-audio.py --dry` tylko liczy znaki brakujących nagrań (bez Azure).
 
 ### Cache offline (service worker)
 
-Nagrania **nie** są w cache powłoki (pierwsze wczytanie zostaje lekkie). Są cache'owane leniwie przy pierwszym odtworzeniu, a ok. 6 s po starcie strona prosi service worker o dociągnięcie reszty w tle (3 pliki naraz; pomijane przy włączonym oszczędzaniu danych) – razem 1,3 MB, więc po pierwszej wizycie wszystko działa offline.
+Nagrania **nie** są w cache powłoki (pierwsze wczytanie zostaje lekkie). Są cache'owane leniwie przy pierwszym odtworzeniu, a ok. 6 s po starcie strona prosi service worker o dociągnięcie reszty w tle (3 pliki naraz; pomijane przy włączonym oszczędzaniu danych) – razem ok. 2,8 MB, więc po pierwszej wizycie wszystko działa offline.
 Lektor pobiera pliki zwykłym `fetch` (całe pliki, bez nagłówka Range) i gra z `blob:`, dzięki czemu odpowiedzi trafiają do cache, a ścieżki są względne (działają pod `/pierwsze-slowa/`).
 Po zmianie nagrań podnieś `VERSION` w `sw.js`.
