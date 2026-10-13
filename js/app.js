@@ -103,7 +103,7 @@ function start() {
   ctx.onWorld = start; ctx.showBanner = true;
   clear(root);
   const cards = MODULES.map((m) => h('button', { class: 'module-card' + (m.available ? '' : ' soon'), type: 'button', 'data-module': m.id, onclick: () => openModule(m) },
-    h('span', { class: 'micon', html: m.icon }), h('span', { class: 'mtitle' }, m.title), h('span', { class: 'mtag' }, m.available ? m.tagline : 'Wkrótce')));
+    h('span', { class: 'micon', html: (m.icons?.[state.iconSet] ?? m.iconSrc) ? `<img class='micon-img' src='${m.icons?.[state.iconSet] ?? m.iconSrc}' alt='' draggable='false' data-variant='${m.icons ? state.iconSet : ''}'>` : m.icon }), h('span', { class: 'mtitle' }, m.title), h('span', { class: 'mtag' }, m.available ? m.tagline : 'Wkrótce')));
   const m0 = ctx.mascot(0), w0 = ctx.world(), kid0 = ctx.kid(), hero0 = kid0 ? kidHeroHtml(kid0, w0.id) : w0.heroArt;
   root.append(h('div', { class: 'start' + (w0.parade ? ' has-parade' : '') }, ctx.topbar({}),
     h('div', { class: 'hero' }, h('div', { class: 'mascot big' + (hero0 ? ' guide' : ''), 'data-mascot': hero0 ? null : 0, html: hero0 ?? m0.svg, 'aria-hidden': 'true' }),
@@ -161,6 +161,7 @@ function poseMascots() {
   });
 }
 new MutationObserver(poseMascots).observe(root, { subtree: true, childList: true, attributes: true, attributeFilter: ['class'] });
+state.iconSet = P.nextIconSet(state.iconSet); ctx.save(); // każda nowa sesja: drugi wariant ikon
 applyTheme();
 avatar = initAvatar(ctx, narrator); ctx.avatar = avatar;
 start();

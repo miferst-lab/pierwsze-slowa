@@ -56,3 +56,48 @@
 @media (prefers-reduced-motion:reduce){.mouth-svg *,.ex-svg *{animation:none!important}}
 @media (max-width:900px){.pron-main{flex-direction:column}}
 .recorder [hidden],.feedback [hidden]{display:none!important}
+/* karty startowe: wysokość z treści (nic się nie ucina), tytuł i podpis skalują się z oknem; ikona = svg albo <img> (iconSrc) */
+.start .module-row{flex-wrap:nowrap}
+.start .module-card{height:auto!important;min-height:clamp(140px,26vh,240px)!important;justify-content:center;gap:.3rem;padding:.5rem .7rem!important;width:min(30vw,300px)!important}
+.start .micon{width:auto!important;max-width:none!important;height:clamp(46px,10vh,104px);display:flex;justify-content:center}
+.start .micon svg,.start .micon img{height:100%;width:auto;display:block}
+.start .mtitle{font-size:clamp(1.05rem,min(3.4vh,2.1vw),1.9rem)!important;line-height:1.15;text-align:center}
+.start .mtag{font-size:clamp(.78rem,min(2.1vh,1.2vw),1.05rem);line-height:1.25;text-align:center}
+@media (max-width:760px){.start .module-row{flex-wrap:wrap}.start .module-card{width:min(80vw,320px)!important}}
+/* lusterko / nagranie: pływające okienko nad stopką (nie zmienia układu, nic się nie przewija) */
+.rec-media{position:fixed;right:clamp(10px,2vw,32px);bottom:clamp(96px,16vh,140px);width:clamp(170px,19vw,280px);z-index:4;background:var(--surface);border:3px solid var(--line,#d8c6a0);border-radius:16px;padding:.35rem;box-shadow:0 8px 20px rgba(0,0,0,.18)}
+.rec-media video{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;background:#222;display:block;transform:scaleX(-1)}
+.rec-cap{margin:.2rem 0 0;font-size:.85rem;font-weight:700;text-align:center}
+.recorder[data-state="recording"] .rec-media{border-color:#d84a4a}
+#mirror-btn[aria-pressed="true"]{outline:3px solid var(--accent,#f2b84b)}
+/* rysunek buzi v2: duże kształty, podpisy, strzałki, kroki */
+.pron-fig.mouth{width:clamp(220px,30vw,400px)}
+.pron-fig.big.mouth{width:clamp(300px,44vw,560px)}
+.mouth-wrap{display:flex;align-items:center;gap:.4rem}
+.mouth-wrap .mouth-svg{flex:1 1 auto;min-width:0;width:100%;height:auto;max-height:36vh}
+.mouth-wrap .lips-svg{flex:0 0 26%;height:auto;max-height:22vh}
+.pron-fig .mouth-svg .tg{fill:#ff6f8a;stroke:#9c1f3c;stroke-width:4;stroke-linejoin:round}
+.pron-fig .mouth-svg .teeth{fill:#fff;stroke:#5a4a3a;stroke-width:3}
+.pron-fig .mouth-svg .lip{fill:#e8475f;stroke:#8a2030;stroke-width:4;stroke-linejoin:round}
+.pron-fig .lbl{font:800 15px Nunito,Segoe UI,Verdana,sans-serif;fill:#2a1e16;paint-order:stroke;stroke:#fff;stroke-width:4px}
+.pron-fig .lbl.voice{fill:#5a2ab0}.pron-fig .lbl.air-l{fill:#1f4fb0}
+.pron-fig .lead{stroke:#2a1e16;stroke-width:2;fill:none}
+.mouth-steps{display:flex;gap:.3rem;justify-content:center;list-style:none;margin:.2rem 0 0;padding:0;counter-reset:st}
+.mouth-steps li{counter-increment:st;padding:.1rem .5rem;border-radius:999px;background:var(--surface2,#eee);font-weight:800;font-size:.85rem;animation:step-hi 8s infinite steps(1)}
+.mouth-steps li::before{content:counter(st) '. '}
+.mouth-steps li:nth-child(1){animation-name:st1}.mouth-steps li:nth-child(2){animation-name:st2}.mouth-steps li:nth-child(3){animation-name:st3}
+@keyframes st1{0%{background:#ffd24a}25%{background:var(--surface2,#eee)}87.5%{background:#ffd24a}}
+@keyframes st2{0%{background:var(--surface2,#eee)}25%{background:#ffd24a}44%{background:var(--surface2,#eee)}}
+@keyframes st3{0%{background:var(--surface2,#eee)}44%{background:#ffd24a}87.5%{background:var(--surface2,#eee)}}
+.mouth-steps.stop li:nth-child(2){animation-name:st2s}.mouth-steps.stop li:nth-child(3){animation-name:st3s}
+@keyframes st2s{0%{background:var(--surface2,#eee)}25%{background:#ffd24a}56%{background:var(--surface2,#eee)}}
+@keyframes st3s{0%{background:var(--surface2,#eee)}56%{background:#ffd24a}87.5%{background:var(--surface2,#eee)}}
+.mouth-say{margin:.25rem 0 0;font-weight:700;font-size:.95rem;text-align:center;color:var(--ink)}
+.pron-fig.mouth:not(.big) .mouth-say,.pron-fig.mouth:not(.big) .mouth-steps{display:none}
+.pron-fig.mouth:not(.big) .mouth-wrap .lips-svg{max-height:16vh}
+.start .mtitle{line-height:1.3!important;padding:.05em 0}
+.pron-main{width:min(1500px,98vw)}
+.pron-fig.big.mouth{width:clamp(320px,47vw,780px)}
+.mouth-wrap .mouth-svg{max-height:50vh}
+.mouth-wrap .lips-svg{max-height:26vh}
+.start .micon{height:clamp(52px,12.5vh,124px)}

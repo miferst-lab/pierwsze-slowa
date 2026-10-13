@@ -57,3 +57,6 @@ Postacie w `art/kids/` to stylizowane podobizny dzieci Daniela (zdjęć oryginal
 
 ## Ćwiczenia wymowy (grafika)
 Rysunki buzi (przekrój z boku, buzia z przodu, wiatraczek, zupa) są własnym SVG/CSS w `modules/pron/mouth.js` i `css/pron.css` – bez nowych plików graficznych. To uproszczone ilustracje poglądowe, nie schematy medyczne.
+
+## Ikony modułów (13.10.2026)
+`art/icons/{reading,math,pron}-{a,b}.webp` – z `/workspace/grok-art/ikony/ikona_01–06` (klucz zieleni tylko od krawędzi, kadr kwadratowy, 220 px). Wariant A/B zmienia się przy każdej nowej sesji gry.

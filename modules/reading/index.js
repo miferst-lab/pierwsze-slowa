@@ -10,6 +10,9 @@ export default {
   title: 'Nauka czytania',
   tagline: 'Litery, sylaby, słowa i zdania',
   available: true,
+  // ikony od Artysty (dwa warianty, zmieniane co sesję gry); iconSrc = jedna stała ikona; brak obu = rysunek SVG poniżej
+  icons: { a: 'art/icons/reading-a.webp', b: 'art/icons/reading-b.webp' },
+  iconSrc: null,
   icon: `<svg viewBox='0 0 100 100' aria-hidden='true'><path d='M8 22q22-6 42 6v58Q30 74 8 80z' fill='#fff' stroke='#334' stroke-width='4' stroke-linejoin='round'/><path d='M92 22Q70 16 50 28v58q20-12 42-6z' fill='#fff7d6' stroke='#334' stroke-width='4' stroke-linejoin='round'/><text x='29' y='62' font-size='28' font-weight='800' text-anchor='middle' fill='#e0533d' font-family='Verdana,sans-serif'>A</text><text x='71' y='60' font-size='22' font-weight='800' text-anchor='middle' fill='#2f6fd0' font-family='Verdana,sans-serif'>ma</text></svg>`,
   mount(ctx, box, { exit, resumeLevel }) {
     const showMap = () => {

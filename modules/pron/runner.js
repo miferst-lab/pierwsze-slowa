@@ -5,7 +5,8 @@ import { artSvg, WORD_ART } from '../../js/art/words.js';
 import * as P from '../../js/core/progress.js';
 import { PRAISE, FINISH, variantPicker } from '../../js/core/lines.js';
 import { PRON_LEVELS, EXERCISES } from './curriculum.js';
-import { mouthSvg, exerciseSvg } from './mouth.js';
+import { mouthFigure, exerciseSvg } from './mouth.js';
+import { reducedMotion } from '../../js/core/ui.js';
 import { createRecorder } from './recorder.js';
 
 const nextPraise = variantPicker(PRAISE), nextFinish = variantPicker(FINISH);
@@ -60,14 +61,14 @@ export function runPronLevel(ctx, box, level, { onExit, onNext }) {
     if (task.type === 'listen') {
       const chips = task.say.filter((p) => p !== 'Posłuchaj.').map((p) => h('button', { class: 'btn pron-chip', type: 'button', 'data-say': p, onclick: () => narrator.speak([p]) }, p.startsWith('#') ? p.slice(1).toUpperCase() : p));
       rec = createRecorder({ narrator, onModel: () => narrator.speak(task.say) });
-      stageEl.append(h('div', { class: 'pron-main' }, fig(mouthSvg(def.mouth, { voiced: def.voiced }), 'big'), h('div', { class: 'pron-side' }, tip, h('div', { class: 'pron-chips' }, chips), rec.el)));
+      stageEl.append(h('div', { class: 'pron-main' }, fig(mouthFigure(def.id, { anim: !reducedMotion() }), 'big mouth'), h('div', { class: 'pron-side' }, h('div', { class: 'pron-chips' }, chips), rec.el)));
     } else if (needAll) {
       const cards = task.items.map((it, i) => {
         const art = task.type === 'words' && WORD_ART[it] ? h('span', { class: 'pc-art', html: artSvg(it, { label: WORD_ART[it].label }) }) : null;
         return h('button', { class: 'pron-card' + (task.type === 'sentence' ? ' wide' : ''), type: 'button', 'data-item': it, onclick: (e) => { e.currentTarget.classList.add('read'); narrator.speak([it]); markHeard(i); } }, art, h('span', { class: 'pc-txt' }, it));
       });
       rec = createRecorder({ narrator, onModel: () => narrator.speak(task.say) });
-      stageEl.append(h('div', { class: 'pron-main' }, fig(mouthSvg(def.mouth, { voiced: def.voiced })), h('div', { class: 'pron-side' }, h('div', { class: 'pron-cards n' + task.items.length }, cards), tip, rec.el)));
+      stageEl.append(h('div', { class: 'pron-main' }, fig(mouthFigure(def.id, { anim: !reducedMotion() }), 'mouth'), h('div', { class: 'pron-side' }, h('div', { class: 'pron-cards n' + task.items.length }, cards), tip, rec.el)));
     } else { // fun
       const ex = EXERCISES[task.ex];
       stageEl.append(h('div', { class: 'pron-main' }, fig(exerciseSvg(ex.anim), 'big ex'), h('div', { class: 'pron-side' }, h('p', { class: 'pron-ex' }, ex.text), tip, h('p', { class: 'pron-note' }, 'Ćwicz spokojnie. Gdy poczujesz zmęczenie, zrób przerwę.'))));

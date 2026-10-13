@@ -3,7 +3,7 @@
 // Są cache'owane leniwie (przy pierwszym odtworzeniu, patrz handler fetch) oraz dociągane w tle po komunikacie
 // {type:'precache-audio'} wysyłanym przez stronę ~6 s po starcie (pomijane przy włączonym oszczędzaniu danych).
 // UWAGA: przy KAŻDEJ zmianie plików podnieś VERSION – stary cache zostanie usunięty przy aktywacji.
-const VERSION = 'v25';
+const VERSION = 'v27';
 const CACHE = `pierwsze-slowa-${VERSION}`;
 const SHELL = [
   './',
@@ -26,6 +26,12 @@ const SHELL = [
   'art/helpers/lesna-macha.webp',
   'art/helpers/wyspy-cieszy.webp',
   'art/helpers/wyspy-macha.webp',
+  'art/icons/math-a.webp',
+  'art/icons/math-b.webp',
+  'art/icons/pron-a.webp',
+  'art/icons/pron-b.webp',
+  'art/icons/reading-a.webp',
+  'art/icons/reading-b.webp',
   'art/kids/kuba-face.webp',
   'art/kids/kuba-lis-cieszy.webp',
   'art/kids/kuba-lis-macha.webp',

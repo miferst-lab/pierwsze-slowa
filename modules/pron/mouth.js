@@ -1,37 +1,79 @@
 // Prosty, przyjazny rysunek buzi w przekroju z boku (twarz zwrócona w prawo) oraz buzi z przodu do ćwiczeń.
 // To ilustracja ogólna – pomoc w zabawie, nie schemat medyczny. Animacje: css/pron.css.
-const TONGUE = {
-  // czubek języka uniesiony za górne zęby (r) – czubek drży
-  r: 'M92 168 C112 150 140 142 164 130 C184 120 198 108 208 99 C216 94 224 100 220 109 C214 122 208 134 200 146 C190 160 172 170 150 172 Z',
-  // czubek uniesiony do góry, środek języka lekko wklęsły (sz, cz, ż, dż)
-  sz: 'M92 168 C112 156 138 150 160 142 C178 136 192 124 202 108 C208 99 216 98 218 106 C218 118 210 134 198 148 C186 162 170 172 150 172 Z',
-  // czubek za dolnymi zębami, języka „płasko” (c, dz)
-  c: 'M92 168 C116 156 146 148 170 138 C190 130 206 130 220 138 C226 142 224 152 216 156 C200 164 176 172 150 172 Z',
-  // czubek za dolnymi zębami, środek języka wysoko do podniebienia (ś, ć, ź, dź)
-  ś: 'M92 168 C110 150 134 124 160 106 C176 96 196 100 206 116 C214 128 220 140 220 148 C214 158 190 168 168 172 L150 172 Z',
+// Ułożenie dla każdej głoski: kształt języka (shape), usta (lips: round = dzióbek, smile = uśmiech, open = lekko otwarte),
+// stop = najpierw język dotyka (zwarcie), potem puszcza powietrze; voiced = „brzęczy” gardło.
+export const ARTIC = {
+  r: { shape: 'r', lips: 'open', vib: true, say: 'Czubek języka idzie do góry, za górne zęby, i drży.' },
+  sz: { shape: 'sz', lips: 'round', say: 'Czubek języka do góry, usta w dzióbek, powietrze szumi.' },
+  cz: { shape: 'sz', lips: 'round', stop: true, say: 'Język dotyka góry, potem puszcza powietrze. Usta w dzióbek.' },
+  zrz: { shape: 'sz', lips: 'round', voiced: true, say: 'Jak SZ, a gardło brzęczy.' },
+  dz2: { shape: 'sz', lips: 'round', stop: true, voiced: true, say: 'Jak CZ, a gardło brzęczy.' },
+  c: { shape: 'c', lips: 'smile', stop: true, say: 'Uśmiech, czubek języka na dole za zębami. Język dotyka zębów i puszcza powietrze.' },
+  dz: { shape: 'c', lips: 'smile', stop: true, voiced: true, say: 'Jak C, a gardło brzęczy: bzz!' },
+  s2: { shape: 'ś', lips: 'smile', say: 'Uśmiech, środek języka wysoko do podniebienia, cichy szum.' },
+  c2: { shape: 'ś', lips: 'smile', stop: true, say: 'Środek języka dotyka podniebienia, potem puszcza powietrze.' },
+  z2: { shape: 'ś', lips: 'smile', voiced: true, say: 'Jak Ś, a gardło brzęczy.' },
+  dz3: { shape: 'ś', lips: 'smile', stop: true, voiced: true, say: 'Jak Ć, a gardło brzęczy.' },
 };
-const AIR = { r: 0, sz: 1, c: 1, ś: 1 };
+// Język jako funkcja kilku punktów: zawsze ta sama lista poleceń ścieżki, więc da się płynnie animować (SMIL).
+const T = (tx, ty, blade, mid) => `M112 204 C130 ${mid + 34} 168 ${mid} 210 ${mid} C250 ${mid} 270 ${blade} ${tx - 14} ${ty + 6} Q${tx + 6} ${ty - 4} ${tx + 2} ${ty + 14} C${tx - 4} ${ty + 40} 292 200 250 206 L112 206 Z`;
+const REST = T(294, 170, 168, 156);
+const TARGET = { r: T(296, 92, 112, 146), sz: T(286, 92, 104, 156), c: T(298, 158, 120, 142), ś: T(296, 166, 124, 90) };
+const CONTACT = { sz: T(290, 82, 94, 146), c: T(298, 140, 104, 138), ś: T(296, 166, 122, 70) };
+const DUR = '8s';
 
-export function mouthSvg(kind = 'r', { voiced = false } = {}) {
-  const t = TONGUE[kind] ?? TONGUE.r;
-  const round = kind === 'sz'; // dzióbek
-  const lipX = round ? 12 : 0;
-  const vib = kind === 'r';
-  return `<svg class='mouth-svg' data-kind='${kind}' viewBox='0 0 300 220' role='img' aria-label='Buzia z boku: ${kind === 'r' ? 'czubek języka drży za górnymi zębami' : round ? 'usta w dzióbek, czubek języka u góry' : kind === 'c' ? 'uśmiech, czubek języka za dolnymi zębami' : 'uśmiech, środek języka wysoko'}'>
-<path d='M52 200 Q36 110 70 56 Q112 18 190 28 Q248 36 262 86 L262 160 Q258 204 214 206 Z' fill='#ffe3c8' stroke='#b98a66' stroke-width='3'/>
-<path d='M78 150 L78 86 Q96 62 150 66 Q196 70 232 84 L236 156 Q200 180 150 180 Q104 180 78 150 Z' fill='#7a2e3a'/>
-<path d='M96 76 Q150 56 232 86 L232 92 Q170 74 100 90 Z' fill='#f4a6a6'/>
-<g class='tongue'><g class='${vib ? 'vib' : ''}' style='transform-origin:96px 168px'><path d='${t}' fill='#ff7b8f' stroke='#c24a60' stroke-width='3' stroke-linejoin='round'/>${vib ? "<path class='vlines' d='M222 92 q8 -6 14 0 M226 104 q8 -6 14 0 M222 116 q8 -6 14 0' fill='none' stroke='#2f6fd0' stroke-width='3' stroke-linecap='round'/>" : ''}</g></g>
-<rect x='222' y='84' width='16' height='26' rx='5' fill='#fff' stroke='#c9b8a8' stroke-width='2'/>
-<rect x='224' y='130' width='14' height='24' rx='5' fill='#fff' stroke='#c9b8a8' stroke-width='2'/>
-<g class='lips' style='transform:translateX(${lipX}px)'>
-<path d='M236 74 Q262 70 268 88 Q262 108 238 104 Z' fill='#f06a7a' stroke='#b8404f' stroke-width='3'/>
-<path d='M238 128 Q264 122 270 142 Q262 164 238 158 Z' fill='#f06a7a' stroke='#b8404f' stroke-width='3'/>
-</g>
-${AIR[kind] ? `<g class='air' fill='none' stroke='#2f6fd0' stroke-width='4' stroke-linecap='round'><path d='M250 116 h22'/><path d='M254 124 h26'/><path d='M250 132 h22'/></g>` : ''}
-${voiced ? `<g class='buzz' fill='none' stroke='#8a4fd0' stroke-width='3' stroke-linecap='round'><path d='M60 150 q-8 8 0 16 q8 8 0 16'/><path d='M48 146 q-10 10 0 20 q10 10 0 20'/></g>` : ''}
-<text x='66' y='214' font-size='13' fill='#6b5846' font-family='Nunito,Segoe UI,Verdana,sans-serif'>${voiced ? 'gardło „brzęczy”' : ''}</text>
+/** Rysunek buzi z boku (duży, z podpisami) + buzia z przodu (dla głosek, gdzie liczy się kształt ust) + kroki ruchu. */
+export function mouthFigure(soundId, { anim = true } = {}) {
+  const a = ARTIC[soundId] ?? ARTIC.r;
+  return `<div class='mouth-wrap' data-sound='${soundId}'>${mouthSvg(soundId, { anim })}${a.lips !== 'open' ? lipsSvg(a.lips, { anim }) : ''}</div>
+<ol class='mouth-steps${a.stop ? ' stop' : ''}' aria-label='Kroki'><li>spokój</li><li>${a.stop ? 'dotknij' : 'ruch'}</li><li>${a.stop ? 'puść powietrze' : a.vib ? 'drży!' : 'głoska'}</li></ol>
+<p class='mouth-say'>${a.say}</p>`;
+}
+
+export function mouthSvg(soundId = 'r', { anim = true } = {}) {
+  const a = ARTIC[soundId] ?? ARTIC[{ cz: 'cz', ś: 's2' }[soundId]] ?? ARTIC.r;
+  const target = TARGET[a.shape], contact = CONTACT[a.shape];
+  const kt = a.stop ? '0;0.25;0.4;0.5;0.56;0.875;1' : '0;0.25;0.44;0.875;1';
+  const vals = a.stop ? [REST, REST, contact, contact, target, target, REST] : [REST, REST, target, target, REST];
+  const onKt = a.stop ? '0;0.56;0.875;1' : '0;0.44;0.875;1', on = '0;1;0;0';
+  const tongue = anim ? `<path class='tg' d='${REST}'><animate attributeName='d' dur='${DUR}' repeatCount='indefinite' keyTimes='${kt}' values='${vals.join(';')}'/></path>` : `<path class='tg' d='${target}'/>`;
+  const show = (inner, cls, kts = onKt, v = on, still = true) => (anim ? `<g class='${cls}' opacity='0'><animate attributeName='opacity' dur='${DUR}' repeatCount='indefinite' keyTimes='${kts}' values='${v}' calcMode='discrete'/>${inner}</g>` : still ? `<g class='${cls}'>${inner}</g>` : '');
+  const lipsX = a.lips === 'round' ? 14 : a.lips === 'smile' ? -4 : 0;
+  const jaw = a.lips === 'smile' ? -14 : 0; // przy uśmiechu zęby bliżej siebie
+  const tip = (a.shape === 'c' || a.shape === 'ś') ? [300, 150] : [298, 96];
+  const air = a.shape === 'r' ? '' : show(`<path d='M332 128 h52' stroke='#1f5fd0' stroke-width='7' stroke-linecap='round'/><path d='M378 116 l16 12 l-16 12' fill='none' stroke='#1f5fd0' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/><text x='346' y='108' class='lbl air-l'>powietrze</text>`, 'air');
+  const vib = a.vib ? show(`<path d='M304 74 l8 -8 l8 8 l8 -8 M304 120 l8 8 l8 -8 l8 8' fill='none' stroke='#1f5fd0' stroke-width='4' stroke-linecap='round'/><text x='330' y='62' class='lbl'>drży!</text>`, 'vib') : '';
+  const buzz = a.voiced ? `<g class='buzz'><path d='M70 196 q-10 9 0 18 q10 9 0 18 M54 192 q-12 11 0 22 q12 11 0 22' fill='none' stroke='#7a3fd0' stroke-width='5' stroke-linecap='round'/><text x='18' y='254' class='lbl voice'>gardło: bzzz</text></g>` : '';
+  const stopMark = a.stop ? show(`<circle cx='${tip[0] - 6}' cy='${tip[1] - 8}' r='9' fill='#ffd24a' stroke='#8a5a00' stroke-width='3'/><text x='${tip[0] - 10}' y='${tip[1] - 3}' font-size='13' font-weight='900' fill='#5a3a00'>!</text>`, 'stopm', '0;0.4;0.55;1', '0;1;0;0') : '';
+  const moveArrow = show(`<path d='M300 176 Q330 ${a.shape === 'c' ? 168 : a.shape === 'ś' ? 150 : 140} ${a.shape === 'ś' ? 230 : 306} ${a.shape === 'ś' ? 100 : a.shape === 'c' ? 150 : 104}' fill='none' stroke='#e07a10' stroke-width='5' stroke-dasharray='8 6' stroke-linecap='round' marker-end='url(#ah)'/>`, 'move', '0;0.22;0.46;1', '0;1;0;0', false);
+  return `<svg class='mouth-svg' data-sound='${soundId}' viewBox='0 0 420 262' role='img' aria-label='Buzia z boku: ${a.say}'>
+<defs><marker id='ah' viewBox='0 0 10 10' refX='6' refY='5' markerWidth='5' markerHeight='5' orient='auto'><path d='M0 0 L10 5 L0 10 Z' fill='#e07a10'/></marker></defs>
+<path d='M30 262 L36 120 Q48 28 172 22 Q300 18 346 70 Q364 92 354 112 L364 126 Q368 142 354 152 L358 178 Q342 218 282 226 L210 230 Q150 232 132 262 Z' fill='#ffe0c2' stroke='#7a5236' stroke-width='4'/>
+<path d='M114 204 L114 98 Q160 64 232 60 Q292 62 320 86 L320 ${178 + jaw} Q292 ${206 + jaw} 220 206 Z' fill='#4a1420'/>
+<path class='palate' d='M118 98 Q160 68 232 64 Q284 66 306 84' fill='none' stroke='#ff9fb2' stroke-width='12' stroke-linecap='round'/>
+${tongue}
+<rect class='teeth' x='300' y='84' width='20' height='32' rx='6'/>
+<rect class='teeth' x='300' y='${146 + jaw}' width='20' height='30' rx='6'/>
+<g transform='translate(${lipsX} 0)'><path class='lip' d='M318 76 Q350 72 356 94 Q350 118 320 112 Z'/><path class='lip' d='M320 ${142 + jaw} Q352 ${136 + jaw} 358 ${158 + jaw} Q350 ${184 + jaw} 320 ${178 + jaw} Z'/></g>
+${air}${vib}${buzz}${stopMark}${moveArrow}
+<g class='labels'><path d='M200 46 L200 62' class='lead'/><text x='150' y='40' class='lbl'>podniebienie</text>
+<path d='M170 222 L178 184' class='lead'/><text x='140' y='242' class='lbl'>język</text>
+<path d='M322 100 L384 76' class='lead'/><text x='374' y='70' class='lbl' text-anchor='middle'>zęby</text>
+<path d='M${354 + lipsX} ${168 + jaw} L392 ${196}' class='lead'/><text x='392' y='212' class='lbl' text-anchor='middle'>wargi</text></g>
 </svg>`;
+}
+
+/** Usta z przodu: neutralne -> dzióbek / uśmiech (w tym samym rytmie co rysunek z boku). */
+export function lipsSvg(kind, { anim = true } = {}) {
+  const target = kind === 'round'
+    ? `<ellipse cx='80' cy='86' rx='30' ry='26' fill='#e8475f' stroke='#8a2030' stroke-width='4'/><ellipse cx='80' cy='86' rx='11' ry='9' fill='#4a1420'/><rect x='73' y='78' width='14' height='5' rx='2' fill='#fff'/>`
+    : `<path d='M30 80 Q80 66 130 80 Q80 112 30 80 Z' fill='#e8475f' stroke='#8a2030' stroke-width='4' stroke-linejoin='round'/><path d='M42 82 Q80 74 118 82 Q80 98 42 82 Z' fill='#fff' stroke='#bbb' stroke-width='2'/><path d='M42 86 H118' stroke='#bbb' stroke-width='2'/>`;
+  const neutral = `<path d='M46 84 Q80 74 114 84 Q80 102 46 84 Z' fill='#e8475f' stroke='#8a2030' stroke-width='4' stroke-linejoin='round'/><path d='M50 85 H110' stroke='#8a2030' stroke-width='3'/>`;
+  const sw = (inner, vals) => (anim ? `<g opacity='${vals[0]}'><animate attributeName='opacity' dur='${DUR}' repeatCount='indefinite' keyTimes='0;0.3;0.875;1' values='${vals.join(';')}' calcMode='discrete'/>${inner}</g>` : '');
+  return `<svg class='lips-svg' viewBox='0 0 160 170' role='img' aria-label='Usta z przodu: ${kind === 'round' ? 'dzióbek' : 'uśmiech'}'>
+<circle cx='80' cy='70' r='66' fill='#ffe0c2' stroke='#7a5236' stroke-width='4'/><circle cx='56' cy='46' r='6' fill='#3a2a22'/><circle cx='104' cy='46' r='6' fill='#3a2a22'/>
+${anim ? sw(neutral, [1, 0, 1, 1]) + sw(target, [0, 1, 0, 0]) : target}
+<text x='80' y='160' class='lbl' text-anchor='middle'>${kind === 'round' ? 'wargi w dzióbek' : 'uśmiech'}</text></svg>`;
 }
 
 /** Buzia z przodu do ćwiczeń i wiatraczek / zupa. */

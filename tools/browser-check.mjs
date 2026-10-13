@@ -353,7 +353,7 @@ try {
   await page.type('#gate-in', String(a + b)); await click(page, '.gate .btn.primary'); await page.waitForSelector('#speed');
   await page.evaluate(() => document.querySelectorAll('details').forEach((d) => (d.open = true)));
   await shot(page, '10-rodzic-panel'); ok('panel rodzica: bramka i dashboard');
-  { const pn = await page.evaluate(() => { const e = document.querySelector('#pron-note'); return e ? e.textContent : ''; }); if (!/logoped/i.test(pn) || !/lokalnie/i.test(pn) || !/nie terapia|nie terapi|a nie terapia/i.test(pn)) throw new Error('panel rodzica: brak noty o ćwiczeniach wymowy (logopeda, lokalny mikrofon)'); await page.evaluate(() => document.querySelector('#pron-note').scrollIntoView()); await shot(page, 'p6-rodzic-nota'); ok('panel rodzica: nota o ćwiczeniach wymowy (zabawa, logopeda, mikrofon lokalnie)'); }
+  { const pn = await page.evaluate(() => { const e = document.querySelector('#pron-note'); return e ? e.textContent : ''; }); if (!/logoped/i.test(pn) || !/lokalnie/i.test(pn) || !/nie terapia|nie terapi|a nie terapia/i.test(pn)) throw new Error('panel rodzica: brak noty o ćwiczeniach wymowy (logopeda, lokalny mikrofon)'); await page.evaluate(() => document.querySelector('#pron-note').scrollIntoView()); await shot(page, 'p7-rodzic-nota'); ok('panel rodzica: nota o ćwiczeniach wymowy (zabawa, logopeda, mikrofon lokalnie)'); }
   // reset
   await click(page, '.btn.danger'); await click(page, '.btn.danger'); await page.waitForSelector('#gate-in');
   const after = await page.evaluate(() => localStorage.getItem('pierwsze-slowa:v1'));
@@ -476,15 +476,23 @@ try {
     await pg.waitForSelector('#stage', { timeout: 5000 }); await sleep(250);
     const type = await pg.evaluate(() => [...document.querySelector('#stage').classList].find((c) => c.startsWith('t-')));
     await noScroll(pg, `pron ${label} ${type}`);
-    if (shot) await shot();
+    if (shot) await shot('');
     if (rec && type !== 't-fun') {
-      const st = () => pg.evaluate(() => document.querySelector('.recorder')?.dataset.state);
-      if (!(await pg.evaluate(() => /Nic nie jest wysyłane/.test(document.querySelector('.rec-privacy')?.textContent ?? '')))) throw new Error('brak informacji o prywatności przy nagrywaniu');
+      if (!(await pg.evaluate(() => /Nic nie jest wysyłane/.test(document.querySelector('.rec-privacy')?.textContent ?? '') && /zniknie samo po obejrzeniu/.test(document.querySelector('.rec-privacy')?.textContent ?? '')))) throw new Error('brak informacji o prywatności / automatycznym usuwaniu');
+      // śledzimy strumienie kamery/mikrofonu, żeby sprawdzić, że zostają zatrzymane
+      await pg.evaluate(() => { if (window.__gum) return; window.__streams = []; const md = navigator.mediaDevices; const o = md.getUserMedia.bind(md); window.__gum = true; md.getUserMedia = async (c) => { const st = await o(c); window.__streams.push(st); return st; }; });
+      await click(pg, '#mirror-btn'); await pg.waitForFunction(() => document.querySelector('.recorder')?.dataset.state === 'mirror' && document.querySelector('.rec-live').videoWidth > 0, { timeout: 5000 });
+      if (shot) await shot('lusterko');
+      await click(pg, '#mirror-btn'); await sleep(200);
+      if (await pg.evaluate(() => window.__streams.some((st) => st.getTracks().some((t) => t.readyState === 'live')))) throw new Error('po zamknięciu lusterka kamera nadal włączona');
       await click(pg, '#rec-btn'); await pg.waitForFunction(() => document.querySelector('.recorder')?.dataset.state === 'recording', { timeout: 5000 });
-      await sleep(900); await click(pg, '#rec-btn'); await pg.waitForFunction(() => document.querySelector('.recorder')?.dataset.state === 'recorded', { timeout: 5000 });
-      const urlOk = await pg.evaluate(async () => { const b = document.querySelector('#rec-play'); return !b.hidden; });
-      if (!urlOk) throw new Error('po nagraniu brak przycisku odsłuchu');
-      await click(pg, '#rec-play'); await sleep(200);
+      const kinds = await pg.evaluate(() => window.__streams.at(-1).getTracks().map((t) => t.kind).sort().join(','));
+      if (kinds !== 'audio,video') throw new Error('nagranie powinno mieć obraz i dźwięk, jest: ' + kinds);
+      await sleep(1200); await click(pg, '#rec-btn');
+      await pg.waitForFunction(() => document.querySelector('.recorder')?.dataset.state === 'playing' && !!document.querySelector('.rec-play').getAttribute('src'), { timeout: 5000 });
+      if (shot) await shot('odtwarzanie');
+      await pg.waitForFunction(() => document.querySelector('.recorder')?.dataset.state === 'deleted', { timeout: 15000 });
+      if (await pg.evaluate(() => !!document.querySelector('.rec-play').getAttribute('src') || window.__streams.some((st) => st.getTracks().some((t) => t.readyState === 'live')))) throw new Error('po obejrzeniu nagranie lub kamera nie zostały usunięte');
     }
     await pg.evaluate(() => document.querySelectorAll('.pron-card').forEach((c) => c.click()));
     await click(pg, '#pron-great'); await pg.waitForSelector('#pron-next:not([hidden])', { timeout: 4000 });
@@ -496,34 +504,43 @@ try {
     const pp = await newPage(1366, 768);
     await pp.goto(`${BASE}/`); await pp.evaluate(() => localStorage.clear()); await pp.reload(); await sleep(700);
     for (const w of ['lesna', 'kosmos', 'dzungla', 'wyspy']) { await chooseWorld(pp, w); await sleep(250); await noScroll(pp, 'start 3 moduły ' + w); }
+    const clipped = async (pg, lab) => { const c = await pg.evaluate(() => [...document.querySelectorAll('.module-card, .module-card *')].filter((e) => e.scrollHeight > e.clientHeight + 1 || e.scrollWidth > e.clientWidth + 1).map((e) => e.className + ':' + e.textContent.slice(0, 24))); if (c.length) throw new Error('ucięty tekst na kartach startowych (' + lab + '): ' + c.join(' | ')); };
+    for (const w of ['lesna', 'kosmos', 'dzungla', 'wyspy']) { await chooseWorld(pp, w); await sleep(200); await clipped(pp, '1366 ' + w); }
+    const icons = async (pg) => pg.evaluate(() => [...document.querySelectorAll('.module-card img.micon-img')].map((i) => (i.complete && i.naturalWidth > 0 ? i.dataset.variant : 'BRAK')));
+    const v1 = await icons(pp); await pp.reload(); await sleep(600); const v2 = await icons(pp);
+    if (v1.length !== 3 || v1.includes('BRAK') || v2.includes('BRAK') || v1[0] === v2[0]) throw new Error('ikony modułów: oczekiwano 3 wczytanych i zmiany wariantu po nowej sesji: ' + v1 + ' / ' + v2);
+    ok('karty startowe: tekst nieucięty w 4 światach; ikony Artysty wczytane, wariant zmienia się co sesję (' + v1[0] + ' → ' + v2[0] + ')');
+    for (const [W, H] of [[1920, 1080], [1280, 720], [1024, 768]]) { const pq = await newPage(W, H); await pq.goto(`${BASE}/`); await sleep(500); for (const w of ['lesna', 'dzungla']) { await chooseWorld(pq, w); await sleep(200); await clipped(pq, `${W}x${H} ${w}`); await noScroll(pq, `start ${W}x${H} ${w}`); } if (W === 1024) await shot(pq, 'p7-start-1024'); await pq.close(); }
     if ((await pp.$$('.module-card')).length !== 3 || !(await pp.$('.module-card[data-module="pron"]'))) throw new Error('na starcie powinny być 3 moduły, w tym pron');
     await chooseWorld(pp, 'lesna'); await sleep(200);
-    await shot(pp, 'p6-start-3-moduly');
+    await shot(pp, 'p7-start-3-moduly');
     await click(pp, '.module-card[data-module="pron"]'); await pp.waitForSelector('.tile-level[data-level="P01"]');
     if ((await pp.$$('.tile-level')).length < 10) throw new Error('mapa głosek: za mało głosek');
     if (!(await pp.evaluate(() => /logoped/i.test(document.body.textContent)))) throw new Error('brak informacji o logopedzie na mapie');
-    await shot(pp, 'p6-mapa-glosek');
+    await shot(pp, 'p7-mapa-glosek');
     await click(pp, '.tile-level[data-level="P01"]');
     // krok 1: awatar lektorki + postać prowadząca są obecne, a lektor nie psuje układu
-    const t0 = await pronStep(pp, { rec: true, label: 'P01 listen', shot: () => shot(pp, 'p6-r-1-sluchaj') });
+    const t0 = await pronStep(pp, { rec: true, label: 'P01 listen', shot: (x) => shot(pp, 'p7-r-1-sluchaj' + (x ? '-' + x : '')) });
     if (t0 !== 't-listen') throw new Error('pierwszy krok powinien być „Posłuchaj”, jest ' + t0);
     if (!(await pp.evaluate(() => !!document.querySelector('#lektor img') && document.querySelector('.pron-fig svg')))) throw new Error('brak awatara lub rysunku buzi');
-    await pronStep(pp, { rec: true, label: 'P01 syl', shot: () => shot(pp, 'p6-r-2-sylaby') });
+    await pronStep(pp, { rec: true, label: 'P01 syl', shot: (x) => x ? null : shot(pp, 'p7-r-2-sylaby') });
+    // wyjście z kroku zatrzymuje wszystkie ścieżki
+    if (await pp.evaluate(() => (window.__streams ?? []).some((st) => st.getTracks().some((t) => t.readyState === 'live')))) throw new Error('po wyjściu z kroku kamera/mikrofon nadal włączone');
     await pronStep(pp, { label: 'P01 syl2' });
     // wznawianie: wyjście i „Kontynuuj”
     await pp.reload(); await sleep(700);
     const resume = await pp.$('.resume[data-resume="P01"]');
     if (!resume) throw new Error('brak przycisku Kontynuuj dla ćwiczeń wymowy');
-    await shot(pp, 'p6-kontynuuj'); await resume.click(); await pp.waitForSelector('#stage');
+    await shot(pp, 'p7-kontynuuj'); await resume.click(); await pp.waitForSelector('#stage');
     const star = await pp.evaluate(() => document.querySelectorAll('.starstrip .sstar.on').length);
     if (star !== 3) throw new Error('po wznowieniu powinny być 3 zdobyte gwiazdki, jest ' + star);
     let n = 3;
     for (; n < 40; n++) {
       if (!(await pp.$('#stage'))) break;
-      const sh = n === 4 ? () => shot(pp, 'p6-r-slowa') : n === 8 ? () => shot(pp, 'p6-r-zdanie') : n === 11 ? () => shot(pp, 'p6-r-cwiczenie') : null;
+      const sh = n === 4 ? () => shot(pp, 'p7-r-slowa') : n === 8 ? () => shot(pp, 'p7-r-zdanie') : n === 11 ? () => shot(pp, 'p7-r-cwiczenie') : null;
       await pronStep(pp, { label: 'P01 #' + n, shot: sh });
     }
-    await pp.waitForSelector('.done-screen'); await noScroll(pp, 'pron ukończenie'); await shot(pp, 'p6-r-ukonczone');
+    await pp.waitForSelector('.done-screen'); await noScroll(pp, 'pron ukończenie'); await shot(pp, 'p7-r-ukonczone');
     const lv = await pp.evaluate(() => JSON.parse(localStorage.getItem('pierwsze-slowa:v1')).levels.P01);
     if (!lv?.done || Object.keys(lv.tasks).length !== 12) throw new Error('poziom P01 powinien być ukończony (12 kroków): ' + JSON.stringify(lv));
     ok('Ćwiczenia wymowy: 3 moduły na starcie w 4 światach (bez przewijania), mapa 11 głosek, głoska R (12 kroków) z nagrywaniem z atrapą mikrofonu, Kontynuuj, ukończenie, zapis');
@@ -531,7 +548,7 @@ try {
     await pp.evaluate(() => { navigator.mediaDevices.getUserMedia = () => Promise.reject(Object.assign(new Error('x'), { name: 'NotAllowedError' })); });
     await click(pp, '.btn.back'); await click(pp, '.tile-level[data-level="P02"]'); await pp.waitForSelector('#stage');
     await click(pp, '#rec-btn'); await pp.waitForFunction(() => document.querySelector('.recorder')?.dataset.state === 'denied', { timeout: 4000 });
-    await shot(pp, 'p6-brak-zgody');
+    await shot(pp, 'p7-brak-zgody');
     ok('mikrofon odrzucony: przyjazny komunikat, ćwiczenie działa dalej');
     // strona rodzica
     await click(pp, '.btn.back'); await click(pp, '.btn.back'); await pp.waitForSelector('[data-module="pron"]');
@@ -540,13 +557,13 @@ try {
     await pp2.goto(`${BASE}/`); await pp2.evaluate(() => localStorage.setItem('pierwsze-slowa:v1', JSON.stringify({ v: 1, world: 'kosmos', unlockAll: true }))); await pp2.reload(); await sleep(600);
     await noScroll(pp2, 'start 1920 pron');
     await click(pp2, '.module-card[data-module="pron"]'); await click(pp2, '.tile-level[data-level="P02"]');
-    for (let k = 0; k < 13; k++) { if (!(await pp2.$('#stage'))) break; await pronStep(pp2, { label: '1920 P02 #' + k, shot: k === 5 ? () => shot(pp2, 'p6-1920-slowa-kosmos') : null }); }
+    for (let k = 0; k < 13; k++) { if (!(await pp2.$('#stage'))) break; await pronStep(pp2, { label: '1920 P02 #' + k, shot: k === 5 ? () => shot(pp2, 'p7-1920-slowa-kosmos') : null }); }
     await pp2.close();
     for (const w of ['dzungla', 'wyspy']) {
       const p4 = await newPage(1366, 768);
       await p4.goto(`${BASE}/`); await p4.evaluate((ww) => localStorage.setItem('pierwsze-slowa:v1', JSON.stringify({ v: 1, world: ww })), w); await p4.reload(); await sleep(600);
       await click(p4, '.module-card[data-module="pron"]'); await click(p4, '.tile-level[data-level="P07"]');
-      await pronStep(p4, { label: w + ' P07 listen', shot: () => shot(p4, 'p6-swiat-' + w) });
+      await pronStep(p4, { label: w + ' P07 listen', shot: () => shot(p4, 'p7-swiat-' + w) });
       for (let k = 0; k < 12; k++) { if (!(await p4.$('#stage'))) break; await pronStep(p4, { label: w + ' P07 #' + k }); }
       await p4.close();
     }

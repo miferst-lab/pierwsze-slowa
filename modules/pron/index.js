@@ -9,6 +9,9 @@ export default {
   title: 'Ćwiczenia wymowy',
   tagline: 'Trudne głoski: r, sz, cz i inne',
   available: true,
+  // ikony od Artysty (dwa warianty, zmieniane co sesję gry); iconSrc = jedna stała ikona; brak obu = rysunek SVG poniżej
+  icons: { a: 'art/icons/pron-a.webp', b: 'art/icons/pron-b.webp' },
+  iconSrc: null,
   icon: `<svg viewBox='0 0 100 100' aria-hidden='true'><circle cx='50' cy='50' r='40' fill='#fff' stroke='currentColor' stroke-width='4'/><path d='M30 56 Q50 80 70 56' fill='#c43c55' stroke='#8a2a3c' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/><path d='M40 60 Q50 46 60 60 Z' fill='#ff7b8f'/><circle cx='36' cy='38' r='5' fill='#334'/><circle cx='64' cy='38' r='5' fill='#334'/></svg>`,
   mount(ctx, box, { exit, resumeLevel }) {
     const showMap = () => {

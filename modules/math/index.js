@@ -10,6 +10,9 @@ export default {
   title: 'Matematyka',
   tagline: 'Liczenie, dodawanie, figury i zabawy',
   available: true,
+  // ikony od Artysty (dwa warianty, zmieniane co sesję gry); iconSrc = jedna stała ikona; brak obu = rysunek SVG poniżej
+  icons: { a: 'art/icons/math-a.webp', b: 'art/icons/math-b.webp' },
+  iconSrc: null,
   icon: `<svg viewBox='0 0 100 100' aria-hidden='true'><rect x='8' y='14' width='84' height='72' rx='18' fill='#fff' stroke='currentColor' stroke-width='4'/><text x='50' y='64' font-size='34' font-weight='800' text-anchor='middle' fill='#2f6fd0' font-family='Nunito,Segoe UI,Verdana,sans-serif'>1+2</text></svg>`,
   mount(ctx, box, { exit, resumeLevel }) {
     const showMap = () => {
