@@ -249,8 +249,8 @@
   },
   "t-adzia": {
    "kind": "drill",
-   "dur": 0.82,
-   "bytes": 4940
+   "dur": 0.79,
+   "bytes": 4796
   },
   "t-ala_ma_trzy_jabu142kau2e_dostau142a_jeszcze_dwau2e_ile_ma_terazu3f": {
    "kind": "problem",
@@ -269,8 +269,8 @@
   },
   "t-asia": {
    "kind": "drill",
-   "dur": 0.86,
-   "bytes": 5228
+   "dur": 0.82,
+   "bytes": 4940
   },
   "t-asz": {
    "kind": "drill",
@@ -309,8 +309,8 @@
   },
   "t-azia": {
    "kind": "drill",
-   "dur": 0.84,
-   "bytes": 5084
+   "dur": 0.86,
+   "bytes": 5228
   },
   "t-ba": {
    "kind": "syllable",
@@ -464,13 +464,13 @@
   },
   "t-ci": {
    "kind": "drill",
-   "dur": 0.58,
-   "bytes": 3500
+   "dur": 0.62,
+   "bytes": 3788
   },
   "t-cia": {
    "kind": "drill",
-   "dur": 1.15,
-   "bytes": 6956
+   "dur": 0.62,
+   "bytes": 3788
   },
   "t-ciastek": {
    "kind": "word",
@@ -504,8 +504,8 @@
   },
   "t-cio": {
    "kind": "drill",
-   "dur": 1.2,
-   "bytes": 7244
+   "dur": 0.6,
+   "bytes": 3644
   },
   "t-ciocia": {
    "kind": "word",
@@ -519,8 +519,8 @@
   },
   "t-ciu": {
    "kind": "drill",
-   "dur": 1.15,
-   "bytes": 6956
+   "dur": 0.6,
+   "bytes": 3644
   },
   "t-co": {
    "kind": "drill",
@@ -834,13 +834,13 @@
   },
   "t-dzi": {
    "kind": "drill",
-   "dur": 0.58,
-   "bytes": 3500
+   "dur": 0.6,
+   "bytes": 3644
   },
   "t-dzia": {
    "kind": "drill",
-   "dur": 0.67,
-   "bytes": 4076
+   "dur": 0.65,
+   "bytes": 3932
   },
   "t-dziadek": {
    "kind": "word",
@@ -849,8 +849,8 @@
   },
   "t-dzie": {
    "kind": "drill",
-   "dur": 0.62,
-   "bytes": 3788
+   "dur": 0.58,
+   "bytes": 3500
   },
   "t-dziecko": {
    "kind": "word",
@@ -904,8 +904,8 @@
   },
   "t-dzio": {
    "kind": "drill",
-   "dur": 0.62,
-   "bytes": 3788
+   "dur": 0.6,
+   "bytes": 3644
   },
   "t-dziu": {
    "kind": "drill",
@@ -1789,8 +1789,8 @@
   },
   "t-ni": {
    "kind": "syllable",
-   "dur": 0.5,
-   "bytes": 3068
+   "dur": 0.53,
+   "bytes": 3212
   },
   "t-nic_nie_szkodziu2e_spruf3buj_jeszcze_razu2e": {
    "kind": "retry",
@@ -1844,8 +1844,8 @@
   },
   "t-ocio": {
    "kind": "drill",
-   "dur": 1.3,
-   "bytes": 7820
+   "dur": 0.74,
+   "bytes": 4508
   },
   "t-ocz": {
    "kind": "drill",
@@ -1884,8 +1884,8 @@
   },
   "t-odzio": {
    "kind": "drill",
-   "dur": 0.77,
-   "bytes": 4652
+   "dur": 0.74,
+   "bytes": 4508
   },
   "t-oko": {
    "kind": "word",
@@ -1954,8 +1954,8 @@
   },
   "t-osio": {
    "kind": "drill",
-   "dur": 1.3,
-   "bytes": 7820
+   "dur": 0.72,
+   "bytes": 4364
   },
   "t-osz": {
    "kind": "drill",
@@ -1999,8 +1999,8 @@
   },
   "t-ozio": {
    "kind": "drill",
-   "dur": 1.3,
-   "bytes": 7820
+   "dur": 0.74,
+   "bytes": 4508
   },
   "t-pa": {
    "kind": "syllable",
@@ -2354,18 +2354,18 @@
   },
   "t-si": {
    "kind": "syllable",
-   "dur": 0.84,
-   "bytes": 5084
+   "dur": 0.58,
+   "bytes": 3500
   },
   "t-sia": {
    "kind": "drill",
-   "dur": 1.18,
-   "bytes": 7100
+   "dur": 0.62,
+   "bytes": 3788
   },
   "t-sie": {
    "kind": "drill",
-   "dur": 0.62,
-   "bytes": 3788
+   "dur": 0.6,
+   "bytes": 3644
   },
   "t-siedem": {
    "kind": "number",
@@ -2384,8 +2384,8 @@
   },
   "t-sio": {
    "kind": "drill",
-   "dur": 0.6,
-   "bytes": 3644
+   "dur": 0.58,
+   "bytes": 3500
   },
   "t-siu": {
    "kind": "drill",
@@ -2784,8 +2784,8 @@
   },
   "t-ucie": {
    "kind": "drill",
-   "dur": 0.72,
-   "bytes": 4364
+   "dur": 0.82,
+   "bytes": 4940
   },
   "t-ucy": {
    "kind": "drill",
@@ -2849,8 +2849,8 @@
   },
   "t-usie": {
    "kind": "drill",
-   "dur": 0.84,
-   "bytes": 5084
+   "dur": 0.77,
+   "bytes": 4652
   },
   "t-usz": {
    "kind": "drill",
@@ -2909,8 +2909,8 @@
   },
   "t-uzie": {
    "kind": "drill",
-   "dur": 0.74,
-   "bytes": 4508
+   "dur": 0.79,
+   "bytes": 4796
   },
   "t-uzupeu142niju2e": {
    "kind": "instruction",
@@ -3064,13 +3064,13 @@
   },
   "t-zi": {
    "kind": "syllable",
-   "dur": 0.89,
-   "bytes": 5372
+   "dur": 0.6,
+   "bytes": 3644
   },
   "t-zia": {
    "kind": "drill",
-   "dur": 0.74,
-   "bytes": 4508
+   "dur": 0.65,
+   "bytes": 3932
   },
   "t-ziarno": {
    "kind": "word",
@@ -3079,8 +3079,8 @@
   },
   "t-zie": {
    "kind": "drill",
-   "dur": 0.67,
-   "bytes": 4076
+   "dur": 0.65,
+   "bytes": 3932
   },
   "t-zielona": {
    "kind": "word",
@@ -3109,8 +3109,8 @@
   },
   "t-zio": {
    "kind": "drill",
-   "dur": 0.96,
-   "bytes": 5804
+   "dur": 0.6,
+   "bytes": 3644
   },
   "t-ziu": {
    "kind": "drill",

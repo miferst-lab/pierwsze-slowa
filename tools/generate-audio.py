@@ -55,6 +55,30 @@ CUT = {'k': ('ka', 'stop', 0.025), 'p': ('pa', 'stop', 0.025), 't': ('ta', 'stop
        'f': ('fa', 'fric', 0), 's': ('sa', 'fric', 0), 'sz': ('sza', 'fric', 0), 'ch': ('cha', 'fric', 0), 'h': ('ha', 'fric', 0), 'ś': ('sia', 'fric', 0),
        'z': ('za', 'fric', 0), 'ź': ('zia', 'fric', 0), 'ż': ('ża', 'fric', 0), 'rz': ('rza', 'fric', 0),
        'w': ('wa', 'son', 0), 'ł': ('ła', 'son', 0)}
+
+# Sylaby ze zmiękczającym „i” (sio, cia, dzio, nia…): czytane zwykłym tekstem Azure potrafi przeliterować je („s i o”, „c i”)
+# albo przeczytać jako dwie sylaby („si-o”). Dlatego podajemy całą sylabę w IPA (np. sio → ɕɔ), co daje jedną sylabę.
+SOFT = re.compile(r'(dzi|ci|si|zi|ni)')
+_SOFT_IPA = {'dzi': 'dʑ', 'ci': 'tɕ', 'si': 'ɕ', 'zi': 'ʑ', 'ni': 'ɲ'}
+_ORDER = ['dzi', 'ci', 'si', 'zi', 'ni', 'dź', 'dż', 'dz', 'sz', 'cz', 'rz', 'ch'] + sorted(IPA, key=len, reverse=True)
+
+
+def syllable_ipa(t):
+    """'sio' -> 'ɕɔ', 'osio' -> 'ɔɕɔ', 'si' -> 'ɕi'; None, gdy brak zmiękczenia albo nieznana litera."""
+    if not SOFT.search(t): return None
+    out, i = [], 0
+    while i < len(t):
+        for k in _ORDER:
+            if t.startswith(k, i):
+                if k in _SOFT_IPA:
+                    nxt = t[i + len(k):i + len(k) + 1]
+                    out.append(_SOFT_IPA[k] + ('' if nxt and nxt in 'aeouyąęó' else 'i'))
+                else: out.append(IPA[k])
+                i += len(k); break
+        else: return None
+    return ''.join(out)
+
+
 FR = 0.01  # ramka 10 ms
 
 
@@ -118,6 +142,9 @@ def build_ssml(voice, kind, part):
         inner = f"<phoneme alphabet='ipa' ph='{IPA[k]}'>{esc(k)}</phoneme>"
         a = ''.join(f" {n}='{v}'" for n, v in STYLE['sound'].items())
         return ssml(voice, f'<prosody{a}>{inner}</prosody>')
+    if kind in ('syllable', 'drill') and (ph := syllable_ipa(part)):
+        a = ''.join(f" {n}='{v}'" for n, v in STYLE[kind].items())
+        return ssml(voice, f"<prosody{a}><phoneme alphabet='ipa' ph='{ph}'>{esc(part)}</phoneme></prosody>")
     text = part
     if kind in ('praise', 'finish', 'retry') and not text.rstrip().endswith(('!', '?', '.')): text += '!'
     return ssml(voice, prosody(text, **STYLE[kind]))
