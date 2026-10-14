@@ -498,6 +498,15 @@ try {
       if (shot) await shot('odtwarzanie');
       await pg.waitForFunction(() => document.querySelector('.recorder')?.dataset.state === 'deleted', { timeout: 15000 });
       if (await pg.evaluate(() => !!document.querySelector('.rec-play').getAttribute('src') || window.__streams.some((st) => st.getTracks().some((t) => t.readyState === 'live')))) throw new Error('po obejrzeniu nagranie lub kamera nie zostały usunięte');
+      // Lusterko włączone -> Nagraj: ten sam strumień kamery (bez drugiego otwierania), z dołożonym mikrofonem
+      await click(pg, '#mirror-btn'); await pg.waitForFunction(() => document.querySelector('.recorder')?.dataset.state === 'mirror', { timeout: 5000 });
+      const vBefore = await pg.evaluate(() => window.__streams.filter((st) => st.getVideoTracks().length).length);
+      await click(pg, '#rec-btn'); await pg.waitForFunction(() => document.querySelector('.recorder')?.dataset.state === 'recording', { timeout: 5000 });
+      const vAfter = await pg.evaluate(() => window.__streams.filter((st) => st.getVideoTracks().length).length);
+      if (vAfter !== vBefore) throw new Error('nagrywanie z lusterka otworzyło kamerę drugi raz');
+      await sleep(1000); await click(pg, '#rec-btn');
+      await pg.waitForFunction(() => ['playing', 'ready'].includes(document.querySelector('.recorder')?.dataset.state), { timeout: 5000 });
+      if (await pg.evaluate(() => window.__streams.some((st) => st.getTracks().some((t) => t.readyState === 'live')))) throw new Error('po nagraniu z lusterka kamera/mikrofon nadal włączone');
     }
     await pg.evaluate(() => document.querySelectorAll('.pron-card').forEach((c) => c.click()));
     await click(pg, '#pron-great'); await pg.waitForSelector('#pron-next:not([hidden])', { timeout: 4000 });
@@ -556,6 +565,10 @@ try {
     await click(pp, '.btn.back'); await click(pp, '.tile-level[data-level="W-z2"]'); await pp.waitForSelector('#stage');
     await click(pp, '#rec-btn'); await pp.waitForFunction(() => document.querySelector('.recorder')?.dataset.state === 'denied', { timeout: 4000 });
     await shot(pp, 'p7-brak-zgody');
+    { const t = await pp.evaluate(() => document.querySelector('.rec-status').textContent); if (!/NotAllowedError/.test(t) || !/Zezwalaj/.test(t)) throw new Error('komunikat odmowy bez nazwy błędu: ' + t); }
+    await pp.evaluate(() => { navigator.mediaDevices.getUserMedia = () => Promise.reject(Object.assign(new Error('busy'), { name: 'NotReadableError' })); });
+    await click(pp, '#rec-btn'); await pp.waitForFunction(() => /zajęte przez inny program/.test(document.querySelector('.rec-status')?.textContent) && /NotReadableError/.test(document.querySelector('.rec-status').textContent), { timeout: 4000 });
+    await shot(pp, 'p9-kamera-zajeta'); ok('kamera zajęta (NotReadableError): osobny komunikat z nazwą błędu');
     ok('mikrofon odrzucony: przyjazny komunikat, ćwiczenie działa dalej');
     // strona rodzica
     await click(pp, '.btn.back'); await click(pp, '.btn.back'); await pp.waitForSelector('[data-module="pron"]');

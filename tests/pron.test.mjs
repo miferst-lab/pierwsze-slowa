@@ -88,3 +88,57 @@ test('źródła: przypisy tylko w panelu rodzica, poprawne odwołania, nota', as
   assert.match(fs.readFileSync('tools/check-external.mjs', 'utf8'), /ALLOW = new Set\(\['js\/parent-sources\.js'\]\)/);
   execSync('node tools/check-external.mjs');
 });
+
+test('nagraj: wybór mimeType tylko spośród wspieranych, inaczej bez typu', async () => {
+  const R = await import('../modules/pron/recorder.js');
+  const MR = (ok) => ({ isTypeSupported: (t) => ok.includes(t) });
+  assert.equal(R.pickMimeType(MR(['video/webm;codecs=vp9,opus', 'video/webm']), true), 'video/webm;codecs=vp9,opus');
+  assert.equal(R.pickMimeType(MR(['video/webm;codecs=vp8,opus']), true), 'video/webm;codecs=vp8,opus');
+  assert.equal(R.pickMimeType(MR(['video/mp4']), true), 'video/mp4');
+  assert.equal(R.pickMimeType(MR([]), true), '');
+  assert.equal(R.pickMimeType({}, true), '');
+  assert.equal(R.pickMimeType({ isTypeSupported: () => { throw new Error('x'); } }, true), '');
+  assert.equal(R.pickMimeType(MR(['audio/webm']), false), 'audio/webm');
+  // konstruktor odrzuca typ -> drugi raz bez opcji
+  const calls = [];
+  class Fake { constructor(s, o) { calls.push(o); if (o) throw Object.assign(new Error('no'), { name: 'NotSupportedError' }); } static isTypeSupported() { return true; } }
+  const warn = console.warn; console.warn = () => {};
+  try { assert.ok(R.makeRecorder(Fake, {}, true) instanceof Fake); } finally { console.warn = warn; }
+  assert.deepEqual(calls, [{ mimeType: 'video/webm;codecs=vp9,opus' }, undefined]);
+  class None { constructor(s, o) { calls.push(['none', o]); } static isTypeSupported() { return false; } }
+  R.makeRecorder(None, {}, true); assert.deepEqual(calls.at(-1), ['none', undefined]);
+});
+
+test('nagraj: łańcuch getUserMedia (luźne -> true -> audio -> video) i rozróżnianie błędów', async () => {
+  const R = await import('../modules/pron/recorder.js');
+  const err = (name) => Object.assign(new Error(name), { name });
+  const stream = (v, a) => ({ getVideoTracks: () => (v ? [{}] : []), getAudioTracks: () => (a ? [{}] : []) });
+  const md = (script) => { const seen = []; return { seen, getUserMedia: async (c) => { seen.push(c); const r = script[seen.length - 1]; if (r instanceof Error) throw r; return r; } }; };
+  const warn = console.warn; console.warn = () => {};
+  try {
+    // luźne ograniczenia: bez exact
+    assert.ok(!JSON.stringify(R.STREAM_ATTEMPTS).includes('exact'));
+    let m = md([stream(1, 1)]); let g = await R.acquireStream(m); assert.ok(g.video && g.audio); assert.equal(m.seen.length, 1);
+    m = md([err('OverconstrainedError'), stream(1, 1)]); g = await R.acquireStream(m); assert.deepEqual(m.seen[1], { video: true, audio: true });
+    m = md([err('NotReadableError'), err('NotReadableError'), stream(0, 1)]); g = await R.acquireStream(m); assert.equal(g.video, false); assert.equal(g.audio, true);
+    m = md([err('NotFoundError'), err('NotFoundError'), err('NotFoundError'), stream(1, 0)]); g = await R.acquireStream(m); assert.ok(g.video && !g.audio); assert.deepEqual(m.seen[3], { video: true });
+    // odmowa: koniec od razu
+    m = md([err('NotAllowedError')]); await assert.rejects(R.acquireStream(m), (e) => e.name === 'NotAllowedError'); assert.equal(m.seen.length, 1);
+    // zajęta kamera ważniejsza niż brak urządzenia
+    m = md([err('NotReadableError'), err('NotReadableError'), err('NotFoundError'), err('NotReadableError')]);
+    await assert.rejects(R.acquireStream(m), (e) => e.name === 'NotReadableError' && e.attempts.length === 4);
+  } finally { console.warn = warn; }
+  const txt = (n) => R.describeError({ name: n }).text;
+  assert.match(txt('NotReadableError'), /zajęte przez inny program/); assert.match(txt('NotReadableError'), /Teams/);
+  assert.match(txt('NotAllowedError'), /nie pozwoliła/); assert.match(txt('NotFoundError'), /Nie znaleziono/);
+  assert.match(txt('OverconstrainedError'), /ustawień/); assert.match(txt('SecurityError'), /bezpieczeństwa/);
+  assert.equal(new Set(['NotReadableError', 'NotAllowedError', 'NotFoundError', 'OverconstrainedError', 'SecurityError', 'Weird'].map(txt)).size, 6);
+  assert.equal(R.describeError({ name: 'X' }).code, 'X');
+});
+
+test('nagraj: start/onstop/play mają osobną obsługę, Lusterko jest używane ponownie, brak enumerateDevices', async () => {
+  const src = (await import('node:fs')).readFileSync(new URL('../modules/pron/recorder.js', import.meta.url), 'utf8');
+  assert.match(src, /try \{ rec\.start\(/); assert.match(src, /catch \(e\) \{ console\.error\('\[nagraj\] onstop'/);
+  assert.match(src, /const reuse = mode === 'mirror'/); assert.ok(!/enumerateDevices/.test(src)); assert.ok(!/exact/.test(src));
+  assert.match(src, /rec-err/);
+});

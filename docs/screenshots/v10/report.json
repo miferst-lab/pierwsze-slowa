@@ -1,0 +1,1929 @@
+{
+  "consoleErrors": [],
+  "pageErrors": [],
+  "externalRequests": [],
+  "failedRequests": [],
+  "noScrollViolations": [],
+  "steps": [
+    "ekran startowy; baner braku głosu ukryty (są nagrania, brak głosu systemowego w headless Chrome)",
+    "nagrania: 3 pliki zagrane bez błędów pod /pierwsze-slowa/ (czasy 0.89, 0.77, 0.67 s)",
+    "Leśna Wyprawa: świat domyślny, ekran startowy bez przewijania, obrazki (portret lisa, grupa) wczytane",
+    "przełączanie 4 światów na ekranie startowym (bez przewijania), wybór zapisany",
+    "poziom 1 ukończony, L02 odblokowany",
+    "tryb bez głosu: duży tekst zastępczy niewidoczny (głos dostępny)",
+    "poziom L03 przeklikany",
+    "poziom L04 przeklikany",
+    "poziom L05 przeklikany",
+    "poziom L21 przeklikany",
+    "poziom L22 przeklikany",
+    "poziom L24 przeklikany",
+    "wszystkie 25 poziomów rozwiązanych w przeglądarce",
+    "matematyka: łagodna reakcja i podpowiedź po drugiej pomyłce",
+    "matematyka: M01 ukończony (gwiazdki zapisane), M02 odblokowany",
+    "matematyka: wszystkie 25 poziomów rozwiązane w przeglądarce (typy: 21)",
+    "zabawa math:lap: ukończona, gwiazdki 3",
+    "zabawa math:sciezka: ukończona, gwiazdki 3",
+    "zabawa math:balony: ukończona, gwiazdki 3",
+    "zabawa reading:lap: ukończona, gwiazdki 3",
+    "zabawa reading:sciezka: ukończona, gwiazdki 3 (klawiatura: fokus + Enter)",
+    "zabawa reading:balony: ukończona, gwiazdki 3",
+    "zabawy: sterowanie strzałkami i Enter (Ścieżka) – bohater idzie na wybraną platformę",
+    "zabawa bonusowa po poziomie 4 (czytanie)",
+    "lektor wypowiedział 308 różnych tekstów w całej grze – wszystkie mają nagranie",
+    "przełączenie świata w trakcie zadania",
+    "awatar lektorki: widoczny w 4 światach, przełącznik ukrywa; nastroje cieszy/mysli (teraz mysli)",
+    "odznaki „Odkrywca Liter” i „Mistrz Liczenia” zdobyte po ukończeniu wszystkich poziomów",
+    "skarby: 12 z 12 zebrane po wszystkich poziomach",
+    "panel rodzica: bramka i dashboard",
+    "panel rodzica: nota o ćwiczeniach wymowy (zabawa, logopeda, mikrofon lokalnie)",
+    "panel rodzica: Źródła – 8 przypisów, linki w nowej karcie, nota „nie terapia”",
+    "reset postępów: localStorage wyczyszczony",
+    "offline po pierwszym wczytaniu: aplikacja startuje z cache",
+    "offline: portrety i grupa Leśnej Wyprawy wczytane z cache service workera",
+    "Kontynuuj (reading): po przeładowaniu wraca do poziomu L02, zadania 3 (2 gwiazdki zachowane), świat zachowany",
+    "Kontynuuj (math): po przeładowaniu wraca do poziomu M02, zadania 3 (2 gwiazdki zachowane), świat zachowany",
+    "głos systemowy: ranking wybrał Microsoft Zofia Online (Natural) - Polish (Poland)",
+    "domyślnie nagrany głos (2 nagrań, syntezator milczy)",
+    "panel rodzica: postępy matematyki i zabaw, tempo zabaw wolno/normalnie zapamiętane",
+    "panel rodzica: „Test głosek” gra nagrane głoski",
+    "panel rodzica: tryb głosu, tempo i głośność działają i są zapamiętane",
+    "głos systemowy: głoski/sylaby rate 0.65 vol 1.0; zdania rate 0.85 vol 0.9; pitch 1.12–1.15; głos Zofia Online (Natural)",
+    "wybór głosu systemowego zapamiętany po przeładowaniu: Microsoft Paulina - Polish (Poland)",
+    "bez plików audio (404): zadanie rozwiązane, mowa przez głos systemowy: Posłuchaj. | a | Posłuchaj jeszcze raz i spróbuj.",
+    "karty startowe: tekst nieucięty w 4 światach; ikony Artysty wczytane, wariant zmienia się co sesję (a → b)",
+    "wymowa: kolejność W-s2 W-z2 W-c2 W-dz3 W-c W-dz W-sz W-zrz W-cz W-dz2 W-r, polecana W-s2, notka o R",
+    "Ćwiczenia wymowy: 3 moduły na starcie w 4 światach (bez przewijania), mapa 11 głosek, głoska R (12 kroków) z nagrywaniem z atrapą mikrofonu, Kontynuuj, ukończenie, zapis",
+    "kamera zajęta (NotReadableError): osobny komunikat z nazwą błędu",
+    "mikrofon odrzucony: przyjazny komunikat, ćwiczenie działa dalej",
+    "Ćwiczenia wymowy: 1920x1080 (kosmos) i światy dżungla/wyspy bez przewijania"
+  ],
+  "tasksSolved": {
+    "hear": 93,
+    "initial": 16,
+    "build": 20,
+    "pick": 10,
+    "hearPic": 8,
+    "sentpic": 12,
+    "readtap": 16,
+    "story": 6,
+    "m:count": 14,
+    "m:tapNum": 12,
+    "m:make": 8,
+    "m:seq": 14,
+    "m:order": 5,
+    "m:cmpGroups": 4,
+    "m:cmpWords": 3,
+    "m:sign": 9,
+    "m:eq": 69,
+    "m:frame": 12,
+    "m:problem": 16,
+    "m:pattern": 4,
+    "m:shapeTap": 4,
+    "m:shapeName": 1,
+    "m:shapeSides": 2,
+    "m:ruler": 6,
+    "m:coinSum": 3,
+    "m:coin100": 1,
+    "m:pay": 4,
+    "m:clock": 4,
+    "m:clockPick": 3,
+    "pron:listen": 4,
+    "pron:syll": 12,
+    "pron:words": 12,
+    "pron:sentence": 8,
+    "pron:fun": 12
+  },
+  "spoken": [],
+  "audio": {
+    "/audio/manifest.json": {
+      "status": 200,
+      "type": "application/json",
+      "bytes": 51679
+    },
+    "/audio/t-posu142uchaju2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5372
+    },
+    "/audio/s-m.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4652
+    },
+    "/audio/t-brawou21.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4076
+    },
+    "/audio/s-a.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3068
+    },
+    "/audio/t-jeszcze_razu2c_na_pewno_dasz_radu119u21.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 13148
+    },
+    "/audio/t-rewelacjau21.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5948
+    },
+    "/audio/s-o.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3068
+    },
+    "/audio/t-wspanialeu21.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5804
+    },
+    "/audio/s-e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3068
+    },
+    "/audio/t-prawieu21_spruf3buj_jeszcze_razu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 16892
+    },
+    "/audio/t-doskonaleu21.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5948
+    },
+    "/audio/t-ktuf3ry_obrazek_zaczyna_siu119_od_du17awiu119ku.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 15596
+    },
+    "/audio/t-osa.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4076
+    },
+    "/audio/t-piu119knieu21.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4652
+    },
+    "/audio/t-brawou21_tak_trzymaju21.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 13868
+    },
+    "/audio/t-hurrau21_poziom_ukou144czonyu21.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 15884
+    },
+    "/audio/s-u.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3068
+    },
+    "/audio/s-i.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3068
+    },
+    "/audio/t-nic_nie_szkodziu2e_spruf3buj_jeszcze_razu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 19916
+    },
+    "/audio/t-superu21.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4220
+    },
+    "/audio/s-t.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 1628
+    },
+    "/audio/t-u15bwietnie_ci_idzieu21.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7820
+    },
+    "/audio/s-l.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4652
+    },
+    "/audio/t-spruf3buj_jeszcze_razu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 8828
+    },
+    "/audio/t-mama.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4076
+    },
+    "/audio/t-tak_jestu21.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4652
+    },
+    "/audio/t-tata.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3932
+    },
+    "/audio/t-brawou2c_piotrkuu21.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7820
+    },
+    "/audio/t-lala.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4220
+    },
+    "/audio/t-u15bwietnieu21.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4940
+    },
+    "/audio/t-brawou21_ukou144czyu142eu15b_poziomu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 16028
+    },
+    "/audio/t-ma.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3356
+    },
+    "/audio/t-to.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 2780
+    },
+    "/audio/t-uu142uf3u17c_sylabu119u2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7100
+    },
+    "/audio/t-me.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3500
+    },
+    "/audio/t-tu.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 2924
+    },
+    "/audio/t-li.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3356
+    },
+    "/audio/t-posu142uchaj_jeszcze_raz_i_spruf3buju2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 12716
+    },
+    "/audio/t-ta.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3068
+    },
+    "/audio/t-ly.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6812
+    },
+    "/audio/t-gwiazdka_dla_ciebieu21.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 8828
+    },
+    "/audio/t-mu.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3068
+    },
+    "/audio/t-uu142uf3u17c_su142owo_z_sylabu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 9692
+    },
+    "/audio/t-ktuf3re_su142owo_pasuje_do_obrazkau3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 12716
+    },
+    "/audio/t-ktuf3re_zdanie_pasuje_do_obrazkau3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 13004
+    },
+    "/audio/t-to_jest_domu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5804
+    },
+    "/audio/t-dotykaj_su142uf3wu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7100
+    },
+    "/audio/t-jest.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3788
+    },
+    "/audio/t-las.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3788
+    },
+    "/audio/t-to_jest_lasu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6092
+    },
+    "/audio/t-to_jest_kotu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6092
+    },
+    "/audio/t-ser.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3644
+    },
+    "/audio/t-to_jest_seru2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6236
+    },
+    "/audio/t-dom.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3356
+    },
+    "/audio/t-kot.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3356
+    },
+    "/audio/t-u15bwietna_robotau21_ukou144czyu142eu15b_poziomu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 19340
+    },
+    "/audio/t-mama_ma_lodyu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7532
+    },
+    "/audio/t-rower.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4076
+    },
+    "/audio/t-tata_ma_roweru2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6812
+    },
+    "/audio/t-kura_ma_jajou2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6812
+    },
+    "/audio/t-mysz.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3500
+    },
+    "/audio/t-mysz_ma_seru2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6524
+    },
+    "/audio/t-lody.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4076
+    },
+    "/audio/t-kura.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3788
+    },
+    "/audio/t-jajo.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4220
+    },
+    "/audio/t-przeczytaj_czytanku119u2c_dotykaju105c_zdau144u2e_potem_odpowiedz_na_pytanieu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 31580
+    },
+    "/audio/t-mama_ma_kotau2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7388
+    },
+    "/audio/t-kot_ma_na_imiu119_mruku2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 9692
+    },
+    "/audio/t-mruk_lubi_rybu119u2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 8396
+    },
+    "/audio/t-rybu119.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3932
+    },
+    "/audio/t-na.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3356
+    },
+    "/audio/t-imiu119.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3788
+    },
+    "/audio/t-mruk.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4076
+    },
+    "/audio/t-w_lesie_jest_lisu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 8252
+    },
+    "/audio/t-lis_ma_butyu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7100
+    },
+    "/audio/t-lis_idzie_do_domuu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 8396
+    },
+    "/audio/t-lis.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3932
+    },
+    "/audio/t-w.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5948
+    },
+    "/audio/t-lesie.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4220
+    },
+    "/audio/t-rower_ma_kou142au2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7244
+    },
+    "/audio/t-tata_jedzie_do_lasuu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 9404
+    },
+    "/audio/t-mama_ma_balonu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7676
+    },
+    "/audio/s-y.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3068
+    },
+    "/audio/s-s.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4652
+    },
+    "/audio/s-k.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 1628
+    },
+    "/audio/s-d.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 1916
+    },
+    "/audio/t-sok.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3788
+    },
+    "/audio/s-p.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 1484
+    },
+    "/audio/s-b.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 1916
+    },
+    "/audio/s-n.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4652
+    },
+    "/audio/t-balon.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4364
+    },
+    "/audio/t-noga.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4076
+    },
+    "/audio/s-w.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4652
+    },
+    "/audio/s-r.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4652
+    },
+    "/audio/s-z.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4508
+    },
+    "/audio/t-woda.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4220
+    },
+    "/audio/t-ryba.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3932
+    },
+    "/audio/s-j.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4652
+    },
+    "/audio/s-u142.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4508
+    },
+    "/audio/s-g.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 2060
+    },
+    "/audio/s-f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4508
+    },
+    "/audio/s-c.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 1916
+    },
+    "/audio/s-h.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4652
+    },
+    "/audio/s-u15b.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4652
+    },
+    "/audio/s-u107.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 2204
+    },
+    "/audio/s-u144.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4652
+    },
+    "/audio/s-u17a.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4508
+    },
+    "/audio/s-u17c.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4508
+    },
+    "/audio/s-u105.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3068
+    },
+    "/audio/s-u119.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3068
+    },
+    "/audio/s-uf3.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3068
+    },
+    "/audio/t-u17caba.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4508
+    },
+    "/audio/s-sz.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4652
+    },
+    "/audio/s-cz.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 1628
+    },
+    "/audio/s-ch.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4508
+    },
+    "/audio/s-rz.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4508
+    },
+    "/audio/t-szafa.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4364
+    },
+    "/audio/t-czapka.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4796
+    },
+    "/audio/t-chata.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4220
+    },
+    "/audio/s-dz.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 1628
+    },
+    "/audio/s-du17a.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 2060
+    },
+    "/audio/s-du17c.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 1916
+    },
+    "/audio/t-sa.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4652
+    },
+    "/audio/t-ko.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 2924
+    },
+    "/audio/t-se.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5372
+    },
+    "/audio/t-ku.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 2924
+    },
+    "/audio/t-di.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3788
+    },
+    "/audio/t-ka.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4364
+    },
+    "/audio/t-dy.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6380
+    },
+    "/audio/t-su.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3500
+    },
+    "/audio/t-pa.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3212
+    },
+    "/audio/t-bo.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3500
+    },
+    "/audio/t-pe.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4940
+    },
+    "/audio/t-bu.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3500
+    },
+    "/audio/t-ni.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3068
+    },
+    "/audio/t-ba.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3644
+    },
+    "/audio/t-ny.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3356
+    },
+    "/audio/t-pu.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4508
+    },
+    "/audio/t-wa.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3500
+    },
+    "/audio/t-ro.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 2924
+    },
+    "/audio/t-we.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3644
+    },
+    "/audio/t-ru.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4508
+    },
+    "/audio/t-zi.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5372
+    },
+    "/audio/t-ra.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5084
+    },
+    "/audio/t-zy.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3500
+    },
+    "/audio/t-wu.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3644
+    },
+    "/audio/t-uu142uf3u17c_su142owo_z_literu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 9116
+    },
+    "/audio/t-so.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5084
+    },
+    "/audio/t-sowa.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4076
+    },
+    "/audio/t-ty.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 2924
+    },
+    "/audio/t-buty.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4364
+    },
+    "/audio/t-u17ca.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3788
+    },
+    "/audio/t-cha.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3788
+    },
+    "/audio/t-kou142o.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3644
+    },
+    "/audio/t-kot_lubi_rybu119u2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7532
+    },
+    "/audio/t-lubi.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4076
+    },
+    "/audio/t-mak.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3500
+    },
+    "/audio/t-osa_lubi_maku2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7676
+    },
+    "/audio/t-czapku119.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4652
+    },
+    "/audio/t-u17caba_ma_czapku119u2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 8540
+    },
+    "/audio/t-czapka_jest_zielonau2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 9404
+    },
+    "/audio/t-u17caba_lubi_wodu119u2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 8396
+    },
+    "/audio/t-zielona.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5084
+    },
+    "/audio/t-mysz_chowa_ser_w_szafieu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 11132
+    },
+    "/audio/t-kot_nie_ma_serau2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7676
+    },
+    "/audio/t-w_szafie.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4796
+    },
+    "/audio/t-chowa.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3932
+    },
+    "/audio/t-szafie.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4652
+    },
+    "/audio/t-ola_ma_lodyu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6812
+    },
+    "/audio/t-lody_su105_dobreu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7388
+    },
+    "/audio/t-mama_lubi_lodyu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 8252
+    },
+    "/audio/t-ola_i_mama_jedzu105_lodyu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 11564
+    },
+    "/audio/t-policz_i_dotknij_wu142au15bciwu105_liczbu119u2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 14012
+    },
+    "/audio/t-dwa.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3356
+    },
+    "/audio/t-liu15bcie.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4508
+    },
+    "/audio/t-dotknij_liczbu119.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7388
+    },
+    "/audio/t-trzy.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3068
+    },
+    "/audio/t-cztery.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4364
+    },
+    "/audio/t-motyle.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4940
+    },
+    "/audio/t-pou142uf3u17c_na_talerzu.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7964
+    },
+    "/audio/t-piu119u107.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3932
+    },
+    "/audio/t-gwiazd.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4652
+    },
+    "/audio/t-jeden.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4364
+    },
+    "/audio/t-liu15bci.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4652
+    },
+    "/audio/t-szeu15bu107.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4220
+    },
+    "/audio/t-osiem.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4076
+    },
+    "/audio/t-siedem.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4508
+    },
+    "/audio/t-dziesiu119u107.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4940
+    },
+    "/audio/t-dziewiu119u107.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5084
+    },
+    "/audio/t-motyli.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5084
+    },
+    "/audio/t-jakiej_liczby_brakujeu3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 9404
+    },
+    "/audio/t-dotykaj_liczb_od_najmniejszej_do_najwiu119kszeju2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 17612
+    },
+    "/audio/t-dotykaj_liczb_od_najwiu119kszej_do_najmniejszeju2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 17468
+    },
+    "/audio/t-zero.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3932
+    },
+    "/audio/t-gdzie_jest_wiu119ceju3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7964
+    },
+    "/audio/t-jest_wiu119cej_niu17c.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7964
+    },
+    "/audio/t-gdzie_jest_mnieju3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6956
+    },
+    "/audio/t-jest_mniej_niu17c.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7676
+    },
+    "/audio/t-poruf3wnaj_grupyu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7244
+    },
+    "/audio/t-po_lewej_jest.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7244
+    },
+    "/audio/t-tyle_samo.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5660
+    },
+    "/audio/t-wiu119cej.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4940
+    },
+    "/audio/t-mniej.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3500
+    },
+    "/audio/t-wybierz_znaku2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6812
+    },
+    "/audio/t-jest_mniejsze_niu17c.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7964
+    },
+    "/audio/t-jest_wiu119ksze_niu17c.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7820
+    },
+    "/audio/t-jest_ruf3wne.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5804
+    },
+    "/audio/t-uzupeu142niju2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6236
+    },
+    "/audio/t-plus.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3644
+    },
+    "/audio/t-ile.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3356
+    },
+    "/audio/t-ruf3wna_siu119.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4940
+    },
+    "/audio/t-zaznacz_na_ramce.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 9692
+    },
+    "/audio/t-dopeu142nij_ramku119_do_dziesiu119ciuu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 12284
+    },
+    "/audio/t-ile_to_jest.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6236
+    },
+    "/audio/t-minus.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4508
+    },
+    "/audio/t-dwanau15bcie.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6236
+    },
+    "/audio/t-piu119tnau15bcie.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6092
+    },
+    "/audio/t-trzynau15bcie.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5804
+    },
+    "/audio/t-siedemnau15bcie.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6668
+    },
+    "/audio/t-dwadzieu15bcia.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5804
+    },
+    "/audio/t-szesnau15bcie.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5948
+    },
+    "/audio/t-dziewiu119tnau15bcie.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6812
+    },
+    "/audio/t-czternau15bcie.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6380
+    },
+    "/audio/t-osiemnau15bcie.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6380
+    },
+    "/audio/t-jedenau15bcie.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6092
+    },
+    "/audio/t-ala_ma_trzy_jabu142kau2e_dostau142a_jeszcze_dwau2e_ile_ma_terazu3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 34172
+    },
+    "/audio/t-jabu142ek.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5084
+    },
+    "/audio/t-na_talerzu_leu17cu105_cztery_ciastkau2e_mama_ku142adzie_jeszcze_trzyu2e_ile_jest_teraz_na_talerzuu3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 44108
+    },
+    "/audio/t-ciastek.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5228
+    },
+    "/audio/t-w_koszyku_jest_piu119u107_piu142eku2e_doku142adamy_jeszcze_czteryu2e_ile_jest_teraz_w_koszykuu3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 41228
+    },
+    "/audio/t-piu142ek.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4220
+    },
+    "/audio/t-piotrek_ma_szeu15bu107_balonuf3wu2e_dostau142_jeszcze_trzyu2e_ile_ma_terazu3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 36476
+    },
+    "/audio/t-balonuf3w.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5372
+    },
+    "/audio/t-na_talerzu_leu17cy_siedem_jabu142eku2e_mama_ku142adzie_jeszcze_piu119u107u2e_ile_jest_teraz_na_talerzuu3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 45548
+    },
+    "/audio/t-w_koszyku_jest_osiem_kwiatkuf3wu2e_doku142adamy_jeszcze_szeu15bu107u2e_ile_jest_teraz_w_koszykuu3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 42524
+    },
+    "/audio/t-kwiatkuf3w.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5372
+    },
+    "/audio/t-kasia_ma_dziewiu119u107_ciasteku2e_dostau142a_jeszcze_osiemu2e_ile_ma_terazu3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 37484
+    },
+    "/audio/t-w_koszyku_jest_dziesiu119u107_balonuf3wu2e_doku142adamy_jeszcze_siedemu2e_ile_jest_teraz_w_koszykuu3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 43964
+    },
+    "/audio/t-ola_miau142a_piu119u107_ciasteku2e_oddau142a_dwau2e_ile_jej_zostau142ou3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 34316
+    },
+    "/audio/t-ciastka.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5084
+    },
+    "/audio/t-na_u142u105ce_rosu142o_siedem_kwiatkuf3wu2e_dziewczynka_zerwau142a_trzyu2e_ile_zostau142ou3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 39356
+    },
+    "/audio/t-kwiatki.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5228
+    },
+    "/audio/t-piotrek_miau142_osiem_balonuf3wu2e_trzy_balony_odleciau142yu2e_ile_mu_zostau142ou3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 37916
+    },
+    "/audio/t-tomek_miau142_dziewiu119u107_jabu142eku2e_oddau142_czteryu2e_ile_mu_zostau142ou3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 34748
+    },
+    "/audio/t-na_u142u105ce_rosu142o_dwanau15bcie_kwiatkuf3wu2e_dziewczynka_zerwau142a_piu119u107u2e_ile_zostau142ou3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 41516
+    },
+    "/audio/t-kasia_miau142a_czternau15bcie_balonuf3wu2e_szeu15bu107_balonuf3w_odleciau142ou2e_ile_jej_zostau142ou3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 42524
+    },
+    "/audio/t-ala_miau142a_piu119tnau15bcie_piu142eku2e_oddau142a_osiemu2e_ile_jej_zostau142ou3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 36332
+    },
+    "/audio/t-ola_miau142a_siedemnau15bcie_ciasteku2e_oddau142a_dziewiu119u107u2e_ile_jej_zostau142ou3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 37628
+    },
+    "/audio/t-co_bu119dzie_daleju3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7100
+    },
+    "/audio/t-dotknij.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5084
+    },
+    "/audio/t-kwadrat.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5228
+    },
+    "/audio/t-truf3jku105t.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5084
+    },
+    "/audio/t-jak_siu119_nazywa_ta_figurau3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 10124
+    },
+    "/audio/t-prostoku105t.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6092
+    },
+    "/audio/t-ile_bokuf3w_ma_ta_figurau3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 10124
+    },
+    "/audio/t-trzydzieu15bci.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5948
+    },
+    "/audio/t-czterdzieu15bci.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6380
+    },
+    "/audio/t-piu119u107dziesiu105t.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5516
+    },
+    "/audio/t-szeu15bu107dziesiu105t.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6236
+    },
+    "/audio/t-siedemdziesiu105t.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6668
+    },
+    "/audio/t-osiemdziesiu105t.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6380
+    },
+    "/audio/t-dziewiu119u107dziesiu105t.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6524
+    },
+    "/audio/t-ile_centymetruf3w_ma_patyczeku3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 11996
+    },
+    "/audio/t-centymetry.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6236
+    },
+    "/audio/t-centymetruf3w.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6812
+    },
+    "/audio/t-ile_pieniu119dzy_jest_razemu3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 10268
+    },
+    "/audio/t-zu142ote.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4796
+    },
+    "/audio/t-zu142otych.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5084
+    },
+    "/audio/t-ile_groszy_ma_jeden_zu142otyu3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 11564
+    },
+    "/audio/t-zu142oty.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4652
+    },
+    "/audio/t-sto.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3356
+    },
+    "/audio/t-groszy.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4652
+    },
+    "/audio/t-zapu142au107.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5660
+    },
+    "/audio/t-ktuf3ra_jest_godzinau3f.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7964
+    },
+    "/audio/t-trzecia.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4508
+    },
+    "/audio/t-szuf3sta.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4364
+    },
+    "/audio/t-dziewiu105ta.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5660
+    },
+    "/audio/t-znajdu17a_zegaru2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7676
+    },
+    "/audio/t-dwunasta.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5948
+    },
+    "/audio/t-piu105ta.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4508
+    },
+    "/audio/t-uf3sma.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4076
+    },
+    "/audio/t-pierwsza.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4508
+    },
+    "/audio/t-zu142ap_wyniku2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7100
+    },
+    "/audio/t-zu142ap_liczbu119.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7100
+    },
+    "/audio/t-idu17a_do_liczby.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6524
+    },
+    "/audio/t-idu17a_do_wynikuu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6812
+    },
+    "/audio/t-przebij_balon_z_wynikiemu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 10988
+    },
+    "/audio/t-przebij_balon_z_liczbu105.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 10268
+    },
+    "/audio/t-zu142ap_literu119.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7388
+    },
+    "/audio/t-zu142ap_su142owo.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6956
+    },
+    "/audio/t-zu142ap_sylabu119.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7676
+    },
+    "/audio/t-idu17a_do_su142owa.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6524
+    },
+    "/audio/t-idu17a_do_sylaby.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6956
+    },
+    "/audio/t-przebij_balon_z_sylabu105.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 11420
+    },
+    "/audio/t-przebij_balon_ze_su142owem.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 10556
+    },
+    "/audio/t-tak_brzmi_lektor_w_tym_tempieu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 11852
+    },
+    "/audio/t-sia.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7100
+    },
+    "/audio/t-sio.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3644
+    },
+    "/audio/t-siu.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3644
+    },
+    "/audio/t-sie.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3788
+    },
+    "/audio/t-si.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5084
+    },
+    "/audio/t-au15b.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3932
+    },
+    "/audio/t-ou15b.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3644
+    },
+    "/audio/t-uu15b.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5084
+    },
+    "/audio/t-eu15b.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3788
+    },
+    "/audio/t-asia.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5228
+    },
+    "/audio/t-osio.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7820
+    },
+    "/audio/t-usie.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5084
+    },
+    "/audio/t-u15blimak.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5084
+    },
+    "/audio/t-u15bnieg.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3932
+    },
+    "/audio/t-u15bwieca.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5084
+    },
+    "/audio/t-u15bwinka.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5084
+    },
+    "/audio/t-gu105sienica.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 6524
+    },
+    "/audio/t-miu15b.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3644
+    },
+    "/audio/t-gu119u15b.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3788
+    },
+    "/audio/t-u15blimak_idzie_przez_u15bniegu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 11132
+    },
+    "/audio/t-miu15b_ma_u15bwieczku119u2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 8540
+    },
+    "/audio/t-uu15bmiech_i_dziuf3beku2c_uu15bmiech_i_dziuf3beku2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 15596
+    },
+    "/audio/t-malarzu3a_pomaluj_ju119zykiem_niebo_w_buziu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 17324
+    },
+    "/audio/t-dmuchaj_na_goru105cu105_zupu119u2c_potem_na_zimne_du142onieu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 19772
+    },
+    "/audio/t-zia.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4508
+    },
+    "/audio/t-zio.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5804
+    },
+    "/audio/t-ziu.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3788
+    },
+    "/audio/t-zie.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4076
+    },
+    "/audio/t-au17a.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3932
+    },
+    "/audio/t-ou17a.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3644
+    },
+    "/audio/t-uu17a.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5084
+    },
+    "/audio/t-eu17a.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3788
+    },
+    "/audio/t-azia.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5084
+    },
+    "/audio/t-ozio.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 7820
+    },
+    "/audio/t-uzie.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4508
+    },
+    "/audio/t-zima.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4220
+    },
+    "/audio/t-zielony.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5228
+    },
+    "/audio/t-ziemia.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4508
+    },
+    "/audio/t-ziarno.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4652
+    },
+    "/audio/t-jezioro.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4652
+    },
+    "/audio/t-koziou142ek.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5516
+    },
+    "/audio/t-weu17a.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3644
+    },
+    "/audio/t-zimu105_pada_u15bniegu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 8828
+    },
+    "/audio/t-koziou142ek_skacze_nad_jezioremu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 12428
+    },
+    "/audio/t-baloniku3a_nadmij_policzki_i_powoli_wypuu15bu107_powietrzeu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 23084
+    },
+    "/audio/t-sza.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3644
+    },
+    "/audio/t-szo.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3500
+    },
+    "/audio/t-szu.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3644
+    },
+    "/audio/t-sze.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3644
+    },
+    "/audio/t-szy.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4652
+    },
+    "/audio/t-asz.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3932
+    },
+    "/audio/t-osz.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3644
+    },
+    "/audio/t-usz.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3500
+    },
+    "/audio/t-esz.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3500
+    },
+    "/audio/t-asza.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4796
+    },
+    "/audio/t-osze.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4508
+    },
+    "/audio/t-uszy.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4364
+    },
+    "/audio/t-szalik.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4940
+    },
+    "/audio/t-szynka.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4508
+    },
+    "/audio/t-szopa.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4364
+    },
+    "/audio/t-kasza.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4220
+    },
+    "/audio/t-myszka.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4652
+    },
+    "/audio/t-poduszka.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5372
+    },
+    "/audio/t-koszyk.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 4364
+    },
+    "/audio/t-kosz.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 3212
+    },
+    "/audio/t-kapelusz.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 5372
+    },
+    "/audio/t-szybka_mysz_szuka_szafyu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 10412
+    },
+    "/audio/t-szary_szalik_leu17cy_w_szufladzieu2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 13148
+    },
+    "/audio/t-weu17a_powietrze_nosem_i_dmuchaj_na_wiatraczeku2e.mp3": {
+      "status": 200,
+      "type": "audio/mpeg",
+      "bytes": 17900
+    }
+  }
+}
