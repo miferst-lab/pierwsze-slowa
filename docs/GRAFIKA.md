@@ -56,6 +56,8 @@ Postacie w `art/kids/` to stylizowane podobizny dzieci Daniela (zdjęć oryginal
 - Rozmiar `art/`: ok. 2,8 MB.
 
 ## Ćwiczenia wymowy (grafika)
+
+Mapa głosek (v8): grupy w kolejności ciszące → syczące → szumiące → R; kafelek „Polecana teraz” ma pomarańczową etykietę i obwódkę (`.tile-level.recommended`, `.lrec`), pod nagłówkiem R notka dla rodzica (`.r-note`). Zrzuty: `docs/screenshots/v8/`. Kolejność i źródła: README, sekcja „Ćwiczenia wymowy”.
 Rysunki buzi (przekrój z boku, buzia z przodu, wiatraczek, zupa) są własnym SVG/CSS w `modules/pron/mouth.js` i `css/pron.css` – bez nowych plików graficznych. To uproszczone ilustracje poglądowe, nie schematy medyczne.
 
 ## Ikony modułów (13.10.2026)

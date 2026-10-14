@@ -1,4 +1,5 @@
 // Panel rodzica: bramka (zadanie rachunkowe), postępy, słabe miejsca, lektor, dane.
+import { R_NOTE } from '../modules/pron/curriculum.js';
 import { h, clear, soundLabel } from './core/ui.js';
 import * as P from './core/progress.js';
 import { SAY, audioId } from './core/say.js';
@@ -104,7 +105,8 @@ export function showParent(ctx, box) {
         h('h3', {}, 'Do powtórzenia w matematyce'),
         weakMath.length ? h('ul', { id: 'math-weak' }, weakMath.map((w) => h('li', {}, `${TOPIC_NAMES[w.item.slice(2)]} – ${w.misses} pomyłek, ${w.hits} trafień`)), weakMathItems.map((w) => h('li', { class: 'muted' }, `działanie ${w.item.slice(2).replace('-', ' − ').replace('+', ' + ')} – ${w.misses} pomyłek`))) : h('p', { class: 'muted' }, 'Na razie brak danych z matematyki.')),
       h('section', { class: 'card', id: 'pron-note' }, h('h2', {}, 'Ćwiczenia wymowy'),
-        h('p', {}, 'Moduł „Ćwiczenia wymowy” to zabawa w ćwiczenie trudnych głosek (r, sz, cz, ż/rz, dż, c, dz, ś, ć, ź, dź): słuchanie wzoru lektora, sylaby, słowa, zdania oraz ćwiczenia oddechu, języka i ust. To zabawa, a nie terapia.'),
+        h('p', {}, 'Moduł „Ćwiczenia wymowy” to zabawa w ćwiczenie trudnych głosek w kolejności zalecanej przez logopedów (ś, ź, ć, dź → c, dz → sz, ż/rz, cz, dż → r): słuchanie wzoru lektora, sylaby, słowa, zdania oraz ćwiczenia oddechu, języka i ust. To zabawa, a nie terapia.'),
+        h('p', { id: 'pron-order' }, R_NOTE + ' Gra podświetla „Polecaną teraz” głoskę (pierwszą nieukończoną), ale kolejność warto dopasować do dziecka – najlepiej z logopedą.'),
         h('p', {}, 'Jeśli dziecko ma stałą trudność z wymową, warto skonsultować się z logopedą – gra tego nie zastąpi i niczego nie diagnozuje. Gra nie ocenia wymowy automatycznie: dziecko albo Ty wybieracie „Powtórz” lub „Super!”.'),
         h('p', { class: 'muted' }, 'Kamera i mikrofon („Nagraj siebie”, „Lusterko”) działają wyłącznie lokalnie: przeglądarka zawsze pyta o zgodę. „Lusterko” tylko pokazuje obraz z kamery, bez nagrywania. „Nagraj siebie” nagrywa obraz i dźwięk (bez kamery – sam dźwięk) do 8 sekund, odtwarza je raz obok wzoru lektora, a potem nagranie samo znika (najpóźniej po minucie albo po wyjściu z ekranu). Nic nie jest wysyłane ani zapisywane. Zgodę możesz w każdej chwili cofnąć w ustawieniach przeglądarki.')),
       h('section', { class: 'card', id: 'avatar-choice' }, h('h2', {}, 'Awatar lektora'), h('p', { class: 'muted' }, 'Mała postać przy zadaniu: porusza się, gdy lektor mówi, cieszy się po dobrej odpowiedzi i myśli po pomyłce.'),

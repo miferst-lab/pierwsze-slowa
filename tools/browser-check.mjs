@@ -514,22 +514,24 @@ try {
     if ((await pp.$$('.module-card')).length !== 3 || !(await pp.$('.module-card[data-module="pron"]'))) throw new Error('na starcie powinny być 3 moduły, w tym pron');
     await chooseWorld(pp, 'lesna'); await sleep(200);
     await shot(pp, 'p7-start-3-moduly');
-    await click(pp, '.module-card[data-module="pron"]'); await pp.waitForSelector('.tile-level[data-level="P01"]');
+    await click(pp, '.module-card[data-module="pron"]'); await pp.waitForSelector('.tile-level[data-level="W-s2"]');
+    { const ord = await pp.$$eval('.tile-level', (t) => t.map((x) => x.dataset.level)); if (ord[0] !== 'W-s2' || ord.at(-1) !== 'W-r') throw new Error('zła kolejność głosek: ' + ord);
+      if (!(await pp.$('.tile-level.recommended[data-level="W-s2"]')) || !(await pp.$('section[data-group="r"] .r-note'))) throw new Error('brak podświetlenia polecanej głoski lub notki o R'); ok('wymowa: kolejność ' + ord.join(' ') + ', polecana W-s2, notka o R'); }
     if ((await pp.$$('.tile-level')).length < 10) throw new Error('mapa głosek: za mało głosek');
     if (!(await pp.evaluate(() => /logoped/i.test(document.body.textContent)))) throw new Error('brak informacji o logopedzie na mapie');
     await shot(pp, 'p7-mapa-glosek');
-    await click(pp, '.tile-level[data-level="P01"]');
+    await click(pp, '.tile-level[data-level="W-s2"]');
     // krok 1: awatar lektorki + postać prowadząca są obecne, a lektor nie psuje układu
-    const t0 = await pronStep(pp, { rec: true, label: 'P01 listen', shot: (x) => shot(pp, 'p7-r-1-sluchaj' + (x ? '-' + x : '')) });
+    const t0 = await pronStep(pp, { rec: true, label: 'W-s2 listen', shot: (x) => shot(pp, 'p8-s-1-sluchaj' + (x ? '-' + x : '')) });
     if (t0 !== 't-listen') throw new Error('pierwszy krok powinien być „Posłuchaj”, jest ' + t0);
     if (!(await pp.evaluate(() => !!document.querySelector('#lektor img') && document.querySelector('.pron-fig svg')))) throw new Error('brak awatara lub rysunku buzi');
-    await pronStep(pp, { rec: true, label: 'P01 syl', shot: (x) => x ? null : shot(pp, 'p7-r-2-sylaby') });
+    await pronStep(pp, { rec: true, label: 'W-s2 syl', shot: (x) => x ? null : shot(pp, 'p8-s-2-sylaby') });
     // wyjście z kroku zatrzymuje wszystkie ścieżki
     if (await pp.evaluate(() => (window.__streams ?? []).some((st) => st.getTracks().some((t) => t.readyState === 'live')))) throw new Error('po wyjściu z kroku kamera/mikrofon nadal włączone');
-    await pronStep(pp, { label: 'P01 syl2' });
+    await pronStep(pp, { label: 'W-s2 syl2' });
     // wznawianie: wyjście i „Kontynuuj”
     await pp.reload(); await sleep(700);
-    const resume = await pp.$('.resume[data-resume="P01"]');
+    const resume = await pp.$('.resume[data-resume="W-s2"]');
     if (!resume) throw new Error('brak przycisku Kontynuuj dla ćwiczeń wymowy');
     await shot(pp, 'p7-kontynuuj'); await resume.click(); await pp.waitForSelector('#stage');
     const star = await pp.evaluate(() => document.querySelectorAll('.starstrip .sstar.on').length);
@@ -537,16 +539,16 @@ try {
     let n = 3;
     for (; n < 40; n++) {
       if (!(await pp.$('#stage'))) break;
-      const sh = n === 4 ? () => shot(pp, 'p7-r-slowa') : n === 8 ? () => shot(pp, 'p7-r-zdanie') : n === 11 ? () => shot(pp, 'p7-r-cwiczenie') : null;
-      await pronStep(pp, { label: 'P01 #' + n, shot: sh });
+      const sh = n === 4 ? () => shot(pp, 'p8-s-slowa') : n === 8 ? () => shot(pp, 'p8-s-zdanie') : n === 11 ? () => shot(pp, 'p8-s-cwiczenie') : null;
+      await pronStep(pp, { label: 'W-s2 #' + n, shot: sh });
     }
-    await pp.waitForSelector('.done-screen'); await noScroll(pp, 'pron ukończenie'); await shot(pp, 'p7-r-ukonczone');
-    const lv = await pp.evaluate(() => JSON.parse(localStorage.getItem('pierwsze-slowa:v1')).levels.P01);
-    if (!lv?.done || Object.keys(lv.tasks).length !== 12) throw new Error('poziom P01 powinien być ukończony (12 kroków): ' + JSON.stringify(lv));
+    await pp.waitForSelector('.done-screen'); await noScroll(pp, 'pron ukończenie'); await shot(pp, 'p8-s-ukonczone');
+    const lv = await pp.evaluate(() => JSON.parse(localStorage.getItem('pierwsze-slowa:v1')).levels['W-s2']);
+    if (!lv?.done || Object.keys(lv.tasks).length !== 12) throw new Error('poziom W-s2 powinien być ukończony (12 kroków): ' + JSON.stringify(lv));
     ok('Ćwiczenia wymowy: 3 moduły na starcie w 4 światach (bez przewijania), mapa 11 głosek, głoska R (12 kroków) z nagrywaniem z atrapą mikrofonu, Kontynuuj, ukończenie, zapis');
     // brak zgody na mikrofon: komunikat zamiast błędu
     await pp.evaluate(() => { navigator.mediaDevices.getUserMedia = () => Promise.reject(Object.assign(new Error('x'), { name: 'NotAllowedError' })); });
-    await click(pp, '.btn.back'); await click(pp, '.tile-level[data-level="P02"]'); await pp.waitForSelector('#stage');
+    await click(pp, '.btn.back'); await click(pp, '.tile-level[data-level="W-z2"]'); await pp.waitForSelector('#stage');
     await click(pp, '#rec-btn'); await pp.waitForFunction(() => document.querySelector('.recorder')?.dataset.state === 'denied', { timeout: 4000 });
     await shot(pp, 'p7-brak-zgody');
     ok('mikrofon odrzucony: przyjazny komunikat, ćwiczenie działa dalej');
@@ -556,15 +558,15 @@ try {
     const pp2 = await newPage(1920, 1080);
     await pp2.goto(`${BASE}/`); await pp2.evaluate(() => localStorage.setItem('pierwsze-slowa:v1', JSON.stringify({ v: 1, world: 'kosmos', unlockAll: true }))); await pp2.reload(); await sleep(600);
     await noScroll(pp2, 'start 1920 pron');
-    await click(pp2, '.module-card[data-module="pron"]'); await click(pp2, '.tile-level[data-level="P02"]');
-    for (let k = 0; k < 13; k++) { if (!(await pp2.$('#stage'))) break; await pronStep(pp2, { label: '1920 P02 #' + k, shot: k === 5 ? () => shot(pp2, 'p7-1920-slowa-kosmos') : null }); }
+    await click(pp2, '.module-card[data-module="pron"]'); await click(pp2, '.tile-level[data-level="W-z2"]');
+    for (let k = 0; k < 13; k++) { if (!(await pp2.$('#stage'))) break; await pronStep(pp2, { label: '1920 W-z2 #' + k, shot: k === 5 ? () => shot(pp2, 'p7-1920-slowa-kosmos') : null }); }
     await pp2.close();
     for (const w of ['dzungla', 'wyspy']) {
       const p4 = await newPage(1366, 768);
       await p4.goto(`${BASE}/`); await p4.evaluate((ww) => localStorage.setItem('pierwsze-slowa:v1', JSON.stringify({ v: 1, world: ww })), w); await p4.reload(); await sleep(600);
-      await click(p4, '.module-card[data-module="pron"]'); await click(p4, '.tile-level[data-level="P07"]');
-      await pronStep(p4, { label: w + ' P07 listen', shot: () => shot(p4, 'p7-swiat-' + w) });
-      for (let k = 0; k < 12; k++) { if (!(await p4.$('#stage'))) break; await pronStep(p4, { label: w + ' P07 #' + k }); }
+      await click(p4, '.module-card[data-module="pron"]'); await click(p4, '.tile-level[data-level="W-sz"]');
+      await pronStep(p4, { label: w + ' W-sz listen', shot: () => shot(p4, 'p7-swiat-' + w) });
+      for (let k = 0; k < 12; k++) { if (!(await p4.$('#stage'))) break; await pronStep(p4, { label: w + ' W-sz #' + k }); }
       await p4.close();
     }
     ok('Ćwiczenia wymowy: 1920x1080 (kosmos) i światy dżungla/wyspy bez przewijania');

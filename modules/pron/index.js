@@ -1,7 +1,7 @@
 // Moduł „Ćwiczenia wymowy”: mapa głosglobalnie odblokowana (dziecko wybiera głoskę), kroki z gwiazdkami, wznawianie.
 import { h, clear, STAR } from '../../js/core/ui.js';
 import * as P from '../../js/core/progress.js';
-import { PRON_LEVELS, GROUPS } from './curriculum.js';
+import { PRON_LEVELS, GROUPS, R_NOTE, recommendedLevel } from './curriculum.js';
 import { runPronLevel } from './runner.js';
 
 export default {
@@ -19,19 +19,21 @@ export default {
       const wrap = h('div', { class: 'scroll-screen' });
       wrap.append(ctx.topbar({ back: 'Menu', onBack: exit, title: 'Ćwiczenia wymowy' }));
       const done = P.completedCount(ctx.state, PRON_LEVELS);
-      wrap.append(h('p', { class: 'lead on-bg' }, `Ukończone głoski: ${done} z ${PRON_LEVELS.length}. Wybierz głoskę i ćwicz w swoim tempie.`));
+      wrap.append(h('p', { class: 'lead on-bg' }, `Ukończone głoski: ${done} z ${PRON_LEVELS.length}. Kolejność jak u logopedów: najpierw ciszące, potem syczące, szumiące, a R na końcu. Każdą głoskę można otworzyć.`));
+      const rec = recommendedLevel((l) => P.levelRating(ctx.state, l) > 0 || ctx.state.levels[l.id]?.done);
       for (const [g, gname] of Object.entries(GROUPS)) {
         const row = h('div', { class: 'tiles-grid' });
         for (const l of PRON_LEVELS.filter((x) => x.group === g)) {
           const rating = P.levelRating(ctx.state, l), d = P.tasksDone(ctx.state, l);
-          const tile = h('button', { class: 'tile-level' + (rating ? ' done' : ''), type: 'button', 'data-level': l.id, 'aria-label': `${l.title}. Ukończone kroki: ${d} z ${l.tasks.length}` },
+          const tile = h('button', { class: 'tile-level' + (rating ? ' done' : '') + (rec === l ? ' recommended' : ''), 'aria-current': rec === l ? 'step' : null, type: 'button', 'data-level': l.id, 'aria-label': `${l.title}${rec === l ? ' (polecana teraz)' : ''}. Ukończone kroki: ${d} z ${l.tasks.length}` },
+            rec === l ? h('span', { class: 'lrec' }, 'Polecana teraz') : null,
             h('span', { class: 'lnum' }, l.num), h('span', { class: 'ltitle' }, l.title), h('span', { class: 'lprev' }, l.preview),
             h('span', { class: 'lstars', 'aria-hidden': 'true' }, [1, 2, 3].map((n) => h('span', { class: 'ms' + (n <= rating ? ' on' : ''), html: STAR }))),
             h('span', { class: 'lbar', 'aria-hidden': 'true' }, h('span', { style: `width:${(100 * d) / l.tasks.length}%` })));
           tile.addEventListener('click', () => start(l));
           row.append(tile);
         }
-        wrap.append(h('section', { class: 'group' }, h('h2', { class: 'on-bg' }, gname), row));
+        wrap.append(h('section', { class: 'group', 'data-group': g }, h('h2', { class: 'on-bg' }, gname), g === 'r' ? h('p', { class: 'muted on-bg r-note' }, R_NOTE) : null, row));
       }
       wrap.append(h('p', { class: 'muted on-bg pron-disclaimer' }, 'To zabawa w ćwiczenie, a nie terapia. Przy trudnościach z mową warto skonsultować się z logopedą.'));
       box.append(wrap);

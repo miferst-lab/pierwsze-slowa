@@ -1,8 +1,14 @@
 // „Ćwiczenia wymowy”: zabawowe ćwiczenia trudnych polskich głosek (to NIE jest terapia logopedyczna).
-// Każda głoska = jeden poziom (P01…); kroki poziomu = zadania z gwiazdkami, zapisywane jak w pozostałych modułach:
+// Każda głoska = jeden poziom (W-<głoska>, np. W-s2 = Ś); kroki poziomu = zadania z gwiazdkami, zapisywane jak w pozostałych modułach:
 //   listen (posłuchaj + buzia), syll (głoska w sylabach), words (słowa: początek/środek/koniec), sentence (zdanie / łamaniec),
 //   fun (ćwiczenia: oddech, język, usta). Dodanie głoski = jeden wpis w SOUND_DEFS (+ nagrania: tools/generate-audio.py).
-export const GROUPS = { r: 'Drżąca głoska', szum: 'Szumiące', sycz: 'Syczące', cisz: 'Ciszące' };
+// Kolejność jak w typowej terapii i rozwoju mowy: szereg ciszący -> syczący -> szumiący -> r na końcu
+// (źródła: sklep.logopedia.pl „Program terapii głosek dentalizowanych” za Demel/Styczek; verbis-logopedia.pl – patrz README).
+export const GROUPS = { cisz: 'Ciszące', sycz: 'Syczące', szum: 'Szumiące', r: 'Drżąca głoska R (na końcu)' };
+export const ORDER = ['s2', 'z2', 'c2', 'dz3', 'c', 'dz', 'sz', 'zrz', 'cz', 'dz2', 'r'];
+export const R_NOTE = 'Głoska R jest na końcu, bo dzieci zwykle opanowują ją najpóźniej (ok. 5.–6. roku życia), a logopedzi najczęściej ćwiczą ją dopiero wtedy, gdy język sprawnie unosi się do góry, a głoski ciszące, syczące i szumiące są już pewne. Możesz ją otworzyć w każdej chwili.';
+/** Stare identyfikatory poziomów (P01…P11, kolejność sprzed 14.10.2026) -> nowe, oparte na głosce. */
+export const LEGACY_IDS = Object.fromEntries(['r', 'sz', 'cz', 'zrz', 'dz2', 'c', 'dz', 's2', 'c2', 'z2', 'dz3'].map((s, i) => ['P' + String(i + 1).padStart(2, '0'), 'W-' + s]));
 
 /** Ćwiczenia (oddech, język, usta). text = wypowiedź lektora i opis na ekranie; anim = klucz animacji (css/pron.css). */
 export const EXERCISES = {
@@ -75,7 +81,12 @@ function buildTasks(s) {
   return tasks;
 }
 
-export const PRON_LEVELS = SOUND_DEFS.map((s, i) => ({ id: 'P' + String(i + 1).padStart(2, '0'), num: i + 1, group: s.group, title: s.title, preview: s.preview, sound: s.id, def: s, tasks: buildTasks(s) }));
+const ORDERED = ORDER.map((id) => SOUND_DEFS.find((s) => s.id === id));
+/** Poziomy w zalecanej kolejności; id poziomu oparte na głosce (W-<głoska>), więc zmiana kolejności nie rusza postępów. */
+export const PRON_LEVELS = ORDERED.map((s, i) => ({ id: 'W-' + s.id, num: i + 1, group: s.group, title: s.title, preview: s.preview, sound: s.id, def: s, tasks: buildTasks(s) }));
+
+/** Zalecany następny poziom: pierwszy nieukończony w kolejności (null, gdy wszystko ukończone). */
+export const recommendedLevel = (isDone) => PRON_LEVELS.find((l) => !isDone(l)) ?? null;
 
 /** Wszystkie NOWE wypowiedzi tego modułu: {part, kind}. kind: drill (sylaby-ćwiczenia, wolno), word, sentence, instruction. */
 export function pronSpoken() {

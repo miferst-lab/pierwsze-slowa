@@ -9,10 +9,11 @@ import * as P from '../js/core/progress.js';
 
 test('ćwiczenia wymowy: poziomy mają unikalne id, kroki każdego typu i znane ćwiczenia', () => {
   assert.ok(PRON_LEVELS.length >= 10);
-  assert.equal(PRON_LEVELS[0].def.id, 'r');
+  assert.deepEqual(PRON_LEVELS.map((l) => l.sound), ['s2', 'z2', 'c2', 'dz3', 'c', 'dz', 'sz', 'zrz', 'cz', 'dz2', 'r']);
+  assert.equal(PRON_LEVELS.at(-1).id, 'W-r');
   const ids = new Set();
   for (const l of PRON_LEVELS) {
-    assert.match(l.id, /^P\d\d$/);
+    assert.match(l.id, /^W-[a-z0-9]+$/);
     assert.ok(!ids.has(l.id)); ids.add(l.id);
     const types = new Set(l.tasks.map((t) => t.type));
     for (const t of ['listen', 'syll', 'words', 'sentence', 'fun']) assert.ok(types.has(t), l.id + ' brak ' + t);
@@ -58,4 +59,15 @@ test('ikony modułów: dwa warianty na moduł, pliki istnieją, zmiana co sesję
   for (const m of MODULES) for (const v of ['a', 'b']) assert.ok(existsSync(new URL('../' + m.icons[v], import.meta.url)), m.id + v);
   assert.equal(P.nextIconSet('a'), 'b'); assert.equal(P.nextIconSet('b'), 'a');
   assert.equal(P.parseState({ v: 1, iconSet: 'a' }).iconSet, 'a'); assert.equal(P.parseState({ v: 1, iconSet: 'x' }).iconSet, 'b');
+});
+
+test('pron: migracja starych id P01..P11 -> W-<głoska> (postępy i Kontynuuj)', async () => {
+  const { recommendedLevel } = await import('../modules/pron/curriculum.js');
+  const st = P.parseState(JSON.stringify({ v: 1, levels: { P01: { tasks: { 'r-listen': 3 }, done: true }, P08: { tasks: { 's2-listen': 2 }, done: false }, L01: { tasks: { 'L01-1': 3 }, done: true } }, last: { module: 'pron', level: 'P08', task: 1 } }));
+  assert.equal(st.levels['W-r'].done, true); assert.equal(st.levels['W-s2'].tasks['s2-listen'], 2);
+  assert.ok(st.levels.L01 && !st.levels.P01 && !st.levels.P08);
+  assert.equal(st.last.level, 'W-s2');
+  assert.equal(recommendedLevel((l) => st.levels[l.id]?.done).id, 'W-s2');
+  assert.equal(recommendedLevel(() => false).id, 'W-s2');
+  assert.equal(recommendedLevel((l) => l.id !== 'W-r').id, 'W-r');
 });

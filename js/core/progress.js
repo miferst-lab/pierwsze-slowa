@@ -1,4 +1,5 @@
 // Postępy: localStorage, klucz z wersją, bezpieczne parsowanie. Czyste funkcje (testowalne w node).
+import { LEGACY_IDS as LEGACY_LEVEL_IDS } from '../../modules/pron/curriculum.js';
 export const STORAGE_KEY = 'pierwsze-slowa:v1';
 export const STATE_VERSION = 1;
 export const ITEMS_PER_WORLD = 12;
@@ -41,7 +42,8 @@ export function parseState(raw, worldIds = ['lesna', 'kosmos', 'dzungla', 'wyspy
     }
   }
   if (isObj(o.levels)) {
-    for (const [lid, lv] of Object.entries(o.levels)) {
+    for (const [lid0, lv] of Object.entries(o.levels)) {
+      const lid = LEGACY_LEVEL_IDS[lid0] ?? lid0; // stare id ćwiczeń wymowy (P01…) -> W-<głoska>
       if (!isObj(lv) || !isObj(lv.tasks)) continue;
       const tasks = {};
       for (const [tid, s] of Object.entries(lv.tasks)) if (Number.isInteger(s) && s >= 1 && s <= 3) tasks[tid] = s;
@@ -49,7 +51,7 @@ export function parseState(raw, worldIds = ['lesna', 'kosmos', 'dzungla', 'wyspy
     }
   }
   if (isObj(o.last) && ['reading', 'math', 'pron'].includes(o.last.module) && typeof o.last.level === 'string' && /^[A-Za-z0-9_-]{1,20}$/.test(o.last.level)) {
-    d.last = { module: o.last.module, level: o.last.level, idx: Number.isInteger(o.last.idx) ? clamp(o.last.idx, 0, 200) : 0, world: d.world, at: Number.isFinite(o.last.at) ? o.last.at : 0 };
+    d.last = { module: o.last.module, level: (o.last.module === 'pron' && LEGACY_LEVEL_IDS[o.last.level]) || o.last.level, idx: Number.isInteger(o.last.idx) ? clamp(o.last.idx, 0, 200) : 0, world: d.world, at: Number.isFinite(o.last.at) ? o.last.at : 0 };
   }
   d.hits = cleanCounts(o.hits);
   d.misses = cleanCounts(o.misses);

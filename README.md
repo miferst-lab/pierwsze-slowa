@@ -112,6 +112,14 @@ Postępy matematyki (gwiazdki, poziomy, trafienia i pomyłki z tematami „do po
 
 ## Ćwiczenia wymowy (11 głosek, 131 kroków)
 
+**Kolejność (od 14.10.2026):** szereg ciszący **Ś, Ź, Ć, DŹ** → syczący **C, DZ** → szumiący **SZ, Ż/RZ, CZ, DŻ** → **R na końcu**. Wszystkie poziomy są otwarte; mapa podświetla „Polecaną teraz” głoskę (pierwszą nieukończoną w tej kolejności), a przy R jest notka dla rodzica, dlaczego jest ostatnia. Id poziomów są oparte na głosce (`W-s2`, …, `W-r`); stare zapisy `P01…P11` są automatycznie przenoszone (`LEGACY_IDS` w `modules/pron/curriculum.js`, migracja w `parseState`), więc postępy i „Kontynuuj” się nie gubią. (Moduł nie zawiera głosek S i Z.)
+
+Źródła kolejności (zweryfikowane):
+- „Program terapii głosek dentalizowanych”, sklep.logopedia.pl – „W literaturze podawana jest zazwyczaj następująca kolejność wywoływania głosek: ciszące (ś, ź, ć, dź), syczące (s, z, c, dz), szumiące (sz, rz, cz, dż)” (za m.in. Antos, Demel, Styczek; Demel „Minimum logopedyczne…”): https://www.sklep.logopedia.pl/publikacjefachowe/program-terapii-glosek-dentalizowanych/
+- „Kolejność wprowadzania głosek”, verbis-logopedia.pl – szumiące i [r] pojawiają się ok. 5.–6. r.ż.; „najczęściej nie zaczyna się terapii od [r]”: https://verbis-logopedia.pl/kolejnosc-wprowadzania-glosek.htm
+
+Kolejność warto dopasować do dziecka – najlepiej z logopedą.
+
 Trzeci moduł na ekranie startowym (`modules/pron/`): zabawowe ćwiczenia trudnych głosek – **to nie jest terapia**; przy stałych trudnościach z mową warto iść do logopedy (informacja jest też w panelu rodzica i na mapie głosek).
 
 - **Głoski** (jeden poziom P01…P11 na głoskę, wszystkie odblokowane – dziecko wybiera): R, SZ, CZ, Ż/RZ, DŻ, C, DZ, Ś, Ć, Ź, DŹ. Dodanie głoski = jeden wpis w `SOUND_DEFS` w `modules/pron/curriculum.js` (słowa, sylaby, zdania, ćwiczenia, klucz rysunku buzi) i `python tools/generate-audio.py` dla nowych nagrań.
