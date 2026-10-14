@@ -1,5 +1,6 @@
 // Panel rodzica: bramka (zadanie rachunkowe), postępy, słabe miejsca, lektor, dane.
 import { R_NOTE } from '../modules/pron/curriculum.js';
+import { SOURCES, SOURCE_NOTES, SOURCES_DISCLAIMER } from './parent-sources.js';
 import { h, clear, soundLabel } from './core/ui.js';
 import * as P from './core/progress.js';
 import { SAY, audioId } from './core/say.js';
@@ -109,6 +110,12 @@ export function showParent(ctx, box) {
         h('p', { id: 'pron-order' }, R_NOTE + ' Gra podświetla „Polecaną teraz” głoskę (pierwszą nieukończoną), ale kolejność warto dopasować do dziecka – najlepiej z logopedą.'),
         h('p', {}, 'Jeśli dziecko ma stałą trudność z wymową, warto skonsultować się z logopedą – gra tego nie zastąpi i niczego nie diagnozuje. Gra nie ocenia wymowy automatycznie: dziecko albo Ty wybieracie „Powtórz” lub „Super!”.'),
         h('p', { class: 'muted' }, 'Kamera i mikrofon („Nagraj siebie”, „Lusterko”) działają wyłącznie lokalnie: przeglądarka zawsze pyta o zgodę. „Lusterko” tylko pokazuje obraz z kamery, bez nagrywania. „Nagraj siebie” nagrywa obraz i dźwięk (bez kamery – sam dźwięk) do 8 sekund, odtwarza je raz obok wzoru lektora, a potem nagranie samo znika (najpóźniej po minucie albo po wyjściu z ekranu). Nic nie jest wysyłane ani zapisywane. Zgodę możesz w każdej chwili cofnąć w ustawieniach przeglądarki.')),
+      h('section', { class: 'card', id: 'zrodla' }, h('details', {}, h('summary', {}, 'Źródła – na czym opierają się ćwiczenia'),
+        h('p', { class: 'muted' }, SOURCES_DISCLAIMER),
+        ...SOURCE_NOTES.map((n) => h('p', {}, h('strong', {}, n.title + ': '), n.text)),
+        h('ol', { class: 'footnotes' }, SOURCES.map((s) => h('li', { id: 'zrodlo-' + s.id, value: s.id }, `[${s.id}] ${s.text} `,
+          h('a', { href: s.url, target: '_blank', rel: 'noopener noreferrer' }, s.url.replace(/^https:\/\//, '').replace(/\/$/, ''))))),
+        h('p', { class: 'muted' }, 'Linki otwierają się w nowej karcie (tylko tutaj, w panelu rodzica).'))),
       h('section', { class: 'card', id: 'avatar-choice' }, h('h2', {}, 'Awatar lektora'), h('p', { class: 'muted' }, 'Mała postać przy zadaniu: porusza się, gdy lektor mówi, cieszy się po dobrej odpowiedzi i myśli po pomyłce.'),
         (() => { const input = h('input', { type: 'checkbox', id: 'avatar-on' }); input.checked = state.avatar !== false; input.addEventListener('change', () => { state.avatar = input.checked; ctx.save(); document.documentElement.dataset.avatar = state.avatar ? 'on' : 'off'; }); return h('label', { class: 'row' }, input, ' ', h('b', {}, 'Pokazuj awatara lektora')); })()),
       ctx.kids?.length ? h('section', { class: 'card', id: 'guide-choice' }, h('h2', {}, 'Bohater gry'), h('p', { class: 'muted' }, 'Postać, która prowadzi dziecko przez grę (domyślnie Piotr). Dziecko też może ją zmienić przyciskiem „Mój bohater” na ekranie startowym.'),

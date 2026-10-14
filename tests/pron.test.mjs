@@ -71,3 +71,20 @@ test('pron: migracja starych id P01..P11 -> W-<głoska> (postępy i Kontynuuj)',
   assert.equal(recommendedLevel(() => false).id, 'W-s2');
   assert.equal(recommendedLevel((l) => l.id !== 'W-r').id, 'W-r');
 });
+
+test('źródła: przypisy tylko w panelu rodzica, poprawne odwołania, nota', async () => {
+  const fs = await import('node:fs');
+  const { SOURCES, SOURCE_NOTES, SOURCES_DISCLAIMER } = await import('../js/parent-sources.js');
+  assert.ok(SOURCES.length >= 6);
+  SOURCES.forEach((s, i) => { assert.equal(s.id, i + 1); assert.match(s.url, /^https:\/\/[^\s]+$/); assert.ok(s.text.length > 20); });
+  const ids = new Set(SOURCES.map((s) => s.id));
+  for (const n of SOURCE_NOTES) for (const r of n.refs) { assert.ok(ids.has(r)); assert.ok(n.text.includes(`[${r}]`), n.title + ' -> [' + r + ']'); }
+  for (const s of SOURCES) assert.ok(SOURCE_NOTES.some((n) => n.refs.includes(s.id)), 'nieużyte źródło ' + s.id);
+  assert.match(SOURCES_DISCLAIMER, /nie jest terapi/); assert.match(SOURCES_DISCLAIMER, /program/);
+  // importuje je tylko panel rodzica
+  const { execSync } = await import('node:child_process');
+  const users = execSync("grep -rl 'parent-sources' js modules index.html || true", { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
+  assert.deepEqual(users.filter((f) => f !== 'js/parent-sources.js'), ['js/parent.js']);
+  assert.match(fs.readFileSync('tools/check-external.mjs', 'utf8'), /ALLOW = new Set\(\['js\/parent-sources\.js'\]\)/);
+  execSync('node tools/check-external.mjs');
+});

@@ -1,0 +1,23 @@
+// Źródła (przypisy) pokazywane WYŁĄCZNIE w panelu rodzica, za bramką rachunkową.
+// To jedyny plik aplikacji, w którym wolno mieć adresy zewnętrzne (wyjątek w tools/check-external.mjs).
+// Każda pozycja została sprawdzona (WebFetch/WebSearch, 14.10.2026); nie dopisuj niesprawdzonych szczegółów.
+export const SOURCES = [
+  { id: 1, text: '„Program terapii głosek dentalizowanych”, Wydawnictwo Logopedia (sklep.logopedia.pl), publikacje fachowe – kolejność wywoływania głosek: ciszące (ś, ź, ć, dź), syczące (s, z, c, dz), szumiące (sz, rz, cz, dż); bibliografia m.in. Antos, Demel, Styczek oraz G. Demel „Minimum logopedyczne…”.', url: 'https://www.sklep.logopedia.pl/publikacjefachowe/program-terapii-glosek-dentalizowanych/' },
+  { id: 2, text: '„Kolejność wprowadzania głosek”, Verbis – gabinet logopedyczny (verbis-logopedia.pl) – głoski szumiące i [r] pojawiają się ok. 5.–6. roku życia; najczęściej nie zaczyna się terapii od [r].', url: 'https://verbis-logopedia.pl/kolejnosc-wprowadzania-glosek.htm' },
+  { id: 3, text: 'Genowefa Demel, „Minimum logopedyczne nauczyciela przedszkola”, Warszawa: Wydawnictwa Szkolne i Pedagogiczne, wyd. 3 popr. 1994 (wyd. 1 – 1978). Rekord katalogowy:', url: 'https://katalog.bialystok.edu.pl/integro/1752000037742/demel-genowefa/minimum-logopedyczne-nauczyciela-przedszkola' },
+  { id: 4, text: 'Irena Styczek, „Logopedia”, Warszawa: Państwowe Wydawnictwo Naukowe, wyd. 2 zm. i rozsz. 1979. Rekord katalogowy:', url: 'https://integro.cen.info.pl/1291800079844/styczek-irena/logopedia' },
+  { id: 5, text: 'Poradnia Psychologiczno-Pedagogiczna w Janowie Lubelskim, „Ćwiczenia logopedyczne” – ćwiczenia języka, warg, policzków, podniebienia miękkiego oraz ćwiczenia oddechowe dla rodziców.', url: 'https://pppjanow.szkolnastrona.pl/art,5,cwiczenia-logopedyczne' },
+  { id: 6, text: 'Jadwiga Cieszyńska, „Nauka czytania krok po kroku. Jak przeciwdziałać dysleksji”, Kraków: Wydawnictwo Naukowe Akademii Pedagogicznej, 2001 (wyd. 2005). Strona wydawnictwa:', url: 'https://ksiegarniaup.pl/nauka-czytania-krok-po-kroku-jak-przeciwdzialac-dysleksji-27868' },
+  { id: 7, text: 'Katarzyna Grzyb, „Metoda symultaniczno-sekwencyjna J. Cieszyńskiej”, profesor.pl, 2015 – opis metody (nauka czytania sylabami; etapy: od samogłosek do sylaby otwartej, pierwsze wyrazy, sylaby zamknięte … samodzielne czytanie).', url: 'https://profesor.pl/publikacja,29382,Metoda-symultaniczno-sekwencyjna-J-Cieszynskiej' },
+  { id: 8, text: 'Rozporządzenie Ministra Edukacji Narodowej z dnia 14 lutego 2017 r. w sprawie podstawy programowej wychowania przedszkolnego oraz podstawy programowej kształcenia ogólnego dla szkoły podstawowej … (Dz. U. 2017 poz. 356), załącznik nr 2: I etap edukacyjny (klasy I–III), „Edukacja matematyczna”.', url: 'https://eli.gov.pl/api/acts/DU/2017/356/text.html' },
+];
+
+/** Krótkie objaśnienia: co w grze opiera się na którym źródle (numery = przypisy). */
+export const SOURCE_NOTES = [
+  { title: 'Kolejność głosek w „Ćwiczeniach wymowy”', refs: [1, 2, 3, 4], text: 'Najpierw głoski ciszące (Ś, Ź, Ć, DŹ), potem syczące (C, DZ), szumiące (SZ, Ż/RZ, CZ, DŻ), a R na końcu – tak opisuje typową kolejność literatura logopedyczna [1], a R zwykle pojawia się najpóźniej i rzadko od niego zaczyna się terapię [2]. Ogólne podstawy (fonetyka, normy wymowy dziecka) – klasyczne podręczniki [3], [4].' },
+  { title: 'Ćwiczenia oddechowe, języka i warg', refs: [5], text: 'Zabawy „wiatraczek” i dmuchanie, „konik” (kląskanie), liczenie zębów językiem, „uśmiech i dzióbek” (U–I) oraz „balonik” (nadymanie policzków) są wzorowane na ćwiczeniach narządów artykulacyjnych i ćwiczeniach oddechowych polecanych rodzicom przez poradnię psychologiczno-pedagogiczną [5]: krótko, codziennie, w formie zabawy, najlepiej przed lustrem.' },
+  { title: 'Nauka czytania', refs: [6, 7], text: 'Moduł „Nauka czytania” prowadzi od liter (najpierw samogłosek) do sylab otwartych (ma, mo, mu…), potem słów, zdań i czytanek. To podejście zbliżone do sylabowej, symultaniczno-sekwencyjnej metody J. Cieszyńskiej [6], [7], choć gra nie jest jej wierną realizacją (np. pojedyncze głoski też są czytane przez lektora).' },
+  { title: 'Matematyka', refs: [8], text: 'Zakres modułu „Matematyka” (liczenie i porównywanie liczb, znaki <, =, >, dodawanie i odejmowanie, okienka w równaniach, zadania tekstowe, figury, mierzenie, pieniądze, zegar) dobrano do wymagań „Edukacji matematycznej” z podstawy programowej dla klas I–III [8], w zakresie odpowiednim dla klasy 1.' },
+];
+
+export const SOURCES_DISCLAIMER = 'Gra jest zabawową pomocą do ćwiczeń w domu – nie jest terapią logopedyczną, nie diagnozuje i nie zastępuje szkoły ani programu nauczania. Przy trudnościach z mową skonsultuj się z logopedą.';

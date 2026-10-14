@@ -234,3 +234,4 @@ select{border:2px solid var(--line);background:var(--surface);color:var(--ink)}
 .tile-level.recommended{position:relative;border:3px solid var(--accent,#e8891c);box-shadow:0 0 0 4px rgba(232,137,28,.3),var(--shadow-s)}
 .tile-level .lrec{position:absolute;top:-.7rem;left:50%;transform:translateX(-50%);background:var(--accent,#e8891c);color:#fff;font-size:.72rem;font-weight:700;padding:.1rem .5rem;border-radius:999px;white-space:nowrap}
 .r-note{max-width:60rem;margin:.1rem auto .4rem;font-size:.85rem}
+.footnotes{padding-left:0;list-style:none;font-size:.85rem}.footnotes li{margin:.35rem 0;overflow-wrap:anywhere}#zrodla summary{font-size:1.05rem}

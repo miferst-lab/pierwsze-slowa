@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Sprawdza, że pliki aplikacji nie odwołują się do niczego spoza własnej domeny.
 // Szuka http://, https://, adresów względnych protokołu ("//host"), @import/url() z hostem.
-// Wyjątki: xmlns="http://www.w3.org/..." oraz linie będące samym komentarzem.
+// Wyjątki: js/parent-sources.js (źródła w panelu rodzica), xmlns="http://www.w3.org/..." oraz linie będące samym komentarzem.
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
@@ -16,8 +16,10 @@ const PATTERNS = [
   [/@import\s+(?:url\()?["']?(?:https?:)?\/\//gi, '@import z hostem'],
   [/\b(?:wss?):\/\//gi, 'websocket'],
 ];
+// Jedyny wyjątek: przypisy źródeł w panelu rodzica (za bramką rachunkową). Ekrany dziecka nadal bez adresów zewnętrznych.
+const ALLOW = new Set(['js/parent-sources.js']);
 const problems = [];
-for (const file of walk(root).filter((f) => EXT.test(f))) {
+for (const file of walk(root).filter((f) => EXT.test(f) && !ALLOW.has(relative(root, f)))) {
   readFileSync(file, 'utf8').split('\n').forEach((line, i) => {
     if (isComment(line)) return;
     const cleaned = line.replace(/xmlns(:\w+)?\s*=\s*["']http:\/\/www\.w3\.org\/[^"']*["']/g, '');

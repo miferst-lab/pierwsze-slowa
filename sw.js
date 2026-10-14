@@ -3,7 +3,7 @@
 // Są cache'owane leniwie (przy pierwszym odtworzeniu, patrz handler fetch) oraz dociągane w tle po komunikacie
 // {type:'precache-audio'} wysyłanym przez stronę ~6 s po starcie (pomijane przy włączonym oszczędzaniu danych).
 // UWAGA: przy KAŻDEJ zmianie plików podnieś VERSION – stary cache zostanie usunięty przy aktywacji.
-const VERSION = 'v28';
+const VERSION = 'v29';
 const CACHE = `pierwsze-slowa-${VERSION}`;
 const SHELL = [
   './',
@@ -133,6 +133,7 @@ const SHELL = [
   'js/games/logic.js',
   'js/games/map.js',
   'js/games/phrases.js',
+  'js/parent-sources.js',
   'js/parent.js',
   'modules/index.js',
   'modules/math/curriculum.js',

@@ -345,6 +345,7 @@ try {
   await click(page, '.back');
 
   // rodzic
+  { const ext = await page.$$eval('a[href^="http"]', (a) => a.length); if (ext) throw new Error('ekran dziecka ma linki zewnętrzne: ' + ext); }
   await click(page, '.start-foot .btn.ghost'); await page.waitForSelector('#gate-in');
   await shot(page, '09-rodzic-bramka');
   const q = await page.$eval('.gate .lead', (e) => e.textContent); const [a, b] = q.match(/\d+/g).map(Number);
@@ -354,6 +355,10 @@ try {
   await page.evaluate(() => document.querySelectorAll('details').forEach((d) => (d.open = true)));
   await shot(page, '10-rodzic-panel'); ok('panel rodzica: bramka i dashboard');
   { const pn = await page.evaluate(() => { const e = document.querySelector('#pron-note'); return e ? e.textContent : ''; }); if (!/logoped/i.test(pn) || !/lokalnie/i.test(pn) || !/nie terapia|nie terapi|a nie terapia/i.test(pn)) throw new Error('panel rodzica: brak noty o ćwiczeniach wymowy (logopeda, lokalny mikrofon)'); await page.evaluate(() => document.querySelector('#pron-note').scrollIntoView()); await shot(page, 'p7-rodzic-nota'); ok('panel rodzica: nota o ćwiczeniach wymowy (zabawa, logopeda, mikrofon lokalnie)'); }
+  { await page.evaluate(() => { const d = document.querySelector('#zrodla details'); d.open = true; d.scrollIntoView(); });
+    const z = await page.evaluate(() => { const a = [...document.querySelectorAll('#zrodla a')]; return { n: a.length, blank: a.every((x) => x.target === '_blank' && /noopener/.test(x.rel) && x.href.startsWith('https://')), txt: document.querySelector('#zrodla').textContent, fn: document.querySelectorAll('#zrodla .footnotes li').length }; });
+    if (z.n < 6 || z.n !== z.fn || !z.blank || !/nie jest terapi/.test(z.txt) || !/\[1\]/.test(z.txt)) throw new Error('panel rodzica: sekcja Źródła niepoprawna ' + JSON.stringify({ ...z, txt: undefined }));
+    await shot(page, 'p8-rodzic-zrodla'); ok(`panel rodzica: Źródła – ${z.n} przypisów, linki w nowej karcie, nota „nie terapia”`); }
   // reset
   await click(page, '.btn.danger'); await click(page, '.btn.danger'); await page.waitForSelector('#gate-in');
   const after = await page.evaluate(() => localStorage.getItem('pierwsze-slowa:v1'));
